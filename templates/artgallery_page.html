@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block content %}
+	
+
+<section class="row gallery">	
+	<!-- <div class="arrow noleft"> /--- </div> -->
+	<!-- {{arts|length}} -->
+	<div id="number" class="no">{{number}}</div>
+	{% for art in arts %}
+		{% if loop.index<=4 %}
+			{% set cl="" %}
+		{%else%}
+			{% set cl="no" %}
+		{%endif%}
+		<article id="{{loop.index}}" class="art col-3 {{cl}}"> 
+			<!-- <h3 hidden>Last modified: {{art.last_modified}}</h3> -->
+			<canvas id="{{art.key()}}" class="arts" data-processing-sources="pde/{{art.filename}}"></canvas>
+			<section class="art-title no" >
+				<h2>{{art.title}}</h2>
+				<h3>{{art.description}}</h3>
+			</section>		
+			<!-- <p class="desc" hidden>{{art.description}}</p> -->
+			<!-- <p class="tags" hidden>{{art.tag}}</p> -->
+		</article>	
+	{% endfor %}
+
+	<!-- <div class="nav noleft arrow"> --/ </div> -->
+</section>
+<section id="nav"class="row">
+	<div id="left" class="arrow col-6">Left</div>
+	<div id="right" class="arrow col-6">Right</div>
+</section>
+
+<script type="text/javascript" src="/js/artgallery.js"></script>
+{% endblock %}

@@ -1,0 +1,16 @@
+cabal-version:         2.0
+name:                  website
+version:               0.1.0.0
+build-type:            Simple
+
+executable site
+  main-is:          site.hs
+
+  build-depends:       base ^>= 4.12
+                     , hakyll ^>= 4.12
+                     , hakyll-sass ^>= 0.2.4
+
+  ghc-options:        -Wall -threaded
+
+  default-language:   Haskell2010
+  default-extensions: OverloadedStrings

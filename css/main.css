@@ -1,0 +1,140 @@
+/* font-family: "PoiretOneNormal"; */
+@font-face {
+    font-family: "PoiretOneNormal";
+    src: url("../fonts/PoiretOneNormal/PoiretOneNormal.eot");
+    src: url("../fonts/PoiretOneNormal/PoiretOneNormal.eot?#iefix")format("embedded-opentype"),
+    url("../fonts/PoiretOneNormal/PoiretOneNormal.woff") format("woff"),
+    url("../fonts/PoiretOneNormal/PoiretOneNormal.ttf") format("truetype");
+    font-style: normal;
+    font-weight: normal;
+}
+/*using before page is loaded*/
+.overlay{
+  text-align: center;
+  position:fixed;
+  z-index:99999;
+  top:0;
+  left:0;
+  bottom:0;
+  right:0;
+  transition: 1s 0.4s;
+}
+.gif{
+  position:fixed;
+  top:40%;
+  width: 10%;
+  margin: auto;
+}
+/*-----------------------------*/
+body{
+  font-family: 'PoiretOneNormal', cursive;
+  color: rgb(125,255,225);
+}
+header{
+  text-align: right;
+}
+header .subname{
+  margin: 0 1%;
+ }
+.nav-parent{
+  position: relative;
+}
+.text-uppercase{
+  text-transform: uppercase;
+}
+.text-muted{
+  color:#BCBBBB;
+}
+.title-super{
+  margin: 0 1%;
+  font-size: 60px;
+  color: rgb(255,160,190);
+}
+
+
+.main{
+  width: 100%;
+  background-color: rgb(60,10,85);
+}
+
+/*Art gallery stuff*/
+.gallery{
+  margin: 2% auto;
+}
+.art{
+  position: relative;
+}
+.arts canvas{
+
+  margin-bottom: 0;
+}
+.art-title{
+  text-align: center;
+  background-color: rgba(60,10,85,0.8);
+  width: 100%;
+  margin: 0;
+  position: absolute;
+  bottom: 1%;
+  }
+.arrow{
+  background-color: rgba(60,10,85,0.8);
+  height: 60px;
+  text-align: center;
+  font-size: 40px;
+  margin: 2% auto;
+}
+.no{
+  display: none;
+}
+
+
+#coming-canvas {
+  width: 80%;
+  margin:1% auto;
+}
+
+/*here comes footer stuff*/
+footer{
+  padding-top: 1%;
+  font-size: 20px;
+  text-align: center;
+  height:auto;
+  /*list-style-type: none;*/
+  /*position: absolute;
+    bottom: 0;*/
+}
+.no-mar{
+  margin: 0;
+}
+footer img {
+  vertical-align: central;
+  width: 75%;
+  height:auto;
+}
+.highlighted img{
+  width:95%;
+  height: auto;
+}
+/*----------------------------*/
+/*for different devices*/
+@media only screen and (max-width: 900px) {
+  .title-super{
+    font-size: 40px;
+  }
+  .subname{
+    font-size: 20px;
+  }
+
+}
+@media only screen and (max-width: 500px) {
+  .title-super{
+    font-size: 30px;
+  }
+  .subname{
+    font-size: 15px;
+  }
+  footer .col-4{
+    width: 100%;
+  }
+}
+/*-----------------------------*/

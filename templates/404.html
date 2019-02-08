@@ -1,0 +1,24 @@
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <title>Oops! 404</title>  
+  <link rel="stylesheet" type='text/css' href="/css/error404.css">
+  <script type="text/javascript" src="/js/processing.min.js"></script>
+
+  <link rel="shortcut icon" href="/favicon.ico">
+</head>
+<body>
+	<main>
+		<section  id="er404">
+			<canvas data-processing-sources="pde/error404.pde pde/daisy.pde" id="er404-canvas"></canvas>
+		</section>
+		<h1> Oops</h1>
+	</main>
+</body>
+<script type="text/javascript">
+	window.onresize = function(event) {
+    	Processing.getInstanceById('er404-canvas').resizeComing();
+		Processing.getInstanceById('er404-canvas').draw();
+	};
+</script>
+</html>

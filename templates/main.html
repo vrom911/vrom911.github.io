@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>VR</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <link rel="stylesheet" type='text/css' href="/css/frame.css">
+  <link rel="stylesheet" type='text/css' href="/css/main.css">
+
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <script type="text/javascript" src="/js/main.js"></script>
+  <link rel="shortcut icon" href="/favicon.ico">
+
+</head>
+  <body>
+    <section class="overlay main"> <img id="gif" class="gif" src="/images/output_dBuQ1n.gif" alt="Wait"> </section>
+    <!-- Here comes header with logo name and nav-bar -->
+    <script type="text/javascript" src="/js/processing.min.js"></script>
+
+
+    <header class="main">
+      <section class="row">
+        <!-- Self-designed responsive logo made with Processing.js -->
+        <article class="col-1" id="logo-div">
+          <a href="/">
+            <canvas id="logo-can" data-processing-sources="/pde/logo.pde">
+              <!-- <img class="img-responsive title-logo" src="images/100x100" > --> LOGO
+            </canvas>
+          </a>
+        </article>
+        <!-- Using Microdata. See  http://schema.org/Person for detailes-->
+        <article class="col-11 text-right text-uppercase" itemscope itemtype="http://schema.org/Person">
+          <h1 class="title-super text-thin" id="names">
+            <canvas id="uz" data-processing-sources="/pde/uzor.pde /pde/uzor_base.pde"></canvas>
+             <span itemprop="givenName" id="given">Veronika</span> <span itemprop="familyName" id="family">Romashkina</span>
+          </h1>
+          <h2 id="subname" class="text-thin subname">
+            <canvas id='subuz' data-processing-sources="/pde/uzorsub.pde /pde/uzor_base.pde"></canvas>
+            <span itemprop="jobTitle">Web-development Ninja</span>
+          </h2>
+        </article>
+      </section>
+      <!-- Navigation-bar -->
+      <nav class="row main">
+        <div class="col-3 nav-parent" id="link">
+          <a href="/">
+            <canvas id="nav1" class="nav" data-processing-sources="/pde/navblock1.pde pde/nav_all.pde">About</canvas>
+          </a>
+        </div>
+        <div class="col-3 nav-parent">
+          <a href="/">
+            <canvas id="nav2" class="nav"  data-processing-sources="/pde/navblock2.pde pde/nav_all.pde">Projects</canvas>
+          </a>
+        </div>
+        <div class="col-3 nav-parent">
+          <a href="/gallery">
+            <canvas id="nav3" class="nav"  data-processing-sources="/pde/navblock3.pde pde/nav_all.pde">Gallery</canvas>
+          </a>
+        </div>
+        <div class="col-3 nav-parent">
+          <a href="/">
+            <canvas id="nav4" class="nav"  data-processing-sources="/pde/navblock4.pde pde/nav_all.pde">Blog</canvas>
+          </a>
+        </div>
+      </nav>
+    </header>
+  <!-- Main content of page( depend of page url open the one we need) -->
+  <!-- <canvas id="background" data-processing-sources="/pde/backgr1.pjs"></canvas> -->
+  <main class="grid">
+      <section class="row" id="coming">
+          <canvas data-processing-sources="pde/coming.pde pde/daisy.pde" id="coming-canvas"></canvas>
+      </section>
+  </main>
+  <!-- Footer: Coming soon: contacts etc. -->
+  <footer class="main row no-mar">
+      <article class="col-4">
+
+        <section class="row" id="copyright"><h2 class="no-mar subname">&copy; 2015 vrom911</h2></section>
+      </article>
+      <article class="col-4">
+        <section class="row">
+          <span class="col-4"><h4 class="no-mar">+994 50 780 22 87</h4></span>
+          <article class="icon col-2"><img alt="Phone" src="/images/phone-coloured.png"></article>
+
+          <span class="col-4"><h4 class="no-mar">Download CV</h4></span>
+          <section class="icon col-2">
+            <a href="/files/cv_Veronika_Romashkina.pdf" download><img alt="CV" src="/images/cv-coloured.png" title="Download"></a>
+          </section>
+        </section>
+
+
+      </article>
+      <article class="col-4">
+        <!-- <h3>Contact Me</h3> -->
+        <section class="row icons">
+          <article class="icon col-2"><a href="https://www.linkedin.com/in/veronikaromashkina"  target="_blank"><img alt="linkedin" src="/images/linkedin-coloured.png" ></a></article>
+          <article class="icon col-2">
+            <!-- Secured e-mail from spam-botes via js http://webdevtools.ru/maillink -->
+            <script type="text/javascript">eval(unescape('%64%6f%63%75%6d%65%6e%74%2e%77%72%69%74%65%28%27%3c%61%20%68%72%65%66%3d%22%6d%61%69%6c%74%6f%3a%76%72%6f%6d%39%31%31%40%67%6d%61%69%6c%2e%63%6f%6d%22%3e%3c%69%6d%67%20%73%72%63%3d%22%2f%69%6d%61%67%65%73%2f%6d%61%69%6c%2d%63%6f%6c%6f%75%72%65%64%2e%70%6e%67%22%3e%3c%2f%61%3e%27%29%3b'))</script>
+          </article>
+          <article class="icon col-2"><a href="https://github.com/vrom911"  target="_blank"><img alt="github" src="/images/github-coloured.png" ></a></article>
+          <article class="icon col-2"><a href="skype:vrom911?call"  target="_blank"><img alt="skype" src="/images/skype-coloured.png" ></a></article>
+          <article class="icon col-2"><a href="http://vk.com/romashkina_veronika"  target="_blank"><img alt="vk"src="/images/vk-coloured.png"></a></article>
+          <article class="icon col-2"><a href="https://www.facebook.com/ronnie.romashkina"  target="_blank"><img alt="fb" src="/images/fb-coloured.png"></a></article>
+        </section>
+
+
+
+
+      </article>
+
+
+  </footer>
+
+  </body>
+</html>
