@@ -1,4 +1,4 @@
-/* @pjs font="../fonts/PoiretOneNormal/PoiretOneNormal.ttf"; */
+/* @pjs font="../fonts/poiret/poiret-one-v7-latin-regular.ttf"; */
 color back=color(60,10,85), first=color(125,255,225), second=color(255,160,190), third=color(170,47,190);
 
 void nav_settings(){
@@ -9,9 +9,10 @@ void nav_settings(){
     x2=width;
     y1=y2=height/2;
   PFont font;
-  fsize=width/6;
-    font = createFont("../fonts/PoiretOneNormal/PoiretOneNormal.ttf",fsize);
+  fsize=width/9;
+    font = createFont("../fonts/poiret/poiret-one-v7-latin-regular.ttf");
     textFont(font,fsize);
+    textSize(fsize);
     textAlign(CENTER,CENTER);
 }
 

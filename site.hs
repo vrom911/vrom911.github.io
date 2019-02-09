@@ -1,7 +1,12 @@
-import Hakyll (applyAsTemplate, compile, compressCss, compressCssCompiler, copyFileCompiler, create,
-               defaultContext, hakyll, idRoute, loadAndApplyTemplate, makeItem, match,
-               relativizeUrls, route, setExtension, templateBodyCompiler, (.||.))
+import Hakyll (Context, Identifier, Rules, applyAsTemplate, compile, compressCss,
+               compressCssCompiler, copyFileCompiler, create, defaultContext, functionField, hakyll,
+               idRoute, loadAndApplyTemplate, makeItem, match, relativizeUrls, route, setExtension,
+               templateBodyCompiler, (.||.))
+import Hakyll.Core.Identifier (fromFilePath, toFilePath)
 import Hakyll.Web.Sass (sassCompiler)
+
+import qualified Data.Text as T
+
 
 main :: IO ()
 main = hakyll $ do
@@ -18,22 +23,13 @@ main = hakyll $ do
         route   idRoute
         compile compressCssCompiler
 
-    -- Main page
-    create ["index.html"] $ do
-        route idRoute
-        compile $ do
-            makeItem ""
-                >>= applyAsTemplate defaultContext
-                >>= loadAndApplyTemplate "templates/main.html" defaultContext
-                >>= relativizeUrls
-    -- Main page
-    create ["new.html"] $ do
-        route idRoute
-        compile $ do
-            makeItem ""
-                >>= applyAsTemplate defaultContext
-                >>= loadAndApplyTemplate "templates/new.html" defaultContext
-                >>= relativizeUrls
+    -- Main pages
+    createMainPage "index.html"
+    createMainPage "projects.html"
+    createMainPage "hobbies.html"
+    createMainPage "blog.html"
+
+    createMainPage "about.html"
 
     -- Render the 404 page, we don't relativize URL's here.
     create ["404.html"] $ do
@@ -45,3 +41,20 @@ main = hakyll $ do
                 >>= loadAndApplyTemplate "templates/404.html" ctx
 
     match "templates/*" $ compile templateBodyCompiler
+
+createMainPage :: Identifier -> Rules ()
+createMainPage page = create [page] $ do
+    route idRoute
+    compile $ do
+        let ctx = stripExtension <> defaultContext
+        makeItem ""
+            >>= applyAsTemplate ctx
+            >>= loadAndApplyTemplate (fromFilePath $ "templates/" ++ toFilePath page) ctx
+            >>= loadAndApplyTemplate "templates/default.html" ctx
+            >>= relativizeUrls
+
+-- | Removes the @.html@ suffix in the post URLs.
+stripExtension :: Context a
+stripExtension = functionField "stripExtension" $ \args _ -> case args of
+    [k] -> pure $ maybe k T.unpack (T.stripSuffix ".html" $ T.pack k)
+    _   -> error "relativizeUrl only needs a single argument"
