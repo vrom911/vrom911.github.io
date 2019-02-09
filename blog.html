@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
+  <title>VR</title>
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <link rel="stylesheet" type="text/css" href="./css/main.css">
+  <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <script type="text/javascript" src="./js/main.js"></script>
+  <link rel="shortcut icon" href="./favicon.ico">
+
+</head>
+<body>
+    <div class="container-fluid">
+    <section class="overlay main"> <img id="gif" class="gif" src="./images/output_dBuQ1n.gif" alt="Wait"> </section>
+    <!-- Here comes header with logo name and nav-bar -->
+    <script type="text/javascript" src="./js/processing.min.js"></script>
+
+
+    <header class="main">
+      <section class="row">
+        <!-- Self-designed responsive logo made with Processing.js -->
+        <article class="col-md-1 col-xs-1" id="logo-div">
+          <a href="./">
+            <canvas id="logo-can" data-processing-sources="/pde/logo.pde">
+              <!-- <img class="img-responsive title-logo" src="images/100x100" > --> LOGO
+            </canvas>
+          </a>
+        </article>
+        <!-- Using Microdata. See  http://schema.org/Person for detailes-->
+        <article class="col-md-11 text-right text-uppercase" itemscope itemtype="http://schema.org/Person">
+          <h1 class="title-super text-thin" id="names">
+            <canvas id="uz" data-processing-sources="/pde/uzor.pde /pde/uzor_base.pde"></canvas>
+             <span itemprop="givenName" id="given">Veronika</span> <span itemprop="familyName" id="family">Romashkina</span>
+          </h1>
+          <h2 id="subname" class="text-thin subname">
+            <canvas id="subuz" data-processing-sources="/pde/uzorsub.pde /pde/uzor_base.pde"></canvas>
+            <span itemprop="jobTitle">Haskell Devotee</span>
+          </h2>
+        </article>
+      </section>
+      <!-- Navigation-bar -->
+      <nav class="row navbar navbar-default">
+        <div class="col-sm-3 col-xs-12 nav-parent" id="link">
+          <a href="./">
+            <canvas id="nav1" class="nav" data-processing-sources="/pde/navblock1.pde pde/nav_all.pde">About me</canvas>
+          </a>
+        </div>
+        <div class="col-sm-3 col-xs-12 nav-parent">
+          <a href="./projects">
+            <canvas id="nav2" class="nav" data-processing-sources="/pde/navblock2.pde pde/nav_all.pde">Projects</canvas>
+          </a>
+        </div>
+        <div class="col-sm-3 col-xs-12 nav-parent">
+          <a href="./hobbies">
+            <canvas id="nav3" class="nav" data-processing-sources="/pde/navblock3.pde pde/nav_all.pde">Hobbies</canvas>
+          </a>
+        </div>
+        <div class="col-sm-3 col-xs-12 nav-parent">
+          <a href="./blog">
+            <canvas id="nav4" class="nav" data-processing-sources="/pde/navblock4.pde pde/nav_all.pde">Blog</canvas>
+          </a>
+        </div>
+      </nav>
+    </header>
+
+  <!-- Main content of page( depend of page url open the one we need) -->
+  <!-- <canvas id="background" data-processing-sources="/pde/backgr1.pjs"></canvas> -->
+  <main class="main">
+      <section class="row" id="coming">
+<div class="col-xs-12 col-sm-12">
+    <canvas data-processing-sources="pde/coming.pde pde/daisy.pde" id="coming-canvas"></canvas>
+    </div>
+    </section>
+
+  </main>
+
+  <!-- Footer: contacts etc. -->
+  <!-- -->

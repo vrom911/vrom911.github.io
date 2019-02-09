@@ -1,0 +1,132 @@
+
+void setup(){
+	$w = $(".art.col-3").width();
+	size($w,$w);
+
+	background(150,200,250);
+	// main colour and border
+	
+}
+void draw(){
+fill();
+scale(width/200);
+strokeWeight(2)
+	stroke(255,130,0) 
+	fill(250,180,0);
+//tail
+ellipse(160,130,20,100);
+//body
+triangle(100,34,40,180,160,180);
+//ears
+triangle(70,25,130,70,55,70);
+triangle(130,25,75,70,145,70);
+//face
+ellipse(100,70,90,70);
+
+strokeWeight(1)
+fill(255,220,0)
+ellipse(98,142,44,65)
+fill(255,130,0);
+strokeWeight(2)
+// on tail
+rect(156,168,8,8)
+rect(152,150,16,10)
+rect(150,130,20,10)
+rect(152,110,17,10)
+rect(154,90,12,10)
+//hairstyle
+triangle(88,37,98,35,93,43);
+triangle(98,35,108,35,103,43);
+triangle(108,35,118,37,113,43);
+//cheack
+triangle(56,63,56,71,62,67);
+triangle(56,71,56,78,65,74);
+triangle(56,78,59,85,63,81);
+
+triangle(144,63,144,71,138,67);
+triangle(144,71,144,78,135,74);
+triangle(144,78,141,85,137,81);
+//body triangles
+triangle(58,140,53,150,65,146)
+triangle(53,150,48,160,67,159)
+triangle(48,160,44,170,59,169)
+
+triangle(142,140,147,150,135,146)
+triangle(147,150,152,160,131,159)
+triangle(152,160,156,170,141,169)
+//arms
+line(65,120,83,130)
+line(134,120,114,130)
+line(60,135,83,145)
+line(139,135,114,145)
+
+triangle(65,120,70,122,67,130)
+triangle(70,123,75,125,72,133)
+
+triangle(134,120,129,122,132,130)
+triangle(129,123,124,125,127,133)
+fill(250,220,0)
+//left fingers hand
+ellipse(83,128,13,10)
+ellipse(83,142,13,10)
+ellipse(87,135,13,10)
+//right fingers hand
+ellipse(114,128,13,10)
+ellipse(114,142,13,10)
+ellipse(110,135,13,10)
+//left toes leg
+ellipse(62,179,10,13)
+ellipse(79,179,10,13)
+ellipse(70,183,10,13)
+//right toes leg
+ellipse(122,179,10,13)
+ellipse(139,179,10,13)
+ellipse(130,183,10,13)
+//nose
+strokeWeight(3);
+line(100,78,100,84)
+line(100,76,95,74)
+line(100,76,105,74)
+// triangle(100,85,88,81,95,87)
+//mouth
+strokeWeight(2);
+fill(255,90,0)
+triangle(100,95,88,85,112,85)
+//eyes
+noStroke();
+//white
+fill(255)
+ellipse(80,60,30,30);
+ellipse(120,60,30,30);
+//black
+fill(0);
+ellipse(80,60,25,25);
+ellipse(120,60,25,25);
+//little white
+fill(255);
+ellipse(77,55,9,6);
+ellipse(117,55,9,6);
+ellipse(84,64,2,2);
+ellipse(124,64,2,2);
+
+//kogti
+noStroke();
+fill(0);
+//left fingers hand
+triangle(87,127,95,129,87,130)
+triangle(90,134,98,135,90,136)
+triangle(87,141,95,142,87,143)
+//right fingers hand
+triangle(111,127,103,129,111,130)
+triangle(111,141,103,142,111,143)
+triangle(108,134,100,135,108,136)
+//left toes leg
+// ellipse(62,179,10,13)
+// ellipse(79,179,10,13)
+// ellipse(70,183,10,13)
+// //right toes leg
+// ellipse(122,179,10,13)
+// ellipse(139,179,10,13)
+// ellipse(130,183,10,13)
+
+}
