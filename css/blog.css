@@ -1,0 +1,17 @@
+/* Tags */
+.btn-tags {
+    color: rgb(125,255,225) !important;
+    background: rgb(60,10,85) !important;
+    border-color: rgb(125,255,225) !important;
+}
+.btn-tags:hover, .btn-tags:focus, .btn-tags:active {
+    background-color: white !important;
+    border-color: rgb(60,10,85) !important;
+    color: rgb(60,10,85) !important;
+}
+
+/* .blog ul {list-style-image: url('/images/logo.png'); position: inside;} */
+.blog ul { margin: 5% auto !important;list-style-type: none;}
+img.daisy {width: 3%;}
+.blog hr {border-color:  rgb(125,255,225);}
+.blog h2 {margin: 3% auto;}
