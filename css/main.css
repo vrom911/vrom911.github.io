@@ -1,16 +1,4 @@
-/* poiret-one-regular - latin */
-@font-face {
-    font-family: 'PoiretOneNormal';
-    font-style: normal;
-    font-weight: 400;
-    src: url('../fonts/poiret/poiret-one-v7-latin-regular.eot'); /* IE9 Compat Modes */
-    src: local('PoiretOne'), local('PoiretOne-Regular'),
-    url('../fonts/poiret/poiret-one-v7-latin-regular.eot?#iefix') format('embedded-opentype'), /* IE6-IE8 */
-    url('../fonts/poiret/poiret-one-v7-latin-regular.woff2') format('woff2'), /* Super Modern Browsers */
-    url('../fonts/poiret/poiret-one-v7-latin-regular.woff') format('woff'), /* Modern Browsers */
-    url('../fonts/poiret/poiret-one-v7-latin-regular.ttf') format('truetype'), /* Safari, Android, iOS */
-    url('../fonts/poiret/poiret-one-v7-latin-regular.svg#PoiretOne') format('svg'); /* Legacy iOS */
-}
+html {background-color: rgb(60,10,85) !important;}
 
 /*using before page is loaded*/
 .overlay{
@@ -38,9 +26,7 @@ html, body {
 }
 body{
     padding: 0; margin: 0;
-    font-family: 'PoiretOneNormal', cursive !important;
     color: rgb(125,255,225) !important;
-    background-color: rgb(60,10,85);
 }
 header{text-align: right;}
 header .subname{margin: 0 1%;}
@@ -49,11 +35,9 @@ header .subname{margin: 0 1%;}
     width: 100%; padding: 0 !important;
     position: relative;
 }
-.text-uppercase{text-transform: uppercase;}
-.text-muted{color:#BCBBBB;}
 .title-super{
   margin: 0 1%;
-  font-size: 60px;
+  font-size: 40px;
   color: rgb(255,160,190);
 }
 
@@ -63,27 +47,7 @@ header .subname{margin: 0 1%;}
   background-color: rgb(60,10,85);
 }
 
-/*Art gallery stuff*/
-.gallery{margin: 2% auto;}
-.art{position: relative;}
-.arts canvas{margin-bottom: 0;}
-.art-title{
-  text-align: center;
-  background-color: rgba(60,10,85,0.8);
-  width: 100%;
-  margin: 0;
-  position: absolute;
-  bottom: 1%;
-  }
-.arrow{
-  background-color: rgba(60,10,85,0.8);
-  height: 60px;
-  text-align: center;
-  font-size: 40px;
-  margin: 2% auto;
-}
 .no{display: none;}
-
 
 #coming-canvas {
   width: 80%;
@@ -136,4 +100,7 @@ footer img {
     width: 100%;
   }
 }
-/*-----------------------------*/
+
+@media (max-width:768px) {
+    #logo-can {width: 10%;}
+}

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+      <title>$title$</title>
+      <meta charset="utf-8">
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+      <meta name="description" content="vrom911 Blog">
+      <meta name="keywords" content="Haskell, Functional progarmming, FP">
+      <meta name="author" content="Veronika Romashkina"/>
+
+      <!-- Twitter cards -->
+      <meta name="twitter:card" content="summary" />
+      <meta name="twitter:site" content="@vrom911" />
+      <meta property="twitter:title" content="vrom911 - $title$"/>
+      <meta name="twitter:description" content="$description$" />
+      <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+      <meta property="og:title" content="$title$" />
+      <meta property="og:description" content="$description$" />
+      <meta property="og:site_name" content="vrom911" />
+      <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
+      <!-- Favicon -->
+      <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+
+      <!-- Font -->
+      <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+    <link rel="stylesheet" href="/css/highlight-theme.css" />
+
+    <!-- Custom styles for this template -->
+    <link href="/css/default.css" rel="stylesheet">
+    <link href="/css/post.css" rel="stylesheet">
+  </head>
+
+  <body class="body-posts">
+      <!-- Header -->
+      <nav class="navbar navbar-inverse navbar-fixed-right bg-primary text-secondary">
+            <div class="navbar-header row">
+                <div class="postslogo"> <a class="navbar-brand" href="../"><img class="img-fluid" src="/images/logo.png" alt="vrom911"></a></div>
+                <h5 class="text-center"><a href="../blog"> vrom911 Blog</a></h5>
+                $partial("templates/social.html")$
+            </div>
+            <div class="toc-zone">
+                <h6 class="text-white text-center">Contents</h6>
+                <div class="toc" id="main">
+                    $toc$
+                </div>
+            </div>
+      </nav>
+      <div class="container info">
+          <h2 class="text-center text-uppercase text-purple">$title$</h2>
+          <div class="text-center">$date$</div>
+          <div class="row tag-block text-center">
+              <div class="col-md-12 col-xs-12 tag-block">
+              $for(tagsList)$
+              <span> <a class="btn btn-outline-dark btn-tag" href="../tags/$tag$">$tag$</a></span>
+              $endfor$
+              </div>
+          </div>
+
+          <div class="content">
+          <div class="row post">
+              <div class="col-12 post-body">
+              <p class="lead">
+                  $body$
+              </p>
+              </div>
+          </div>
+          </div>
+      </div>
+
+      <!-- Bootstrap core JavaScript -->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"> </script>
+      <script src="/js/post.js"> </script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+      <script>hljs.initHighlightingOnLoad()</script>
+  </body>
+</html>
