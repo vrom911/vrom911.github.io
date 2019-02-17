@@ -5,14 +5,16 @@
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
   <title>VR</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+  <link rel="shortcut icon" href="./favicon.ico">
+  <link rel="stylesheet" type="text/css" href="./css/default.css">
   <link rel="stylesheet" type="text/css" href="./css/main.css">
   <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
   <script type="text/javascript" src="./js/main.js"></script>
-  <link rel="shortcut icon" href="./favicon.ico">
 
 </head>
-<body>
+<body class="bg-purple">
     <div class="container-fluid">
     <section class="overlay main"> <img id="gif" class="gif" src="./images/output_dBuQ1n.gif" alt="Wait"> </section>
     <!-- Here comes header with logo name and nav-bar -->
@@ -30,7 +32,7 @@
           </a>
         </article>
         <!-- Using Microdata. See  http://schema.org/Person for detailes-->
-        <article class="col-md-11 text-right text-uppercase" itemscope itemtype="http://schema.org/Person">
+        <article class="col-md-11  col-xs-11 text-right text-uppercase" itemscope itemtype="http://schema.org/Person">
           <h1 class="title-super text-thin" id="names">
             <canvas id="uz" data-processing-sources="/pde/uzor.pde /pde/uzor_base.pde"></canvas>
              <span itemprop="givenName" id="given">Veronika</span> <span itemprop="familyName" id="family">Romashkina</span>
@@ -45,22 +47,22 @@
       <nav class="row navbar navbar-default">
         <div class="col-sm-3 col-xs-12 nav-parent" id="link">
           <a href="./">
-            <canvas id="nav1" class="nav" data-processing-sources="/pde/navblock1.pde pde/nav_all.pde">About me</canvas>
+            <canvas id="nav1" class="nav" data-processing-sources="/pde/navblock1.pde /pde/nav_all.pde">About me</canvas>
           </a>
         </div>
         <div class="col-sm-3 col-xs-12 nav-parent">
           <a href="./projects">
-            <canvas id="nav2" class="nav" data-processing-sources="/pde/navblock2.pde pde/nav_all.pde">Projects</canvas>
+            <canvas id="nav2" class="nav" data-processing-sources="/pde/navblock2.pde /pde/nav_all.pde">Projects</canvas>
           </a>
         </div>
         <div class="col-sm-3 col-xs-12 nav-parent">
           <a href="./hobbies">
-            <canvas id="nav3" class="nav" data-processing-sources="/pde/navblock3.pde pde/nav_all.pde">Hobbies</canvas>
+            <canvas id="nav3" class="nav" data-processing-sources="/pde/navblock3.pde /pde/nav_all.pde">Hobbies</canvas>
           </a>
         </div>
         <div class="col-sm-3 col-xs-12 nav-parent">
           <a href="./blog">
-            <canvas id="nav4" class="nav" data-processing-sources="/pde/navblock4.pde pde/nav_all.pde">Blog</canvas>
+            <canvas id="nav4" class="nav" data-processing-sources="/pde/navblock4.pde /pde/nav_all.pde">Blog</canvas>
           </a>
         </div>
       </nav>
