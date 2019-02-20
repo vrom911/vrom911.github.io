@@ -27,7 +27,6 @@ runWebsite = hakyll $ do
     createMainPage "index.html"
     createMainPage "projects.html"
     createMainPage "hobbies.html"
-
     createMainPage "about.html"
 
     -- post pages

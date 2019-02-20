@@ -1,10 +1,10 @@
-/* @pjs font="../fonts/PoiretOneNormal/PoiretOneNormal.ttf"; */
+/* @pjs font="../fonts/poiret/poiret-one-v7-latin-regular.ttf"; */
 void daisy_settings(){
     colors[0]=color(125,255,225);  colors[1]=color(255,160,190);  colors[2]=color(170,47,190);
   rad=width/12;   h=-rad/8;    step=-rad/32;    angle=0;
     PFont font;
     fsize=width/4;
-    font = createFont("../fonts/PoiretOneNormal/PoiretOneNormal.ttf",fsize);
+    font = createFont("../fonts/poiret/poiret-one-v7-latin-regular.ttf",fsize);
     textFont(font,fsize);
     textAlign(CENTER,CENTER);
   smooth();  noLoop(); noStroke();
