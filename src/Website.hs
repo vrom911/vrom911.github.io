@@ -9,6 +9,7 @@ import Hakyll.Core.Identifier (fromFilePath, toFilePath)
 
 import Website.Blog (createBlog, createTags, matchBlogPosts)
 import Website.Context (stripExtension)
+import Website.Hobbies (mkHobbiesCtx)
 import Website.Social (mkSocialCtx)
 
 
@@ -27,7 +28,9 @@ runWebsite = hakyll $ do
     createMainPage "index.html"
     createMainPage "projects.html"
     createMainPage "hobbies.html"
+    createMainPage "hobbies/travel.html"
     createMainPage "about.html"
+
 
     -- post pages
     matchBlogPosts
@@ -45,13 +48,13 @@ runWebsite = hakyll $ do
                 >>= applyAsTemplate ctx
                 >>= loadAndApplyTemplate "templates/404.html" ctx
 
-    match "templates/*" $ compile templateBodyCompiler
+    match "templates/**" $ compile templateBodyCompiler
 
 createMainPage :: Identifier -> Rules ()
 createMainPage page = create [page] $ do
     route idRoute
     compile $ do
-        let ctx = stripExtension <> mkSocialCtx <> defaultContext
+        let ctx = stripExtension <> mkSocialCtx <> mkHobbiesCtx <> defaultContext
         makeItem ""
             >>= applyAsTemplate ctx
             >>= loadAndApplyTemplate (fromFilePath $ "templates/" ++ toFilePath page) ctx

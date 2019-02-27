@@ -1,0 +1,48 @@
+<script src="https://www.amcharts.com/lib/3/ammap.js" type="text/javascript"></script>
+<script src="https://www.amcharts.com/lib/3/maps/js/worldHigh.js" type="text/javascript"></script>
+<script src="https://www.amcharts.com/lib/3/themes/dark.js" type="text/javascript"></script>
+
+<section class="container mt-5 mb-5">
+    <div class="row">
+        <div class="col-xs-12 col-md-12 text-center mb-3">
+            <h1 class="text-uppercase"> My World </h1>
+            <blockquote>To see the world, things dangerous to come to, to see behind walls, draw closer, to find each other, and to feel. That is the purpose of life.</blockquote>
+            <p class="float-right">Walter Mitty</p>
+        </div>
+  <div class="row">
+    <div class="col-xs-12 col-md-12" id="mapdiv" style="width: 1000px; height: 450px;"></div>
+  </div>
+</section>
+
+<script type="text/javascript">
+var map = AmCharts.makeChart("mapdiv",{
+type: "map",
+theme: "dark",
+projection: "mercator",
+panEventsEnabled : true,
+backgroundColor : "#3c0a55",
+backgroundAlpha : 1,
+zoomControl: {zoomControlEnabled : true},
+dataProvider : {
+  map : "worldHigh",
+  getAreasFromMap : true,
+  areas :
+  [ {"id": "AZ", "showAsSelected": true},
+    {"id": "HR", "showAsSelected": true},
+    {"id": "GE", "showAsSelected": true},
+    {"id": "RU", "showAsSelected": true},
+    {"id": "TR", "showAsSelected": true},
+    {"id": "GB", "showAsSelected": true},
+    {"id": "IN", "showAsSelected": true},
+    {"id": "MY", "showAsSelected": true},
+    {"id": "SG", "showAsSelected": true}]},
+areasSettings : {
+  autoZoom : true,
+  color : "#B4B4B7",
+  colorSolid : "#7dffe1",
+  selectedColor : "#7dffe1",
+  outlineColor : "#666666",
+  rollOverColor : "#ffa0be",
+  rollOverOutlineColor : "#000000"}
+});
+</script>
