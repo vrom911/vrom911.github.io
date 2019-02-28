@@ -81,26 +81,20 @@ footer img {
 /*----------------------------*/
 /*for different devices*/
 @media only screen and (max-width: 900px) {
-  .title-super{
-    font-size: 40px;
-  }
-  .subname{
-    font-size: 20px;
-  }
+  .title-super{font-size: 40px;}
+  .subname{font-size: 20px;}
 
 }
 @media only screen and (max-width: 500px) {
-  .title-super{
-    font-size: 30px;
-  }
-  .subname{
-    font-size: 15px;
-  }
-  footer .col-4{
-    width: 100%;
-  }
+  .title-super{font-size: 30px;}
+  .subname{font-size: 15px;}
+  footer .col-4{width: 100%;}
 }
 
 @media (max-width:768px) {
     #logo-can {width: 10%;}
+}
+.cool-btn:hover, .cool-button:active, .cool-btn:focus {
+    background: linear-gradient(to right, rgb(125,255,225), rgb(255,160,190)) !important;
+    color:  rgb(60,10,85) !important;
 }

@@ -149,7 +149,6 @@ pre.comment {
     color: rgb(60,10,85) !important;
 }
 .btn-tag:hover, .btn-tag:focus, .btn-tag:active {
-    color: rgb(125,255,225) !important;
-    background: rgb(60,10,85);
-    border-color: rgb(60,10,85);
+    background: linear-gradient(to right, rgb(125,255,225), rgb(255,160,190)) !important;
+    color: white !important;
 }

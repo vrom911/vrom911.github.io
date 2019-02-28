@@ -26,6 +26,7 @@ library
   exposed-modules:     Website
                          Website.Blog
                          Website.Context
+                         Website.Experience
                          Website.Hobbies
                          Website.Social
   build-depends:       base ^>= 4.12
@@ -51,12 +52,14 @@ library
                        ScopedTypeVariables
                        TypeApplications
 
+  default-language:    Haskell2010
+
 executable site
   main-is:             site.hs
 
   build-depends:       base
                      , vrom911-website
 
-  ghc-options:        -Wall -threaded
+  ghc-options:         -Wall -threaded
 
-  default-language:   Haskell2010
+  default-language:    Haskell2010
