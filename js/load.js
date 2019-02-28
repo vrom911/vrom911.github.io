@@ -1,5 +1,5 @@
 $(window).load(function(){
-   // PAGE IS FULLY LOADED  
+   // PAGE IS FULLY LOADED
    // FADE OUT YOUR OVERLAYING DIV
-   $('#overlay').fadeOut();
+   $('#overlaylogo').fadeOut();
 });
