@@ -32,3 +32,9 @@ a:focus, a:hover, a:active {
     color: rgb(255,160,190) !important;
     text-decoration: none !important;
 }
+
+blockquote {
+    padding-left: 2%;
+    font-size: 1.6rem;
+    border-left: 4px solid rgb(125,255,225);
+}

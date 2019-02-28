@@ -1,8 +1,8 @@
-//$("#overlay").height($(window.height()));
+//$("#overlaylogo").height($(window.height()));
 $(window).on("load", function() {
    // PAGE IS FULLY LOADED
    // FADE OUT YOUR OVERLAYING DIV
-   $('.overlay').fadeOut();
+   $('.overlaylogo').fadeOut();
 });
 $(document).ready(function(){
   var h = $("#link").width();

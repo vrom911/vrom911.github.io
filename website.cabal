@@ -26,6 +26,7 @@ library
   exposed-modules:     Website
                          Website.Blog
                          Website.Context
+                         Website.Hobbies
                          Website.Social
   build-depends:       base ^>= 4.12
                      , hakyll ^>= 4.12

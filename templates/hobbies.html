@@ -1,5 +1,22 @@
-<section class="row" id="coming">
-    <div class="col-xs-12 col-sm-12">
-        <canvas data-processing-sources="pde/coming.pde pde/daisy.pde" id="coming-canvas"></canvas>
-    </div>
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+
+<section class="container info">
+    <section class="row align-items-center justify-content-center">
+        <h1 class="text-uppercase"> What I <i class="fas fa-heart"></i></h1>
+    </section>
+    $for(hobbies)$
+    <section class="row align-items-center justify-content-center my-5 mx-auto">
+        <div class="col-md-2 col-xs-12">
+           <a href="$hobbyLink$"> <div class="text-center">
+            <i class="fas fa-$hobbyIcon$ fa-5x"></i>
+            <h2 class="text-uppercase">$hobbyName$</h2>
+           </div>
+           </a>
+        </div>
+        <div class="col-md-6 col-xs-12">
+            <h4>$hobbyDesc$</h4>
+        </div>
+    </section>
+    $endfor$
 </section>

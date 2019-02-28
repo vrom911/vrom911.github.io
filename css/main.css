@@ -1,7 +1,7 @@
 html {background-color: rgb(60,10,85) !important;}
 
 /*using before page is loaded*/
-.overlay{
+.overlaylogo{
   text-align: center;
   position:fixed;
   z-index:99999;
