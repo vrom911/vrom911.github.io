@@ -1,4 +1,4 @@
-var w = $("#link").width();
+var w = $("#link1").width();
 int flagin;
 float sh, x1, x2, y1,y2, angle,x,y;
 float stepx, stepy, max_distance;
@@ -47,7 +47,7 @@ void draw(){
 
 }
 public void resizeNav(){
-    var w = $("#link").width();
+    var w = $("#link1").width();
     size(w,w/4);
     nav_resize();
     max_distance=dist(0,sh,width,height-sh);

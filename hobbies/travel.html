@@ -1,11 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
-  <title>VR</title>
   <meta http-equiv="X-UA-Compatible" content="IE=Edge">
-  <link rel="shortcut icon" href="../favicon.ico">
+  <title>vrom911 | travel</title>
+  <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+  <meta name="description" content="vrom911 website">
+  <meta name="keywords" content="Haskell, Functional progarmming, FP">
+  <meta name="author" content="Veronika Romashkina" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <!-- Twitter cards -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@vrom911" />
+  <meta property="twitter:title" content="vrom911 - travel" />
+  <meta name="twitter:description" content="vrom911 website" />
+  <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+  <meta property="og:title" content="travel" />
+  <meta property="og:description" content="vrom911 website" />
+  <meta property="og:site_name" content="vrom911" />
+  <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
   <link rel="stylesheet" type="text/css" href="../css/default.css">
   <link rel="stylesheet" type="text/css" href="../css/main.css">
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/solid.css" integrity="sha384-r/k8YTFqmlOaqRkZuSiE9trsrDXkh07mRaoGBMoDcmA58OHILZPsk29i2BsFng1B" crossorigin="anonymous">
@@ -17,24 +33,23 @@
 
 </head>
 <body class="bg-purple">
-    <div class="container-fluid">
-    <section class="overlay main overlaylogo"> <img id="gif" class="gif" src="../images/output_dBuQ1n.gif" alt="Wait"> </section>
+  <div class="container-fluid">
+    <section class="overlay main overlaylogo"><img id="gif" class="gif" src="../images/output_dBuQ1n.gif" alt="Wait"></section>
     <!-- Here comes header with logo name and nav-bar -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js"></script>
-
 
     <header class="main">
       <section class="row">
         <!-- Self-designed responsive logo made with Processing.js -->
-        <article class="col-md-1 col-xs-1" id="logo-div">
+        <article class="col-3 col-sm-1" id="logo-div">
           <a href="../">
             <canvas id="logo-can" data-processing-sources="/pde/logo.pde">
-              <!-- <img class="img-responsive title-logo" src="images/100x100" > --> LOGO
+              <img class="img-responsive title-logo" src="../images/logo.png">
             </canvas>
           </a>
         </article>
         <!-- Using Microdata. See  http://schema.org/Person for detailes-->
-        <article class="col-md-11  col-xs-11 text-right text-uppercase" itemscope itemtype="http://schema.org/Person">
+        <article class="col-9 col-sm-11 text-right text-uppercase" itemscope itemtype="http://schema.org/Person">
           <h1 class="title-super text-thin" id="names">
             <canvas id="uz" data-processing-sources="/pde/uzor.pde /pde/uzor_base.pde"></canvas>
              <span itemprop="givenName" id="given">Veronika</span> <span itemprop="familyName" id="family">Romashkina</span>
@@ -47,45 +62,48 @@
       </section>
       <!-- Navigation-bar -->
       <nav class="row navbar navbar-default">
-        <div class="col-sm-3 col-xs-12 nav-parent" id="link">
+        
+          <div class=" col-12 col-sm-3 nav-parent" id="link1">
           <a href="../about">
             <canvas id="nav1" class="nav" data-processing-sources="/pde/navblock1.pde /pde/nav_all.pde">About me</canvas>
           </a>
         </div>
-        <div class="col-sm-3 col-xs-12 nav-parent">
+        
+          <div class=" col-12 col-sm-3 nav-parent" id="link2">
           <a href="../projects">
             <canvas id="nav2" class="nav" data-processing-sources="/pde/navblock2.pde /pde/nav_all.pde">Projects</canvas>
           </a>
         </div>
-        <div class="col-sm-3 col-xs-12 nav-parent">
+        
+          <div class=" col-12 col-sm-3 nav-parent" id="link3">
           <a href="../hobbies">
             <canvas id="nav3" class="nav" data-processing-sources="/pde/navblock3.pde /pde/nav_all.pde">Hobbies</canvas>
           </a>
         </div>
-        <div class="col-sm-3 col-xs-12 nav-parent">
+        
+          <div class=" col-12 col-sm-3 nav-parent" id="link4">
           <a href="../blog">
             <canvas id="nav4" class="nav" data-processing-sources="/pde/navblock4.pde /pde/nav_all.pde">Blog</canvas>
           </a>
         </div>
+        
       </nav>
     </header>
 
   <!-- Main content of page( depend of page url open the one we need) -->
-  <!-- <canvas id="background" data-processing-sources="/pde/backgr1.pjs"></canvas> -->
-  <main class="main">
-      <script src="https://www.amcharts.com/lib/3/ammap.js" type="text/javascript"></script>
+  <main class="main my-2"> <script src="https://www.amcharts.com/lib/3/ammap.js" type="text/javascript"></script>
 <script src="https://www.amcharts.com/lib/3/maps/js/worldHigh.js" type="text/javascript"></script>
 <script src="https://www.amcharts.com/lib/3/themes/dark.js" type="text/javascript"></script>
 
 <section class="container mt-5 mb-5">
     <div class="row">
-        <div class="col-xs-12 col-md-12 text-center mb-3">
+        <div class="col-12 text-center mb-3">
             <h1 class="text-uppercase"> My World </h1>
             <blockquote>To see the world, things dangerous to come to, to see behind walls, draw closer, to find each other, and to feel. That is the purpose of life.</blockquote>
             <p class="float-right">Walter Mitty</p>
         </div>
   <div class="row">
-    <div class="col-xs-12 col-md-12" id="mapdiv" style="width: 1000px; height: 450px;"></div>
+    <div class="col-12" id="mapdiv" style="width: 1000px; height: 450px;"></div>
   </div>
 </section>
 
@@ -121,15 +139,13 @@ areasSettings : {
   rollOverOutlineColor : "#000000"}
 });
 </script>
-
-  </main>
-
+ </main>
   <!-- Footer: contacts etc. -->
     <footer class="row no-mar">
-      <article class="col-sm-4 col-xs-12">
+      <article class="col-sm-4 col-xs-12 my-3">
         <section class="copyright" id="copyright">&copy; 2019 vrom911</section>
       </article>
-      <article class="col-sm-4 col-xs-12">
+      <article class="col-12 col-sm-4 my-3">
           <!-- <h3>Contact Me</h3> -->
           <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
@@ -180,12 +196,12 @@ areasSettings : {
 </ul>
 
       </article>
-      <article class="col-sm-4 col-xs-12">
+      <article class="col-12 col-sm-4 my-3">
           <section class="row">
-          <section class="col-sm-6 col-xs-6">
+              <section class="col-6 col-sm-6">
               <a class="btn btn-outline-light cool-btn" href="mailto:vrom911@gmail.com">Send email</a>
           </section>
-          <section class="col-sm-6 col-xs-6">
+          <section class="col-6 col-sm-6">
             <a class="btn btn-outline-light cool-btn" href="../files/cv_Veronika_Romashkina.pdf" download>Download CV</a>
           </section>
           </section>
@@ -193,5 +209,5 @@ areasSettings : {
   </footer>
 
   </div>
-  </body>
+</body>
 </html>

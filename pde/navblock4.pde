@@ -2,11 +2,11 @@ int flagin;
 float sh, x1, x2, y1,y2, angle,x,y;
 String title;
 void setup(){
-    size($("#link").width(),$("#link").width()/4);
-    nav_settings();  
+    size($("#link4").width(),$("#link4").width()/4);
+    nav_settings();
     title=$("#nav4").text();
 }
-void draw(){ 
+void draw(){
     switch(flagin){
         case 0:
             case0();
@@ -34,7 +34,7 @@ void draw(){
     }
 }
 public void resizeNav(){
-    var w = $("#link").width();
+    var w = $("#link4").width();
     size(w,w/4);
     nav_resize();
 }
