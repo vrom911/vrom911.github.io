@@ -29,7 +29,3 @@ function resizeAll(){
 $(window).resize(function() {
   resizeAll();
 });
-// $(window).bind('resize', function () {
-//  $("#names").css({"fontSize": $("#name").width()/4});
-//  $("#subname").css({"fontSize": $("#subname").height()/4});
-// });
