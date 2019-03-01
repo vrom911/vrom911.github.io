@@ -1,4 +1,4 @@
-var w = $("#link").width();
+var w = $("#link2").width();
 int flagin;
 float sh, x1, x2, y1,y2, angle,x,y;
 float startAng, ang, step;
@@ -28,7 +28,7 @@ void draw(){
                 else{
                     if((y2-sh>0)&&(y1+sh<height))  {vertical_move();}
                     else{
-                        
+
                         stroke(third);
                         strokeWeight(2);
                         noFill();
@@ -36,7 +36,7 @@ void draw(){
                         translate(width/2, height/2+10);
                         startAng=startAng%360.0;
                         ang = startAng;
-                        
+
                         for(int r=width/2+50; r >= rad; r*=0.5) {
                             star(r, ang);
                             ang += step;
@@ -54,7 +54,7 @@ void draw(){
         case 2:
             case2();
     }
-   
+
 }
 void star(float r,float a){
     beginShape();
@@ -67,9 +67,9 @@ void star(float r,float a){
     endShape(CLOSE);
 }
 public void resizeNav(){
-    var w = $("#link").width();
+    var w = $("#link2").width();
     size(w,w/4);
     nav_resize();
     rad = 18;    step = 0;
-    angle=startAng = 270;    
+    angle=startAng = 270;
 }

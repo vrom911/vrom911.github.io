@@ -1,5 +1,5 @@
 int flagin;
-var wid = $("#link").width();
+var wid = $("#link3").width();
 float sh, x1, x2, y1,y2, angle,x,y;
 int xsp = 8;   // How far apart should each horizontal location be spaced
 int w;              // Width of entire wave
@@ -16,7 +16,7 @@ void setup(){
     amplitude = height;
     theta = 0.0;
     period = width/8;
-    
+
     xsp = width/30;
     w = width+xsp;
     dx = (TWO_PI / period) * xsp;
@@ -44,7 +44,7 @@ void draw(){
                         renderWave();
                         calcWave(amplitude*2);
                         renderWave();
-                        
+
                         white_title();
                     }
                 }
@@ -70,13 +70,13 @@ void renderWave() {
   // A simple way to draw the wave with an triangle at each location
   for (int x = 0; x < yvalues.length; x++) {
     noStroke();
-    
+
     //ellipseMode(CENTER);
     triangle(x*xsp,width/2+yvalues[x],x*xsp+2*xsp,width/2+yvalues[x],x*xsp,width/2+yvalues[x]-2*xsp);
   }
 }
 public void resizeNav(){
-    var wi = $("#link").width();
+    var wi = $("#link3").width();
     size(wi,wi/4);
     nav_resize();
     amplitude = height;
