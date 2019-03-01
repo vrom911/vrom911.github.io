@@ -9,6 +9,7 @@ import Hakyll.Core.Identifier (fromFilePath, toFilePath)
 
 import Website.Blog (createBlog, createTags, matchBlogPosts)
 import Website.Context (stripExtension)
+import Website.Experience (mkExperienceCtx)
 import Website.Hobbies (mkHobbiesCtx)
 import Website.Social (mkSocialCtx)
 
@@ -55,7 +56,11 @@ createMainPage :: Identifier -> Rules ()
 createMainPage page = create [page] $ do
     route idRoute
     compile $ do
-        let ctx = stripExtension <> mkSocialCtx <> mkHobbiesCtx <> defaultContext
+        let ctx = stripExtension
+               <> mkSocialCtx
+               <> mkHobbiesCtx
+               <> mkExperienceCtx
+               <> defaultContext
         makeItem ""
             >>= applyAsTemplate ctx
             >>= loadAndApplyTemplate (fromFilePath $ "templates/" ++ toFilePath page) ctx

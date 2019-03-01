@@ -4,7 +4,7 @@ module Website.Social
        , mkPostSocialCtx
        ) where
 
-import Hakyll (Compiler, Context, Item, field, itemBody, listField, makeItem)
+import Hakyll (Context, field, itemBody, listField, makeItem)
 
 data Social = Social
     { sName :: String
