@@ -79,6 +79,11 @@ footer{
   .subname{font-size: 15px;}
 }
 
+.cool-bg {
+    background: linear-gradient(to right, rgb(125,255,225), rgb(255,160,190));
+    border-radius: 0.5em;
+}
+
 .cool-btn:hover, .cool-button:active, .cool-btn:focus {
     background: linear-gradient(to right, rgb(125,255,225), rgb(255,160,190)) !important;
     color:  rgb(60,10,85) !important;

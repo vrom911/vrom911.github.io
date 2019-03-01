@@ -1,5 +1,15 @@
-<section class="row" id="coming">
-    <div class="col-xs-12 col-sm-12">
-        <canvas data-processing-sources="pde/coming.pde pde/daisy.pde" id="coming-canvas"></canvas>
+<section class="container my-5">
+  <div class="row align-items-center justify-content-center mx-auto my-3">
+    $for(projects)$
+    <div class="col-12 col-md-4 cool-bg text-purple"><a target="_blank" href="$pLink$">
+      <div class="row align-items-center justify-content-center mx-auto">
+        <div class="col-4 col-md-3"> <img src="$pImg$" class="img-fluid mx-auto" alt="$pName$" /> </div>
+        <div class="col-8 col-md-9">
+          <h1 class="text-uppercase">$pName$</h1>
+          <p>$pDesc$</p>
+        </div>
+      </div></a>
     </div>
+    $endfor$
+  </div>
 </section>
