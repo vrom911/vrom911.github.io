@@ -28,6 +28,7 @@ library
                          Website.Context
                          Website.Experience
                          Website.Hobbies
+                         Website.Nav
                          Website.Social
   build-depends:       base ^>= 4.12
                      , hakyll ^>= 4.12

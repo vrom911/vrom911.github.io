@@ -16,6 +16,7 @@ import Hakyll (Compiler, Context, Item, Pattern, Rules, buildTags, compile, cons
 import Text.Pandoc.Options (WriterOptions (..))
 
 import Website.Context (postCtx, postCtxWithTags)
+import Website.Nav (mkNavCtx)
 import Website.Social (mkPostSocialCtx, mkSocialCtx)
 
 
@@ -56,6 +57,7 @@ compilePosts title ptrn = do
         tagsList <- nub . concat <$> traverse getTags ids
         let ctx = postCtxWithTags tagsList
                <> listField "posts" postCtx (pure posts)
+               <> mkNavCtx
                <> mkSocialCtx
                <> makeExternalPostsContext
                <> constField "title" title
