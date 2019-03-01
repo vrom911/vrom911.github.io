@@ -83,3 +83,8 @@ footer{
     background: linear-gradient(to right, rgb(125,255,225), rgb(255,160,190)) !important;
     color:  rgb(60,10,85) !important;
 }
+.welcome p {font-size: 1.2em; margin-top: 2em;}
+.welcome a {color: white !important;}
+.welcome a:hover, .welcome a:focus, .welcome a:active {color: rgb(255,160,190) !important;}
+
+@media only screen and (max-width: 767px) { .image {display: none;}}

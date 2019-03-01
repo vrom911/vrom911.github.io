@@ -38,3 +38,8 @@ blockquote {
     font-size: 1.6rem;
     border-left: 4px solid rgb(125,255,225);
 }
+.image img {
+    padding: auto;
+    border-radius: 50%;
+    border: 0.35em solid rgb(125,255,225);
+}
