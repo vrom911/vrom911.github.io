@@ -3,20 +3,27 @@
   <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   <title>Oops! 404</title>
   <link rel="shortcut icon" href="/favicon.ico">
+  <link rel="stylesheet" type='text/css' href="/css/default.css">
   <link rel="stylesheet" type='text/css' href="/css/main.css">
-  <script type="text/javascript" src="/js/processing.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/processing.js/1.6.6/processing.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 </head>
-<body>
-  <main>
-    <section id="er404">
-      <canvas data-processing-sources="pde/error404.pde pde/daisy.pde" id="er404-canvas"></canvas>
-    </section>
-    <h1>Oops</h1>
+<body class="bg-purple">
+  <main class="container my-5">
+    <section class="row align-items-center justify-content-center mt-5"> <section id="er404" class="col-12-xs col-10-sm">
+      <canvas data-processing-sources="/pde/error404.pde /pde/daisy.pde" id="er404-canvas"></canvas>
+    </section></section>
+    <section class="row align-items-center justify-content-center mt-5"> <section id="er404">
+      <h1>Oops</h1>
+    </section></section>
+    <section class="row align-items-center justify-content-center mt-5 mx-auto"> <section id="er404" class="col-xs-8 col-sm-8 mx-auto text-center">
+        <a class="btn btn-outline-light cool-btn" href="/">Go to the Main Page</a>
+    </section></section>
   </main>
 </body>
 <script type="text/javascript">
   window.onresize = function(event) {
-      Processing.getInstanceById('er404-canvas').resizeComing();
+    Processing.getInstanceById('er404-canvas').resizeComing();
     Processing.getInstanceById('er404-canvas').draw();
   };
 </script>
