@@ -2,24 +2,21 @@ float x,y,r;
 color back=color(60,10,85);
 
 void setup(){
-    size($("#background").width(),$("#background").height());
+    size(300,300);
     noFill();
-    stroke(back);
-    r=width/100;
+    stroke(color(255));
+    r=width/10;
     x=r/2; y=r;
 }
 void draw(){
-    background(255);
-    
+    background(back);
+
     for(float j=0;y+j*5*r<=height; j++){
         for(float i=0; i<r;i++){
             uzor(x+i*3*r,y+j*5*r,r);
         }
     }
 }
-
-
-
 
 void uzor(x,y,r){
     strokeWeight(3);
