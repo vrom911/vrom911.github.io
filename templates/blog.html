@@ -1,43 +1,40 @@
 <link href="/css/blog.css" rel="stylesheet">
 <section class="container info blog">
-    <div class="content">
-        <div class="row post">
-            <div class="col-md-10 col-xs-10">
-                <h2 class=" text-white text-thin text-uppercase">
-                    <canvas id='subuz' data-processing-sources="/pde/uzorsub.pde /pde/uzor_base.pde"></canvas>
-                    $title$
-                </h2>
-                <hr>
-                <ul>
-                $for(posts)$
-                  <li>
-                      <h4 class="text-poiret text-white">
-                          <img src="/images/logo.png" alt="Daisy" class="daisy" />
-                          $date$:  <a href="$stripExtension(url)$"> $title$</a></h4>
-                  </li>
-                $endfor$
-                </ul>
-                  <h2 class="text-white text-thin text-uppercase">
-                <canvas id='subuz' data-processing-sources="/pde/uzorsub.pde /pde/uzor_base.pde"></canvas>
-                    From other blogs
-                </h2>
-                <hr>
-                <ul>
-                $for(external)$
-                  <li>
-                      <h4>
-                          <img src="/images/logo.png" alt="Daisy" class="daisy" />
-                          <span class="text-poiret text-white"> $externalDate$:  </span><a href="$externalLink$" target="_blank">$externalTitle$</a></h4>
-                  </li>
-                $endfor$
-                </ul>
-            </div>
-            <div class="col-md-2 col-xs-2">
-                <h2>TAGS</h2>
-                $for(tagsList)$
-                <span class="tag-block"> <a class="btn btn-outline-dark btn-tags" href="../tags/$tag$">$tag$</a> </span> <br/>
-                $endfor$
-            </div>
-         </div>
-     </div>
+  <div class="content">
+    <div class="row post">
+      <div class="col-12 col-sm-10">
+        <h2 class=" text-white text-thin text-uppercase">
+            <canvas id='subuz' data-processing-sources="/pde/uzorsub.pde /pde/uzor_base.pde"></canvas>
+            $title$
+        </h2>
+        <hr>
+        <ul>
+        $for(posts)$
+          <li> <h4 class="text-poiret text-white">
+              <img src="/images/logo.png" alt="Daisy" class="daisy" />
+              $date$:  <a href="$stripExtension(url)$"> $title$</a></h4>
+          </li>
+        $endfor$
+        </ul>
+          <h2 class="text-white text-thin text-uppercase">
+        <canvas id='subuz' data-processing-sources="/pde/uzorsub.pde /pde/uzor_base.pde"></canvas>
+            From other blogs
+        </h2>
+        <hr>
+        <ul>
+        $for(external)$
+          <li> <h4> <img src="/images/logo.png" alt="Daisy" class="daisy" />
+              <span class="text-poiret text-white"> $externalDate$:  </span><a href="$externalLink$" target="_blank">$externalTitle$</a></h4>
+          </li>
+        $endfor$
+        </ul>
+      </div>
+      <div class="col-12 col-sm-2">
+          <h2>TAGS</h2>
+          $for(tagsList)$
+          <span class="tag-block"> <a class="btn btn-outline-dark btn-tags" href="../tags/$tag$">$tag$</a> </span> <br/>
+          $endfor$
+      </div>
+    </div>
+  </div>
 </section>

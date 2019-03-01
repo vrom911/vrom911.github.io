@@ -9,15 +9,6 @@ $(document).ready(function(){
   $(".nav-parent").height(Math.floor(h/4));
   $("#coming-canvas").height($("#coming-canvas").width()/2);
   $(".icons").height($(".icon").width());
-
-
-  $(".icon").on("mouseenter",function(){
-    $(this).toggleClass("highlighted");
-  });
-  $(".icon").on("mouseleave",function(){
-    $(this).toggleClass("highlighted");
-  });
-
 });
 
 function resizeAll(){
