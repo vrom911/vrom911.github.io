@@ -1,7 +1,12 @@
 <section class="container my-5">
+  <div class="col-12 text-center mb-3">
+      <h1 class="text-uppercase"> My Projects </h1>
+      <h3>Most of the time I'm busy with creating ideas and working on different projects in Kowainik. Here are my most rated projects:</h3>
+  </div>
+
+  $for(projects)$
   <div class="row align-items-center justify-content-center mx-auto my-3">
-    $for(projects)$
-    <div class="col-12 col-md-4 cool-bg text-purple"><a target="_blank" href="$pLink$">
+    <div class="col-12 col-md-6 text-purple project cool-btn my-3 py-2"><a target="_blank" href="https://github.com/$pLink$">
       <div class="row align-items-center justify-content-center mx-auto">
         <div class="col-4 col-md-3"> <img src="$pImg$" class="img-fluid mx-auto" alt="$pName$" /> </div>
         <div class="col-8 col-md-9">
@@ -10,6 +15,8 @@
         </div>
       </div></a>
     </div>
-    $endfor$
   </div>
+  $endfor$
+  <div class="row text-green my-5"> <div class="col-12 col-sm-10 col-md-8 mx-auto text-center"> <h1 class="text-uppercase"><a class="btn btn-outline-light cool-btn" href="https://github.com/vrom911">See more at GitHub</a></h1> </div> </div>
+
 </section>

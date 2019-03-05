@@ -5,10 +5,7 @@ html {background-color: rgb(60,10,85) !important;}
   text-align: center;
   position:fixed;
   z-index:99999;
-  top:0;
-  left:0;
-  bottom:0;
-  right:0;
+  top:0; left:0; bottom:0; right:0;
   transition: 1s 0.4s;
 }
 .gif{
@@ -92,4 +89,9 @@ footer{
 .welcome a {color: white !important;}
 .welcome a:hover, .welcome a:focus, .welcome a:active {color: rgb(255,160,190) !important;}
 
-@media only screen and (max-width: 767px) { .image {display: none;}}
+@media only screen and (max-width: 767px) {.me {display: none;}}
+.project {
+    background: linear-gradient(to left, rgb(125,255,225), rgb(255,160,190));
+    border-radius: 0.5em;
+}
+.project a, .project a:hover, .project a:focus, .project a:active{ color: rgb(60,10,85) !important;}
