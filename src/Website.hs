@@ -12,6 +12,7 @@ import Website.Context (stripExtension)
 import Website.Experience (mkExperienceCtx)
 import Website.Hobbies (mkHobbiesCtx)
 import Website.Nav (mkNavCtx)
+import Website.Project (mkProjectCtx)
 import Website.Social (mkSocialCtx)
 
 
@@ -62,6 +63,7 @@ createMainPage page = create [page] $ do
                <> mkHobbiesCtx
                <> mkExperienceCtx
                <> mkNavCtx
+               <> mkProjectCtx
                <> defaultContext
         makeItem ""
             >>= applyAsTemplate ctx
