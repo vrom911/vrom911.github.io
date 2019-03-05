@@ -48,7 +48,7 @@ allProjects = traverse makeItem
     , Project
         { pName = "Hit On"
         , pLink = "kowainik/hit-on"
-        , pImg  = ""
+        , pImg  = "https://user-images.githubusercontent.com/4276606/53816638-d86e4a00-3f9e-11e9-83ab-74032363292f.png"
         , pDesc = "Git Workflow Helper Tool"
         }
     , Project
