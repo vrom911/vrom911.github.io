@@ -79,13 +79,13 @@ pre.comment {
     margin: 1% auto;
 }
 .post-body a{
-    color: rgb(125,255,225);
+    color: rgb(255,160,190) !important;
     text-decoration: none;
 }
 
 .post-body a:focus, .post-body a:hover, .post-body a:active{
     text-decoration: none;
-    color: rgb(60,10,85);
+    color: rgb(125,255,225) !important;
 }
 
 .post-body img, .post-body a img {
