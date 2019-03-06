@@ -9,10 +9,11 @@ module Website.Blog
 
 import Data.List (nub)
 import Hakyll (Compiler, Context, Item, Pattern, Rules, buildTags, compile, constField, create,
-               defaultContext, defaultHakyllReaderOptions, defaultHakyllWriterOptions, field,
-               fromCapture, getResourceString, getTags, idRoute, itemBody, itemIdentifier,
+               customRoute, defaultContext, defaultHakyllReaderOptions, defaultHakyllWriterOptions,
+               field, fromCapture, getResourceString, getTags, idRoute, itemBody, itemIdentifier,
                listField, loadAll, loadAndApplyTemplate, makeItem, match, pandocCompiler,
-               recentFirst, relativizeUrls, renderPandocWith, route, setExtension, tagsRules)
+               recentFirst, relativizeUrls, renderPandocWith, route, tagsRules, toFilePath)
+import System.FilePath (replaceExtension)
 import Text.Pandoc.Options (WriterOptions (..))
 
 import Website.Context (postCtx, postCtxWithTags)
@@ -23,7 +24,7 @@ import Website.Social (mkPostSocialCtx, mkSocialCtx)
 -- | Creates each post page.
 matchBlogPosts :: Rules ()
 matchBlogPosts = match "blog/*" $ do
-    route $ setExtension "html"
+    route $ customRoute $ (`replaceExtension` "html") . ("blog/" ++) . drop 16 . toFilePath
     compile $ do
         i   <- getResourceString
         pandoc <- renderPandocWith defaultHakyllReaderOptions withToc i
