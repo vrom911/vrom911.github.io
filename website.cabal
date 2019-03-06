@@ -33,7 +33,6 @@ library
                          Website.Social
   build-depends:       base ^>= 4.12
                      , hakyll ^>= 4.12
-                     , hakyll-sass ^>= 0.2.4
                      , pandoc >= 2.6
                      , text
 
