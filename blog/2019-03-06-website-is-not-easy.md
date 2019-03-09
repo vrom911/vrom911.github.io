@@ -64,7 +64,7 @@ This list can be very boring to fill in, most probably you’d copy the previous
             <a href=”https://my-favourite-film.com/$filmLink$>$filmName$</a>
         </div>
     </section>
-$endIf$
+$endfor$
 
 ```
 
