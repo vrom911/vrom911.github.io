@@ -146,7 +146,7 @@
             &lt;a href=”https://my-favourite-film.com/$filmLink$&gt;$filmName$&lt;/a&gt;
         &lt;/div&gt;
     &lt;/section&gt;
-$endIf$
+$endfor$
 </code></pre>
 <p>It feels better. And this is not difficult to achieve. You can create the data type with the necessary fields, create the list of the elements of this type and using <a href="http://hackage.haskell.org/package/hakyll-4.12.5.0/docs/Hakyll-Web-Template-Context.html#v:listField"><code>listField</code></a> function from the <code>Hakyll</code> create the context. See the actual example from my website source code:</p>
 <ul>
