@@ -19,7 +19,13 @@ import Website.Social (mkSocialCtx)
 -- | Main function that runs the website.
 runWebsite :: IO ()
 runWebsite = hakyll $ do
-    match ("images/**" .||. "fonts/**" .||. "js/*" .||. "pde/*"  .||. "favicon.ico") $ do
+    match (    "images/**"
+          .||. "fonts/**"
+          .||. "js/*"
+          .||. "pde/*"
+          .||. "files/*"
+          .||. "favicon.ico"
+          ) $ do
         route   idRoute
         compile copyFileCompiler
 
