@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Write yourself a lens</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="vrom911 Blog">
+    <meta name="keywords" content="Haskell, Functional progarmming, FP">
+    <meta name="author" content="Veronika Romashkina" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@vrom911" />
+    <meta property="twitter:title" content="vrom911 - Write yourself a lens" />
+    <meta name="twitter:description" content="Where I describe the process of implementing basic lens functions." />
+    <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+    <meta property="og:title" content="Write yourself a lens" />
+    <meta property="og:description" content="Where I describe the process of implementing basic lens functions." />
+    <meta property="og:site_name" content="vrom911" />
+    <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../css/highlight-theme.css" />
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135683915-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135683915-1');
+        </script>
+
+  </head>
+  <body class="body-posts">
+    <!-- Header -->
+    <nav class="navbar navbar-inverse navbar-fixed-right bg-primary text-secondary">
+      <div class="navbar-header row">
+          <div class="postslogo"> <a class="navbar-brand" href="../"><img class="img-fluid" src="../images/logo.png" alt="vrom911"></a></div>
+          <h5 class="text-center"><a href="../blog"> vrom911 Blog</a></h5>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+<ul class="list-inline mb-0">
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/vronnie911" target="_blank">
+            <i class="fab fa-twitter"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/vrom911" target="_blank">
+            <i class="fab fa-github"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.linkedin.com/in/veronikaromashkina/" target="_blank">
+            <i class="fab fa-linkedin"></i>
+       </a>
+    </li>
+
+</ul>
+
+      </div>
+      <div class="toc-zone">
+          <h6 class="text-white text-center">Contents</h6>
+          <div class="toc" id="main"> <ul>
+<li><a href="#introduction">Introduction</a><ul>
+<li><a href="#why-lenses-in-the-custom-prelude">Why lenses in the custom prelude</a></li>
+<li><a href="#how-it-should-work">How it should work</a></li>
+</ul></li>
+<li><a href="#what-is-lens">What is lens</a></li>
+<li><a href="#implementing-lens">Implementing lens</a></li>
+<li><a href="#using-lens">Using lens</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+<li><a href="#links">Links</a></li>
+</ul> </div>
+      </div>
+    </nav>
+    <section class="container info">
+        <h2 class="text-center text-uppercase text-purple">Write yourself a lens</h2>
+        <div class="text-center">March 20, 2019</div>
+        <div class="row tag-block text-center">
+          <div class="col-12 tag-block">
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/haskell">haskell</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/lens">lens</a></span>
+            
+          </div>
+        </div>
+        <div class="content">
+          <div class="row post">
+            <div class="col-12 post-body"> <p class="lead"> <h2 id="introduction">Introduction</h2>
+<p>Recently I have been working on implementing basic lens ideas in the <a href="https://github.com/kowainik/relude"><code>relude</code></a> custom prelude library. The process was very valuable for me and I feel that now I understand lens concepts better when I encountered their internals. That motivated me to create this brief post to share my experience and describe what I learned from that adventure.</p>
+<blockquote>
+<p>Note, that this is neither a tutorial nor the official documentation of the <a href="http://hackage.haskell.org/package/lens"><code>lens</code></a> package. I’ve put relevant links at the bottom of the post for those who are interested in reading more on this topic.</p>
+</blockquote>
+<h3 id="why-lenses-in-the-custom-prelude">Why lenses in the custom prelude</h3>
+<p>This is a very reasonable question. And I see more than one reason to do that.</p>
+<ul>
+<li>Sooner or later in your application, you will need to use some lenses and for that, you have to add a dependency to your <code>.cabal</code> file. And if you decide to use <code>lens</code> it is quite a fat dependency. Even if you decide to use <code>microlens</code> – a much lighter alternative to <code>lens</code> and fully compatible with it – it is still an extra dependency. Libraries themselves might expose lens-compatible interface without depending on any lens packages due to the magic behind lens (explained later in the post).</li>
+<li>Most of the time you need very basic lens operators: a setter, a getter and the composition of different lenses.</li>
+<li>Sometimes you want to just play with lenses without doing any extra configuration steps.</li>
+</ul>
+<p>These are reasons to want lenses within touch, but as maintainers of a lightweight alternative prelude, we don’t want to impose any lens packages on our users. This brings us to the decision of implementing our own lenses inside <code>relude</code>.</p>
+<h3 id="how-it-should-work">How it should work</h3>
+<p><code>relude</code> encourages users enthusiasm and eagerness to explore. That’s why <code>relude</code> uses the approach with the <a href="https://github.com/kowainik/relude/tree/master/src/Relude/Extra"><code>Extra.*</code> modules</a> which are not exported by default, so it is quite easy to bring something new and let users decide whether to use it or not without spoiling the global namespace. This method is also applied to the implementation of <code>lens</code>. To use lenses from <code>relude</code> you can just add the following import:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb1-1" title="1"><span class="kw">import</span> <span class="dt">Relude.Extra.Lens</span></a></code></pre></div>
+<p>Moreover, this approach doesn’t spoil your project that already has a dependency on the <code>lens</code> or <code>microlens</code> library, you just don’t export this extra module.</p>
+<p>Besides, there is another cool bonus. The fact that <code>Lens'</code> is a type alias gives us the compatibility with the <code>lens</code> package itself. This means that <code>Lens'</code> from <code>relude</code> is absolutely the same type that <code>Lens'</code> from <code>lens</code> or <code>microlens</code> package. So, if later you decide to migrate to one of the libraries, all that you need to do is to add the required library to the dependencies list and change the <code>import</code> to the corresponding module name of the chosen library. All functions would work as expected without any breakages.</p>
+<h2 id="what-is-lens">What is lens</h2>
+<p>I am not going to bring up the complicated definition with some theory-category terms. In simple words, lens is a combination of data getters and setters. If lens would be defined as a data type it could look like this:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb2-1" title="1"><span class="kw">data</span> <span class="dt">Lens'</span> s a <span class="ot">=</span> <span class="dt">Lens'</span></a>
+<a class="sourceLine" id="cb2-2" title="2">    {<span class="ot"> view ::</span> s <span class="ot">-&gt;</span> a</a>
+<a class="sourceLine" id="cb2-3" title="3">    ,<span class="ot"> set  ::</span> s <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> s</a>
+<a class="sourceLine" id="cb2-4" title="4">    }</a></code></pre></div>
+<p>However, the real implementation uses a smarter representation that will be described in the following section.</p>
+<h2 id="implementing-lens">Implementing lens</h2>
+<p>I want to clarify that I didn’t come to this implementation on my own. Lenses is the topic I eventually bumped up into from time to time, so I had the intuition in which direction I should move to solve this puzzle.</p>
+<blockquote>
+<p>Note, that we would examine the <code>Lens' s a</code> type here instead of the <code>Lens s t a b</code>. In fact, most of the time you don’t need the latter one, so it’s fair to operate with <code>Lens'</code>. Moreover, <code>Lens'</code> is the special case of <code>Lens</code> which you can see from the definition:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb3-1" title="1"><span class="kw">type</span> <span class="dt">Lens'</span> s a <span class="ot">=</span> <span class="dt">Lens</span> s s a a</a></code></pre></div>
+</blockquote>
+<p>First of all, let’s look at the type we would work with. Here is the definition:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb4-1" title="1"><span class="kw">type</span> <span class="dt">Lens'</span> s a <span class="ot">=</span> <span class="kw">forall</span> f<span class="op">.</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> f a) <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> f s</a>
+<a class="sourceLine" id="cb4-2" title="2">           │ │</a>
+<a class="sourceLine" id="cb4-3" title="3">           │ └──── the <span class="kw">type</span> <span class="kw">of</span> the value inside <span class="kw">of</span> the structure</a>
+<a class="sourceLine" id="cb4-4" title="4">           │</a>
+<a class="sourceLine" id="cb4-5" title="5">           └───── the <span class="kw">type</span> <span class="kw">of</span> the whole structure</a></code></pre></div>
+<p>The striking part in the definition is the <code>forall</code> on the right side. This is actually a crucial moment. The ability to use any <code>Functor</code> there gives the power to choose the proper one at the right moment to achieve our goals. This is going to be our strategy in writing functions and operators.</p>
+<p>But first, let’s implement a helper function that creates lenses for our data types. It should, by given getter and setter functions, construct the required lens. Let’s write down the type:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb5-1" title="1"><span class="ot">lens ::</span> (s <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> (s <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> s) <span class="ot">-&gt;</span> <span class="dt">Lens'</span> s a</a></code></pre></div>
+<p>After expanding the definition of the <code>Lens'</code> type alias we get:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb6-1" title="1"><span class="ot">lens ::</span> (<span class="dt">Functor</span> f) <span class="ot">=&gt;</span> (s <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> (s <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> s) <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> f a) <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> f s</a>
+<a class="sourceLine" id="cb6-2" title="2">lens getter setter f s <span class="ot">=</span> <span class="op">...</span></a></code></pre></div>
+<p>Let’s get to the implementation. If we write down the variables on the left side, we can see how we can get the value of type <code>f s</code> from all that we have.</p>
+<p>We can start from the easy part: take <code>s</code> as it’s the only constant we have. Using <code>getter</code> we can get <code>a</code> from <code>s</code>. By applying the <code>f</code> function we can construct a value of type <code>f a</code> from <code>a</code> and here we can use <code>setter</code> to get <code>f s</code> from. Sounds awful, but this is how you usually deal with functions: just apply them in the right order to get the result you need. Step by step:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb7-1" title="1"><span class="ot">s                         ::</span> s</a>
+<a class="sourceLine" id="cb7-2" title="2">getter<span class="ot"> s                  ::</span> a</a>
+<a class="sourceLine" id="cb7-3" title="3">f (getter s)<span class="ot">              ::</span> f a</a>
+<a class="sourceLine" id="cb7-4" title="4">setter<span class="ot"> s                  ::</span> a <span class="ot">-&gt;</span> s</a>
+<a class="sourceLine" id="cb7-5" title="5"><span class="ot">(&lt;$&gt;)                     ::</span> (a <span class="ot">-&gt;</span> s) <span class="ot">-&gt;</span> f a <span class="ot">-&gt;</span> f s</a>
+<a class="sourceLine" id="cb7-6" title="6">setter s <span class="op">&lt;$&gt;</span> f (getter s)<span class="ot"> ::</span> f s</a></code></pre></div>
+<p>Putting this all together we get:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb8-1" title="1">lens getter setter f s <span class="ot">=</span> setter s <span class="op">&lt;$&gt;</span> f (getter s)</a></code></pre></div>
+<p>Great! Now we have a helper to build our own lenses.</p>
+<p>The next step is to implement a getter function. In <code>lens</code> terminology it is called <code>view</code>. By given lens and the whole data type, it should return the smaller type. We can express this in type signature this way:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb9-1" title="1"><span class="ot">view ::</span> <span class="dt">Lens'</span> s a <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> a</a></code></pre></div>
+<p>The initial step of solving this one is to understand what the final result we expect and what tools we have to achieve that. The final result is clear – it is the smaller part of the whole data type not wrapped into any functor. Speaking about tools, let’s have a look at the <code>Lens'</code> data type again:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb10-1" title="1"><span class="kw">type</span> <span class="dt">Lens'</span> s a <span class="ot">=</span> <span class="kw">forall</span> f<span class="op">.</span> <span class="dt">Functor</span> f <span class="ot">=&gt;</span> (a <span class="ot">-&gt;</span> f a) <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> f s</a></code></pre></div>
+<p>You can see that the final result produced by the work of the <code>Lens'</code> is the object wrapped into some functor. And here comes the fun part I was talking about earlier. Because this Functor is not fixed, we have the power to choose the one that suits us the most. Okay, we actually need the functor that won’t change the object at all and will just return a value. Let’s look at the standard <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#t:Functor">Functor instances in the base library</a> to choose the most suitable instance. Recall, that we are implementing the getter, so name <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Functor-Const.html#t:Const"><code>Const</code></a> sounds good in these conditions. Let’s check it out:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb11-1" title="1"><span class="kw">newtype</span> <span class="dt">Const</span> a b <span class="ot">=</span> <span class="dt">Const</span> {<span class="ot"> getConst ::</span> a }</a>
+<a class="sourceLine" id="cb11-2" title="2"></a>
+<a class="sourceLine" id="cb11-3" title="3"><span class="kw">instance</span> <span class="dt">Functor</span> (<span class="dt">Const</span> m) <span class="kw">where</span></a>
+<a class="sourceLine" id="cb11-4" title="4">    <span class="fu">fmap</span> _ (<span class="dt">Const</span> v) <span class="ot">=</span> <span class="dt">Const</span> v</a></code></pre></div>
+<p>Looks like we can use it! Let’s try. We need a function of type <code>a -&gt; Const a a</code>. This is just a constructor of <code>Const</code>. Also, we need to remember to unwrap it in the end because the lens gives us <code>Const s</code>. And the <code>getConst</code> function returns us the type <code>a</code>:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb12-1" title="1"><span class="ot">view ::</span> <span class="dt">Lens'</span> s a <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> a</a>
+<a class="sourceLine" id="cb12-2" title="2">view l s <span class="ot">=</span> getConst <span class="op">$</span> l <span class="dt">Const</span> s</a></code></pre></div>
+<p>It compiles! We will check how it all works in the following section.</p>
+<p>Now it is time for the setter. <code>set</code> function should take the lens, the new value and the whole object and return the renewed object with the specified field changed. As usual, let’s start with writing down the type signature:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb13-1" title="1"><span class="ot">set ::</span> <span class="dt">Lens'</span> s a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> s</a></code></pre></div>
+<p>We are already experienced in implementing functions that work with lens and know that it is all about choosing the correct functor. This time we actually want to change the value inside the functor and to return the whole data not wrapped into anything. Let’s check <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#t:Functor">the list</a> again. Aha, look what I found: <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Functor-Identity.html#t:Identity">Identity</a></p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb14-1" title="1"><span class="kw">newtype</span> <span class="dt">Identity</span> a <span class="ot">=</span> <span class="dt">Identity</span> {<span class="ot"> runIdentity ::</span> a }</a>
+<a class="sourceLine" id="cb14-2" title="2"></a>
+<a class="sourceLine" id="cb14-3" title="3"><span class="kw">instance</span> <span class="dt">Functor</span> <span class="dt">Identity</span> <span class="kw">where</span></a>
+<a class="sourceLine" id="cb14-4" title="4">    <span class="fu">fmap</span> f (<span class="dt">Identity</span> x) <span class="ot">=</span> <span class="dt">Identity</span> <span class="op">$</span> f x</a></code></pre></div>
+<p>It seems that it suits our case. We just need to create a function of type <code>a -&gt; Identity a</code>. At first glance, it seems like we can just use the <code>Identity</code> constructor:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb15-1" title="1"><span class="co">-- WRONG IMPLEMENTATION!!!</span></a>
+<a class="sourceLine" id="cb15-2" title="2">set l a s <span class="ot">=</span> runIdentity <span class="op">$</span> l <span class="dt">Identity</span> s</a></code></pre></div>
+<p>But wait, we are not using a variable with name <code>a</code> at all! This is suspicious, taking into consideration the goal that this function is pursuing. We want the value of the type <code>a</code> to be changed to the given one. So we need to somehow change the <code>a</code> value, no matter what the value it had before. Sounds like the <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#v:const"><code>const</code></a> function:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb16-1" title="1">set l a s <span class="ot">=</span> runIdentity <span class="op">$</span> l (<span class="fu">const</span> (<span class="dt">Identity</span> a)) s</a></code></pre></div>
+<p>We are going to verify later that this implementation is actually correct.</p>
+<blockquote>
+<p><strong>Exercise:</strong> try to implement the <code>over</code> function which has the type:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb17-1" title="1"><span class="ot">over ::</span> <span class="dt">Lens'</span> s a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> a) <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> s</a></code></pre></div>
+</blockquote>
+<p>When using lenses you deal with the operators most of the time. So let’s introduce the operator forms of the functions above for the sake of convenience:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb18-1" title="1"><span class="co">-- view</span></a>
+<a class="sourceLine" id="cb18-2" title="2"><span class="kw">infixr</span> <span class="dv">4</span> <span class="op">^.</span></a>
+<a class="sourceLine" id="cb18-3" title="3"><span class="ot">(^.) ::</span> s <span class="ot">-&gt;</span> <span class="dt">Lens'</span> s a <span class="ot">-&gt;</span> a</a>
+<a class="sourceLine" id="cb18-4" title="4"><span class="co">-- set</span></a>
+<a class="sourceLine" id="cb18-5" title="5"><span class="kw">infixr</span> <span class="dv">4</span> <span class="op">.~</span></a>
+<a class="sourceLine" id="cb18-6" title="6"><span class="ot">(.~) ::</span> <span class="dt">Lens'</span> s a <span class="ot">-&gt;</span> a <span class="ot">-&gt;</span> s <span class="ot">-&gt;</span> s</a></code></pre></div>
+<p>We are ready to go! Now we can see how it all works in the following paragraph.</p>
+<h2 id="using-lens">Using lens</h2>
+<p>In this section, I want to show that all that we wrote above works and try to reason about <em>how</em> it works and why it makes sense.</p>
+<p>There is no point in using lenses if you don’t have data. So, let’s start by creating the definitions for data types:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb19-1" title="1"><span class="kw">data</span> <span class="dt">Haskeller</span> <span class="ot">=</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb19-2" title="2">    {<span class="ot"> haskellerName       ::</span> <span class="dt">Text</span></a>
+<a class="sourceLine" id="cb19-3" title="3">    ,<span class="ot"> haskellerExperience ::</span> <span class="dt">Int</span></a>
+<a class="sourceLine" id="cb19-4" title="4">    ,<span class="ot"> haskellerKnowledge  ::</span> <span class="dt">Knowledge</span></a>
+<a class="sourceLine" id="cb19-5" title="5">    } <span class="kw">deriving</span> (<span class="dt">Show</span>)</a>
+<a class="sourceLine" id="cb19-6" title="6"></a>
+<a class="sourceLine" id="cb19-7" title="7"><span class="kw">data</span> <span class="dt">Knowledge</span> <span class="ot">=</span> <span class="dt">Knowledge</span></a>
+<a class="sourceLine" id="cb19-8" title="8">    {<span class="ot"> kSyntax         ::</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb19-9" title="9">    ,<span class="ot"> kMonads         ::</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb19-10" title="10">    ,<span class="ot"> kLens           ::</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb19-11" title="11">    ,<span class="ot"> kTypeLevelMagic ::</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb19-12" title="12">    ,<span class="ot"> kNix            ::</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb19-13" title="13">    } <span class="kw">deriving</span> (<span class="dt">Show</span>)</a></code></pre></div>
+<p>And I’m going to create a sample data.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb20-1" title="1"><span class="ot">me ::</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb20-2" title="2">me <span class="ot">=</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb20-3" title="3">    { haskellerName <span class="ot">=</span> <span class="st">&quot;Veronika&quot;</span></a>
+<a class="sourceLine" id="cb20-4" title="4">    , haskellerExperience <span class="ot">=</span> <span class="dv">2</span></a>
+<a class="sourceLine" id="cb20-5" title="5">    , haskellerKnowledge <span class="ot">=</span> <span class="dt">Knowledge</span></a>
+<a class="sourceLine" id="cb20-6" title="6">        { kSyntax <span class="ot">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb20-7" title="7">        , kMonads <span class="ot">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb20-8" title="8">        , kLens <span class="ot">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb20-9" title="9">        , kTypeLevelMagic <span class="ot">=</span> <span class="dt">True</span></a>
+<a class="sourceLine" id="cb20-10" title="10">        , kNix <span class="ot">=</span> <span class="dt">False</span></a>
+<a class="sourceLine" id="cb20-11" title="11">        }</a>
+<a class="sourceLine" id="cb20-12" title="12">    }</a></code></pre></div>
+<p>Everything is settled, we can create the lenses and test how our <code>lens</code> function works:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb21-1" title="1"><span class="ot">nameL ::</span> <span class="dt">Lens'</span> <span class="dt">Haskeller</span> <span class="dt">Text</span></a>
+<a class="sourceLine" id="cb21-2" title="2">nameL <span class="ot">=</span> lens getter setter</a>
+<a class="sourceLine" id="cb21-3" title="3">  <span class="kw">where</span></a>
+<a class="sourceLine" id="cb21-4" title="4"><span class="ot">    getter ::</span> <span class="dt">Haskeller</span> <span class="ot">-&gt;</span> <span class="dt">Text</span></a>
+<a class="sourceLine" id="cb21-5" title="5">    getter <span class="ot">=</span> haskellerName</a>
+<a class="sourceLine" id="cb21-6" title="6"></a>
+<a class="sourceLine" id="cb21-7" title="7"><span class="ot">    setter ::</span> <span class="dt">Haskeller</span> <span class="ot">-&gt;</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb21-8" title="8">    setter h newName <span class="ot">=</span> h { haskellerName <span class="ot">=</span> newName }</a></code></pre></div>
+<p>Using the same approach we can create other lenses:</p>
+<div class="sourceCode" id="cb22"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb22-1" title="1"><span class="ot">experienseL ::</span> <span class="dt">Lens'</span> <span class="dt">Haskeller</span> <span class="dt">Int</span></a>
+<a class="sourceLine" id="cb22-2" title="2"><span class="ot">knowledgeL  ::</span> <span class="dt">Lens'</span> <span class="dt">Haskeller</span> <span class="dt">Knowledge</span></a></code></pre></div>
+<p>Let’s assume that we have lenses for the <code>Knowledge</code> data type as well.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb23-1" title="1">syntaxL, monadsL, lensL, typeLevelMagicL, nixL</a>
+<a class="sourceLine" id="cb23-2" title="2"><span class="ot">    ::</span> <span class="dt">Lens'</span> <span class="dt">Knowledge</span> <span class="dt">Bool</span></a></code></pre></div>
+<p>Then we can use the composition property of the lenses and create the one for nested fields:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb24-1" title="1"><span class="ot">kLensL ::</span> <span class="dt">Lens'</span> <span class="dt">Haskeller</span> <span class="dt">Bool</span></a>
+<a class="sourceLine" id="cb24-2" title="2">kLensL <span class="ot">=</span> knowledgeL <span class="op">.</span> lensL</a></code></pre></div>
+<p>As we now have lenses to work with, I can’t wait to try them. The first step is to get the name from the data type.</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb25-1" title="1">ghci<span class="op">&gt;</span> me <span class="op">^.</span> nameL</a>
+<a class="sourceLine" id="cb25-2" title="2"><span class="st">&quot;Veronika&quot;</span></a></code></pre></div>
+<p>If you want to access fields of nested data structures, you can create a separate lens by composing existing ones, or you can compose them on-the-fly:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb26-1" title="1">ghci<span class="op">&gt;</span> me <span class="op">^.</span> kLensL</a>
+<a class="sourceLine" id="cb26-2" title="2"><span class="dt">True</span></a>
+<a class="sourceLine" id="cb26-3" title="3">ghci<span class="op">&gt;</span> me <span class="op">^.</span> knowledgeL <span class="op">.</span> lensL</a>
+<a class="sourceLine" id="cb26-4" title="4"><span class="dt">True</span></a></code></pre></div>
+<p>No extra parenthesis required due to properly chosen operator precedence.</p>
+<p>Let’s look closer and try to understand what is going on using the <a href="http://www.haskellforall.com/2013/12/equational-reasoning.html">equational reasoning</a> approach</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb27-1" title="1">  me <span class="op">^.</span> nameL</a>
+<a class="sourceLine" id="cb27-2" title="2"><span class="ot">=</span> view nameL me</a>
+<a class="sourceLine" id="cb27-3" title="3"><span class="co">-- using definition of `view`</span></a>
+<a class="sourceLine" id="cb27-4" title="4"><span class="co">-- view l s = getConst $ l Const s</span></a>
+<a class="sourceLine" id="cb27-5" title="5"><span class="ot">=</span> getConst <span class="op">$</span> nameL <span class="dt">Const</span> me</a>
+<a class="sourceLine" id="cb27-6" title="6"><span class="co">-- using definition of `nameL`</span></a>
+<a class="sourceLine" id="cb27-7" title="7"><span class="ot">=</span> getConst <span class="op">$</span> (lens haskellerName (\h n <span class="ot">-&gt;</span> h {haskellerName <span class="ot">=</span> n})) <span class="dt">Const</span> me</a>
+<a class="sourceLine" id="cb27-8" title="8"><span class="co">-- using definition of `lens`</span></a>
+<a class="sourceLine" id="cb27-9" title="9"><span class="co">-- lens getter setter = \f s -&gt; setter s &lt;$&gt; f (getter s)</span></a>
+<a class="sourceLine" id="cb27-10" title="10"><span class="ot">=</span> getConst <span class="op">$</span> (\n <span class="ot">-&gt;</span> me {haskellerName <span class="ot">=</span> n}) <span class="op">&lt;$&gt;</span> <span class="dt">Const</span> (haskellerName me)</a>
+<a class="sourceLine" id="cb27-11" title="11"><span class="co">-- applying `haskellerName` function</span></a>
+<a class="sourceLine" id="cb27-12" title="12"><span class="ot">=</span> getConst <span class="op">$</span> (\n <span class="ot">-&gt;</span> me {haskellerName <span class="ot">=</span> n}) <span class="op">&lt;$&gt;</span> <span class="dt">Const</span> <span class="st">&quot;Veronika&quot;</span></a>
+<a class="sourceLine" id="cb27-13" title="13"><span class="co">-- using Functor instance for Const</span></a>
+<a class="sourceLine" id="cb27-14" title="14"><span class="co">-- instance Functor (Const m) where fmap _ (Const v) = Const v</span></a>
+<a class="sourceLine" id="cb27-15" title="15"><span class="ot">=</span> getConst <span class="op">$</span> <span class="dt">Const</span> <span class="st">&quot;Veronika&quot;</span></a>
+<a class="sourceLine" id="cb27-16" title="16"><span class="ot">=</span> <span class="st">&quot;Veronika&quot;</span></a></code></pre></div>
+<p>After we convinced ourselves that getter part of lens works as expected, we can try to change the value through lenses:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb28-1" title="1">ghci<span class="op">&gt;</span> me <span class="op">&amp;</span> nameL <span class="op">.~</span> <span class="st">&quot;vrom911&quot;</span></a>
+<a class="sourceLine" id="cb28-2" title="2"><span class="dt">Haskeller</span> { haskellerName <span class="ot">=</span> <span class="st">&quot;vrom911&quot;</span>, <span class="op">...</span> }</a></code></pre></div>
+<p>To give the context of how it works, check out the type of <a href="https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Function.html#v:-38-"><code>&amp;</code></a> operator:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb29-1" title="1"><span class="ot">(&amp;) ::</span> a <span class="ot">-&gt;</span> (a <span class="ot">-&gt;</span> b) <span class="ot">-&gt;</span> b</a></code></pre></div>
+<p>And then the whole picture:</p>
+<div class="sourceCode" id="cb30"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb30-1" title="1"><span class="ot">me                      ::</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb30-2" title="2"><span class="ot">nameL                   ::</span> <span class="dt">Lens'</span> <span class="dt">Haskeller</span> <span class="dt">Text</span></a>
+<a class="sourceLine" id="cb30-3" title="3"><span class="ot">(&amp;)                     ::</span> <span class="dt">Haskeller</span> <span class="ot">-&gt;</span> (<span class="dt">Haskeller</span> <span class="ot">-&gt;</span>  <span class="dt">Haskeller</span>) <span class="ot">-&gt;</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb30-4" title="4"><span class="ot">(.~)                    ::</span> <span class="dt">Lens'</span> <span class="dt">Haskeller</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Text</span> <span class="ot">-&gt;</span> <span class="dt">Haskeller</span> <span class="ot">-&gt;</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb30-5" title="5">nameL <span class="op">.~</span> <span class="st">&quot;vrom911&quot;</span><span class="ot">      ::</span> <span class="dt">Haskeller</span> <span class="ot">-&gt;</span> <span class="dt">Haskeller</span></a>
+<a class="sourceLine" id="cb30-6" title="6">me <span class="op">&amp;</span> nameL <span class="op">.~</span> <span class="st">&quot;vrom911&quot;</span><span class="ot"> ::</span> <span class="dt">Haskeller</span></a></code></pre></div>
+<p>The good thing about operators, you can easily compose them:</p>
+<div class="sourceCode" id="cb31"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb31-1" title="1">ghci<span class="op">&gt;</span> me</a>
+<a class="sourceLine" id="cb31-2" title="2">    <span class="op">&amp;</span> nameL <span class="op">.~</span> <span class="st">&quot;somebody else&quot;</span></a>
+<a class="sourceLine" id="cb31-3" title="3">    <span class="op">&amp;</span> experienceL <span class="op">.~</span> <span class="dv">42</span></a>
+<a class="sourceLine" id="cb31-4" title="4">    <span class="op">&amp;</span> knowledgeL <span class="op">.</span> nixL <span class="op">.~</span> <span class="dt">True</span></a></code></pre></div>
+<blockquote>
+<p><strong>Exercise:</strong> try to use the <a href="http://www.haskellforall.com/2013/12/equational-reasoning.html">equational reasoning</a> technique to see how the <code>set</code> function works. Take <code>set nameL “newName” me</code> as the starting point.</p>
+</blockquote>
+<h2 id="conclusion">Conclusion</h2>
+<p>Apparently, the <code>lens</code> package itself is much deeper than the above implementation. So, if you are interested in more details, you can spend a few days meditating on the original code in there. The goal of this writing was to help you to start your adventure into the magical forest of lenses and to get more prepared for the real lenses.</p>
+<p>That’s all I wanted to share, I hope, that you understand lenses a bit better now</p>
+<div class="sourceCode" id="cb32"><pre class="sourceCode haskell"><code class="sourceCode haskell"><a class="sourceLine" id="cb32-1" title="1">you <span class="op">&amp;</span> kLensL <span class="op">.~</span> <span class="dt">True</span></a></code></pre></div>
+<h2 id="links">Links</h2>
+<p>As promised, some links:</p>
+<ul>
+<li><a href="https://hackage.haskell.org/package/relude-0.5.0/docs/Relude-Extra-Lens.html">relude: Lens Hackage page</a></li>
+<li><a href="https://github.com/kowainik/relude/blob/master/src/Relude/Extra/Lens.hs">relude: Lens source code</a></li>
+<li><a href="http://hackage.haskell.org/package/lens"><code>lens</code> package</a></li>
+<li><a href="http://hackage.haskell.org/package/microlens"><code>microlens</code> package</a></li>
+<li><a href="http://hackage.haskell.org/package/lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html">lens tutorial</a></li>
+<li><a href="https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial">School of Haskell lens tutorial</a></li>
+<li><a href="https://en.wikibooks.org/wiki/Haskell/Lenses_and_functional_references">Wiki Lenses</a></li>
+<li><a href="https://artyom.me/lens-over-tea-1">Lens over tea</a></li>
+<li><a href="http://www.haskellforall.com/2013/12/equational-reasoning.html">Equational reasoning</a></li>
+</ul> </p> </div>
+          </div>
+        </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"> </script>
+    <script src="../js/post.js"> </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad()</script>
+  </body>
+</html>
