@@ -95,6 +95,7 @@ pre.comment {
 .post blockquote {
     padding-left: 2%;
     border-left: 4px solid rgb(60,10,85);
+    font-size: 1.2rem;
 }
 
 /* Table of Contents (TOC) */
