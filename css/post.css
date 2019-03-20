@@ -139,6 +139,8 @@ pre.comment {
 .post-body h2, .post-body h3, .post-body h4, .post-body h5, .post-body h6 {
     font-family: 'PoiretOneNormal', cursive !important;
     color: rgb(60,10,85);
+    font-weight: 700;
+    margin: 0.75em;
 }
 
 .active > a {color: rgb(255,160,190) !important;}
