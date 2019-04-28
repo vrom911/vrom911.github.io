@@ -40,7 +40,7 @@ our users. This brings us to the decision of implementing our own lenses inside
 ### How it should work
 
 `relude` encourages users enthusiasm and eagerness to explore. That’s why
-`relude` uses the approach with the [`Extra.*` modules](https://github.com/kowainik/relude/tree/master/src/Relude/Extra) which
+`relude` uses the approach with the [`Extra.*` modules](@github(kowainik):relude/tree/master/src/Relude/Extra) which
 are not exported by default, so it is quite easy to bring something new and let
 users decide whether to use it or not without spoiling the global namespace.
 This method is also applied to the implementation of `lens`. To use lenses from
@@ -175,7 +175,7 @@ the one that suits us the most. Okay, we actually need the functor that won't
 change the object at all and will just return a value. Let's look at the
 standard [Functor instances in the base library][functor] to choose the most
 suitable instance. Recall, that we are implementing the getter, so name
-[`Const`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Functor-Const.html#t:Const)
+[`Const`](@hackage:base-4.12.0.0/docs/Data-Functor-Const.html#t:Const)
 sounds good in these conditions. Let's check it out:
 
 ```haskell
@@ -210,7 +210,7 @@ know that it is all about choosing the correct functor. This time we actually
 want to change the value inside the functor and to return the whole data not
 wrapped into anything. Let's check [the list][functor] again. Aha, look what I
 found:
-[Identity](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Functor-Identity.html#t:Identity)
+[Identity](@hackage:base-4.12.0.0/docs/Data-Functor-Identity.html#t:Identity)
 
 
 ```haskell
@@ -233,7 +233,7 @@ But wait, we are not using a variable with name `a` at all! This is suspicious,
 taking into consideration the goal that this function is pursuing. We want the
 value of the type `a` to be changed to the given one. So we need to somehow
 change the `a` value, no matter what the value it had before. Sounds like the
-[`const`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Prelude.html#v:const)
+[`const`](@hackage:base-4.12.0.0/docs/Prelude.html#v:const)
 function:
 
 ```haskell
@@ -393,7 +393,7 @@ Haskeller { haskellerName = "vrom911", ... }
 ```
 
 To give the context of how it works, check out the type of
-[`&`](https://hackage.haskell.org/package/base-4.12.0.0/docs/Data-Function.html#v:-38-)
+[`&`](@hackage:base-4.12.0.0/docs/Data-Function.html#v:-38-)
 operator:
 
 
@@ -445,11 +445,11 @@ you & kLensL .~ True
 
 As promised, some links:
 
-* [relude: Lens Hackage page](https://hackage.haskell.org/package/relude-0.5.0/docs/Relude-Extra-Lens.html)
-* [relude: Lens source code](https://github.com/kowainik/relude/blob/master/src/Relude/Extra/Lens.hs)
+* [relude: Lens Hackage page](@hackage:relude-0.5.0/docs/Relude-Extra-Lens.html)
+* [relude: Lens source code](@github(kowainik):relude/blob/master/src/Relude/Extra/Lens.hs)
 * [`lens` package][lens]
-* [`microlens` package](http://hackage.haskell.org/package/microlens)
-* [lens tutorial](http://hackage.haskell.org/package/lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html)
+* [`microlens` package](@hackage:microlens)
+* [lens tutorial](@hackage:lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html)
 * [School of Haskell lens tutorial](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial)
 * [Wiki Lenses](https://en.wikibooks.org/wiki/Haskell/Lenses_and_functional_references)
 * [Lens over tea](https://artyom.me/lens-over-tea-1)

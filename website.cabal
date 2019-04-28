@@ -34,6 +34,7 @@ library
   build-depends:       base ^>= 4.12
                      , filepath ^>= 1.4
                      , hakyll ^>= 4.12
+                     , hakyll-shortcut-links ^>= 0.0.0.0
                      , pandoc >= 2.6
                      , text
 

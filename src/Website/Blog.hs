@@ -11,8 +11,9 @@ import Data.List (nub)
 import Hakyll (Compiler, Context, Item, Pattern, Rules, buildTags, compile, constField, create,
                customRoute, defaultContext, defaultHakyllReaderOptions, defaultHakyllWriterOptions,
                field, fromCapture, getResourceString, getTags, idRoute, itemBody, itemIdentifier,
-               listField, loadAll, loadAndApplyTemplate, makeItem, match, pandocCompiler,
-               recentFirst, relativizeUrls, renderPandocWith, route, tagsRules, toFilePath)
+               listField, loadAll, loadAndApplyTemplate, makeItem, match, recentFirst,
+               relativizeUrls, renderPandocWith, route, tagsRules, toFilePath)
+import Hakyll.ShortcutLinks (allShortcutLinksCompiler)
 import System.FilePath (replaceExtension)
 import Text.Pandoc.Options (WriterOptions (..))
 
@@ -33,7 +34,7 @@ matchBlogPosts = match "blog/*" $ do
         let postTagsCtx = postCtxWithTags tgs
                        <> mkPostSocialCtx
                        <> constField "toc" toc
-        pandocCompiler
+        allShortcutLinksCompiler
             >>= loadAndApplyTemplate "templates/post.html" postTagsCtx
             >>= relativizeUrls
 
