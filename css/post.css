@@ -59,6 +59,7 @@
     }
 }
 pre, code {text-align: left;}
+code {background-color: rgba(60,10,85,0.8); color: white; padding: 0 0.25em;}
 .info {
     min-height: 100%;
     margin-top: 2%;

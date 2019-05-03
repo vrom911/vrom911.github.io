@@ -422,7 +422,7 @@ ghci> me
 ```
 
 > **Exercise:** try to use the [equational reasoning][er] technique to see how the
-> `set` function works. Take `set nameL “newName” me` as the starting point.
+> `set` function works. Take `set nameL "newName" me` as the starting point.
 
 
 
