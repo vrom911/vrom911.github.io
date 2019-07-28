@@ -36,6 +36,7 @@ library
                      , hakyll ^>= 4.12
                      , hakyll-shortcut-links ^>= 0.0.0.0
                      , pandoc >= 2.6
+                     -- , relude ^>= 0.5.0
                      , text
 
   ghc-options:         -Wall

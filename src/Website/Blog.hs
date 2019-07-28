@@ -95,9 +95,25 @@ epLinkC  = field "externalLink"  $ pure . epLink  . itemBody
 
 allExternalPosts :: Compiler [Item ExternalPost]
 allExternalPosts = traverse makeItem
-    [ ExternalPost "Dhall to HLint: Using Dhall to generate HLint rules" "September  9, 2018" "https://kowainik.github.io/posts/2018-09-09-dhall-to-hlint"
-    , ExternalPost "typerep-map Step by Step" "July 11, 2018" "https://kowainik.github.io/posts/2018-07-11-typerep-map-step-by-step"
+    [ ExternalPost
+        { epTitle = "Insane in the Membrain"
+        , epDate = "July 23, 2019"
+        , epLink = kowainik "membrain"
+        }
+    , ExternalPost
+        { epTitle = "Dhall to HLint: Using Dhall to generate HLint rules"
+        , epDate  = "September 9, 2018"
+        , epLink  = kowainik "2018-09-09-dhall-to-hlint"
+        }
+    , ExternalPost
+        { epTitle = "typerep-map Step by Step"
+        , epDate  = "July 11, 2018"
+        , epLink  = kowainik "2018-07-11-typerep-map-step-by-step"
+        }
     ]
+  where
+    kowainik :: String -> String
+    kowainik = (<>) "https://kowainik.github.io/posts/"
 
 -- | The Context with the information about external posts.
 makeExternalPostsContext :: Context a
