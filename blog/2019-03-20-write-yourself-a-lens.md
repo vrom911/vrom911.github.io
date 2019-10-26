@@ -453,6 +453,7 @@ As promised, some links:
 * [School of Haskell lens tutorial](https://www.schoolofhaskell.com/school/to-infinity-and-beyond/pick-of-the-week/a-little-lens-starter-tutorial)
 * [Wiki Lenses](https://en.wikibooks.org/wiki/Haskell/Lenses_and_functional_references)
 * [Lens over tea](https://artyom.me/lens-over-tea-1)
+* ["Let's lens" course](@github(data61):lets-lens)
 * [Equational reasoning][er]
 
 [relude]: https://github.com/kowainik/relude
