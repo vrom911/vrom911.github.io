@@ -36,7 +36,7 @@ allProjects = traverse makeItem
     , Project
         { pName = "Relude"
         , pLink = "kowainik/relude"
-        , pImg  = "https://user-images.githubusercontent.com/4276606/44077619-d2abb39a-9fd6-11e8-9d9f-cc57a9d03fa0.png"
+        , pImg  = "https://user-images.githubusercontent.com/8126674/67678250-9d8eab80-f99f-11e9-96ca-27883ceeefa6.png"
         , pDesc = "Alternative Prelude"
         }
     , Project
@@ -50,6 +50,12 @@ allProjects = traverse makeItem
         , pLink = "kowainik/hit-on"
         , pImg  = "https://user-images.githubusercontent.com/4276606/53816638-d86e4a00-3f9e-11e9-83ab-74032363292f.png"
         , pDesc = "Git Workflow Helper Tool"
+        }
+    , Project
+        { pName = "Haskeller"
+        , pLink = "vrom911/haskeller-answers"
+        , pImg  = "https://user-images.githubusercontent.com/8126674/68671035-d87c0c00-0567-11ea-9db0-258c2b27a464.png"
+        , pDesc = "Web app for typical Haskeller answers to everything."
         }
     , Project
         { pName = "Tomland"

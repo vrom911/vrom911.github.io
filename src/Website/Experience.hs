@@ -29,7 +29,7 @@ allExperience = traverse makeItem
         { eName = "Holmusk"
         , eLink = "https://holmusk.com"
         , eImg  = "hm.jpg"
-        , eTime = "May, 2018 — present"
+        , eTime = "May, 2018 — Nov, 2019"
         , ePosition = "Middle Haskell Developer"
         , eCountry = "Singapore"
         }
