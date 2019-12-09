@@ -6,12 +6,12 @@ module Website.Experience
 import Hakyll (Compiler, Context, Item, field, itemBody, listField, makeItem)
 
 data Experience = Experience
-    { eName     :: String
-    , eLink     :: String
-    , eImg      :: String
-    , eTime     :: String
-    , ePosition :: String
-    , eCountry  :: String
+    { eName     :: !String
+    , eLink     :: !String
+    , eImg      :: !String
+    , eTime     :: !String
+    , ePosition :: !String
+    , eCountry  :: !String
     }
 
 experienceCtx :: Context Experience
@@ -26,11 +26,19 @@ experienceCtx =
 allExperience :: Compiler [Item Experience]
 allExperience = traverse makeItem
     [ Experience
+        { eName = "Habito"
+        , eLink = "https://habito.com"
+        , eImg  = "hb.png"
+        , eTime = "Dec, 2019 — present"
+        , ePosition = "Software Engineer"
+        , eCountry = "UK, London"
+        }
+    , Experience
         { eName = "Holmusk"
         , eLink = "https://holmusk.com"
         , eImg  = "hm.jpg"
         , eTime = "May, 2018 — Nov, 2019"
-        , ePosition = "Middle Haskell Developer"
+        , ePosition = "Software Developer"
         , eCountry = "Singapore"
         }
     , Experience
@@ -49,23 +57,6 @@ allExperience = traverse makeItem
         , ePosition = "Junior Haskell Developer"
         , eCountry = "Russia, Saint Petersburg"
         }
-    , Experience
-        { eName = "EUG2016"
-        , eLink = "http://eug2016.com/"
-        , eImg  = "eug.jpg"
-        , eTime = "Jul, 2016 — Aug, 2016"
-        , ePosition = "Level 2 Helpdesk Engineer"
-        , eCountry = "Croatia, Zagreb"
-        }
-    , Experience
-        { eName = "ATEF"
-        , eLink = "http://www.atefgroup.com/en/"
-        , eImg  = "atef.png"
-        , eTime = "Jan, 2016 — Jul, 2016"
-        , ePosition = "Python Web Developer"
-        , eCountry = "Azerbaijan, Baku"
-        }
-
     ]
 
 mkExperienceCtx :: Context a
