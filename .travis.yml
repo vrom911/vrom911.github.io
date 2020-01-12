@@ -4,7 +4,7 @@ language: haskell
 git:
   depth: 5
 
-cabal: "head"
+cabal: "3.0"
 
 cache:
   directories:
@@ -12,12 +12,10 @@ cache:
 
 matrix:
   include:
-  - ghc: 8.6.3
-
+  - ghc: 8.6.5
 
 install:
-  - cabal new-update
-  - cabal new-build --enable-tests --enable-benchmarks
+  - cabal build --enable-tests --enable-benchmarks
 
 script:
   - curl -sSL https://raw.github.com/ndmitchell/neil/master/misc/travis.sh | sh -s -- hlint .

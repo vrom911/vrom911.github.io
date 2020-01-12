@@ -732,7 +732,7 @@ common stanzas in the wild.
    and GHC flags across all stanzas:
    * [kowainik/tomland common stanza](@github(kowainik):tomland/blob/d9b7a1dc344e41466788fe00d0ea016f04629ade/tomland.cabal#L46-L71)
 2. A similar example, but more complicated with the usage of mixin for custom
-   prelude [relude]():
+   prelude [relude](@github(kowainik):relude):
    * [kowainik/summoner common stanza](@github(kowainik):summoner/blob/60de4f2f087e5bd2beaad9253e7eded731cfbaaf/summoner-cli/summoner.cabal#L48-L80)
 3. An example of using several common stanzas:
    * [kowainik/co-log common stanzas](@github(kowainik):co-log/blob/e9e475b3f64f58d015d1bcde055729534286a9a9/co-log/co-log.cabal#L33-L67)
