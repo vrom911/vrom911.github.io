@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Common stanzas</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="vrom911 Blog">
+    <meta name="keywords" content="Haskell, Functional progarmming, FP">
+    <meta name="author" content="Veronika Romashkina" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@vrom911" />
+    <meta property="twitter:title" content="vrom911 - Common stanzas" />
+    <meta name="twitter:description" content="This post is about one specific feature of Cabal (Haskell build tool) — common stanzas." />
+    <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+    <meta property="og:title" content="Common stanzas" />
+    <meta property="og:description" content="This post is about one specific feature of Cabal (Haskell build tool) — common stanzas." />
+    <meta property="og:site_name" content="vrom911" />
+    <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../css/highlight-theme.css" />
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135683915-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135683915-1');
+        </script>
+
+  </head>
+  <body class="body-posts">
+    <!-- Header -->
+    <nav class="navbar navbar-inverse navbar-fixed-right bg-primary text-secondary">
+      <div class="navbar-header row">
+          <div class="postslogo"> <a class="navbar-brand" href="../"><img class="img-fluid" src="../images/logo.png" alt="vrom911"></a></div>
+          <h5 class="text-center"><a href="../blog"> vrom911 Blog</a></h5>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+<ul class="list-inline mb-0">
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/vronnie911" target="_blank">
+            <i class="fab fa-twitter"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/vrom911" target="_blank">
+            <i class="fab fa-github"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.linkedin.com/in/veronikaromashkina/" target="_blank">
+            <i class="fab fa-linkedin"></i>
+       </a>
+    </li>
+
+</ul>
+
+      </div>
+      <div class="toc-zone">
+          <h6 class="text-white text-center">Contents</h6>
+          <div class="toc" id="main"> <ul>
+<li><a href="#terminology">Terminology</a><ul>
+<li><a href="#what-is-the-cabal-file">What is the cabal file</a></li>
+<li><a href="#cabal-files-structure">Cabal files structure</a></li>
+<li><a href="#general-fields">General fields</a></li>
+<li><a href="#stanzas">Stanzas</a></li>
+<li><a href="#why-so-much-boilerplate">Why so much boilerplate</a></li>
+</ul></li>
+<li><a href="#common-stanzas">Common Stanzas</a><ul>
+<li><a href="#technical-description">Technical description</a></li>
+<li><a href="#how-to-use">How to use</a></li>
+<li><a href="#compatibility">Compatibility</a></li>
+</ul></li>
+<li><a href="#common-stanzas-in-action">Common stanzas in action</a></li>
+<li><a href="#alternatives">Alternatives</a><ul>
+<li><a href="#hpack">Hpack</a></li>
+<li><a href="#dhall-to-cabal">Dhall-to-Cabal</a></li>
+</ul></li>
+<li><a href="#real-world-examples">Real-world examples</a></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+      </div>
+    </nav>
+    <section class="container info">
+        <h2 class="text-center text-uppercase text-purple">Common stanzas</h2>
+        <div class="text-center">January 12, 2020</div>
+        <div class="row tag-block text-center">
+          <div class="col-12 tag-block">
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/haskell">haskell</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/cabal">cabal</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/build-tools">build-tools</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/dhall">dhall</a></span>
+            
+          </div>
+        </div>
+        <div class="content">
+          <div class="row post">
+            <div class="col-12 post-body"> <p class="lead"> <p>When creating a project in <a href="https://www.haskell.org">Haskell</a> you <em>usually</em> explicitly or implicitly deal with the <code>.cabal</code> files, no matter which build tool you prefer. In this post, I would like to discuss one specific feature of <a href="https://www.haskell.org/cabal/">Cabal</a> — <a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#common-stanzas">common stanzas</a>, explain its mission and demonstrate how it could be used, which problems it helps to avoid, and also mention some widely used alternatives.</p>
+<h2 id="terminology">Terminology</h2>
+<p>Before going into detail about the feature itself I think it could be useful to speak a bit about the <code>cabal</code> configuration format, declare all the definitions and explain the structure of the <code>.cabal</code> file, so everybody could follow what common stanzas bring to the table. If you are using Cabal on a daily basis or fairly proficient with the syntax and the concepts of Cabal, you can skip to the next section. If you are not a frequent Cabal user, I think that this section might be useful anyway as it is generally valuable to keep up with what you are dealing with even if it is not apparent usage.</p>
+<h3 id="what-is-the-cabal-file">What is the cabal file</h3>
+<p>In Haskell, you can play with your ideas directly in REPL using <code>ghci</code> or by putting your code into a single file. You simply need to create a file with the <code>.hs</code> extension, and then you can compile and run it with <code>ghc</code> and <code>runhaskell</code> commands. However, when it comes to some bigger ideas, you want to create a project to structure your code in a more modular way or to create a reusable library. Project is not as elementary as a <code>.hs</code> file and to handle extra complexity you need a build tool. For build tool to work correctly with your project, there is a need to know some details about your code and goals for the package beforehand. For those purposes, you are required to create a <code>your-project-name.cabal</code> file (hereafter I will refer to such files as simply <code>.cabal</code> files), which literally contains the technical description of your project, including meta-information about it, dependencies, some other advanced Haskell configurations and much more.</p>
+<blockquote>
+<p>❗ <strong>Note:</strong> you better name the Cabal file with the same name as the name of your package. It’s not crucial for the Cabal (the tool), however, some of the dependent tools may not work without this restriction to be kept (e.g. Hackage won’t let you upload such package).</p>
+</blockquote>
+<blockquote>
+<p>💡 <em>Interesting fact:</em> packages are not part of the Haskell language, rather they are a feature provided by the combination of Cabal and GHC (and several other Haskell implementations).</p>
+</blockquote>
+<p>Let’s talk a bit more concrete about the structure of the <code>cabal</code> file and its application for your project.</p>
+<h3 id="cabal-files-structure">Cabal files structure</h3>
+<p>Most of the time you don’t create the <code>.cabal</code> file from scratch. Using <code>init</code> <a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#using-cabal-init">commands</a> of the build tools (or some <a href="https://github.com/kowainik/summoner">programmes specialised on scaffolding</a>), you can get a reasonable default project configuration, and all you have to do is to modify it slightly as needed. Despite that, let’s look into a detailed view of the file to understand it better.</p>
+<p>Cabal uses special syntax that is parsed by the <code>Cabal</code> <a href="https://hackage.haskell.org/package/Cabal">library</a> and used by other build tools as well. The <code>.cabal</code> file is divided into sections and each one of them consists of the fields with name and value that are related to those sections semantically. The field name (case insensitive) and the value (case sensitive) are separated by the <code>:</code> symbol.</p>
+<p>The full specification can be found here:</p>
+<ul>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-desc">Cabal format description</a></li>
+</ul>
+<h3 id="general-fields">General fields</h3>
+<p>The first section in the file is the general-purpose package describing part. This section is also called <a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#package-properties">“package properties”</a>. It must always start with the field <code>cabal-version</code> in which you should specify the version of Cabal format you’re using in your package configuration:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1"></a>cabal<span class="op">-</span>version<span class="op">:</span>       <span class="fl">3.0</span></span></code></pre></div>
+<p>This is important as the Cabal specification does change with the time and that makes the version of the tool essential for parsing the file. The version number you specify will affect both compatibility and behaviour.</p>
+<p>Besides that, this section is the right place for properties like <code>name</code>, <code>version</code>, <code>author</code>, some extra meta information sources, like <code>LICENSE</code>, <code>README</code>, <code>CHANGELOG</code>, and many more that should be established once and for the package as a whole.</p>
+<h3 id="stanzas">Stanzas</h3>
+<p>Aside from the basic package information, In your project, you can have:</p>
+<ul>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#library">Libraries</a>
+<ul>
+<li>Public library — external API that could be used by other projects.</li>
+<li>Internal library — internal API only in the scope of your project.</li>
+</ul></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#executables">Executables</a> — a runnable standalone programme.</li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#test-suites">Test suites</a> — runnable special executable for package tests.</li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#benchmarks">Benchmark suites</a> — runnable special executable to compare the performance.</li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#foreign-libraries">Foreign libraries</a> — system libraries.</li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#configurations">Configurations sections</a> — the place to introduce all flags that can be included in other sections.</li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#source-repositories">Source repositories</a> — source revision control repository for a package.</li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#custom-setup-scripts">Custom setup scripts</a> — establish the way to work with custom <code>Setup.hs</code> files.</li>
+</ul>
+<p>and all these elements in any number and combination. This is up to you to select the suitable parts for your goal and glue them together in one project. Each piece from the list above is called <strong>stanza</strong>.</p>
+<blockquote>
+<p>💡 If you are curious about the word <code>stanza</code> as I was, it is a <a href="https://en.wikipedia.org/wiki/Stanza">literary term</a> that means a grouped set of lines within a poem. Thinking more about it, the word fits well with the arrangement of the <code>cabal</code> file’s concept.</p>
+</blockquote>
+<p>Every stanza is a separate section in the project’s <code>cabal</code> file. Most of the fields that could be used in stanzas are shared but there are some special ones that could be used only in the stanzas they belong to.</p>
+<h3 id="why-so-much-boilerplate">Why so much boilerplate</h3>
+<p>Each stanza has so many fields in common and most of the time the greatest part of them is absolutely identical from stanza to stanza as it contains the common rules you are establishing across the package.</p>
+<p>It is usually fields like</p>
+<ul>
+<li><code>default-language</code> which is always set consistently in all stanzas to <code>Haskell2010</code> (or <code>Haskell98</code>)</li>
+<li><code>default-extensions</code> as most of the time you use pretty much the same extensions across the modules that can include such useful ones as <code>DeriveFunctor</code> and <code>GeneralizedNewtypeDeriving</code></li>
+<li>most of the <code>ghc-options</code>, as it is quite handy to have <code>-Wall</code> in the whole package</li>
+<li>some <code>build-dependencies</code>, at least all the stanzas would share the same <code>base</code> dependency in most of the cases</li>
+</ul>
+<p>Moreover, when you have more than one stanza of the same type they usually also share lots of data. For instance, test suites can share a lot of dependencies, options etc.</p>
+<p>So, why do we need to repeat ourselves? Here is where <code>common stanzas</code> come in handy. They form a new type of stanzas and have a particular goal in mind.</p>
+<h2 id="common-stanzas">Common Stanzas</h2>
+<p>Now when we have a uniform understanding of terms related to <code>.cabal</code> files like <code>stanza</code>, <code>cabal fields</code> I will operate with them to explain the <code>common stanzas</code> feature.</p>
+<p>As I mentioned earlier, by design there are a lot of fields that can be used in every stanza. As the values of these fields can intersect a lot we end up writing a lot of identical (or similar) fields in each stanza. We are repeating ourselves again and again, which can lead to a maintenance problem in the future when we need to change all such common parts at once. The problem of the code duplication is the fundamental problem of programming. Common stanzas feature is one of the approaches towards that direction that is specific to the <code>.cabal</code> file.</p>
+<p>To summarise, common stanzas feature expands <code>.cabal</code> files format to allow extracting common parts into a separate group, so a user can reuse it later in other parts of the settings.</p>
+<h3 id="technical-description">Technical description</h3>
+<p>Common stanza is another type of stanzas that can contain the information to be shared in other stanzas by manually including it in them.</p>
+<p>At the moment common stanzas can include only <em>build information fields</em> inside. Here is the full list of the fields that can be used:</p>
+<ul>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-depends">build-depends</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-modules">other-modules</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-hs-source-dirs">hs-source-dirs</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-extensions">default-extensions</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-extensions">other-extensions</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-tool-depends">build-tool-depends</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-buildable">buildable</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-options">ghc-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-prof-options">ghc-prof-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-shared-options">ghc-shared-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-includes">includes</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-install-includes">install-includes</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-include-dirs">include-dirs</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-c-sources">c-sources</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cxx-sources">cxx-sources</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-asm-sources">asm-sources</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cmm-sources">cmm-sources</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-js-sources">js-sources</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-libraries">extra-libraries</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-ghci-libraries">extra-ghci-libraries</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-bundled-libraries">extra-bundled-libraries</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-lib-dirs">extra-lib-dirs</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cc-options">cc-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cpp-options">cpp-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cxx-options">cxx-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cmm-options">cmm-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-asm-options">asm-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ld-options">ld-options</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-pkgconfig-depends">pkgconfig-depends</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-frameworks">frameworks</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-frameworks-dirs">extra-frameworks-dirs</a></li>
+<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-mixins">mixins</a></li>
+</ul>
+<h3 id="how-to-use">How to use</h3>
+<p>Common stanzas have to be defined before you can use it in other sections, so the best place to put your common stanzas is after the general information and before the first stanza of your package. Common stanza primarily is a stanza, so it should be a section of the cabal file starting with the special keyword.</p>
+<p>The syntax should be as follows: use the keyword <code>common</code> to indicate the definition of the common stanza, give the meaningful name by which you will refer to it in other stanzas, list all the necessary fields you want to include.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1"></a>common my<span class="op">-</span>first<span class="op">-</span>common<span class="op">-</span>stanza</span>
+<span id="cb2-2"><a href="#cb2-2"></a>  build<span class="op">-</span>depends<span class="op">:</span>    base <span class="op">^&gt;=</span> <span class="fl">4.13</span></span></code></pre></div>
+<p>When the common stanzas are ready, you need to specify them in the stanzas where you want to include them. For that, you need to use the <code>import</code> field and the name of the common stanza defined earlier.</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1"></a>library</span>
+<span id="cb3-2"><a href="#cb3-2"></a>  <span class="kw">import</span>:        my-first-common-stanza</span>
+<span id="cb3-3"><a href="#cb3-3"></a>  build<span class="op">-</span>depends<span class="op">:</span> text <span class="op">^&gt;=</span> <span class="fl">1.2</span><span class="op">.</span><span class="fl">4.0</span></span></code></pre></div>
+<blockquote>
+<p>❗ <strong>Important:</strong> the <code>import</code> of common stanzas must be the first thing in your stanza. If you are using conditionals, it should be the first thing in each case (if you need it in there), however, be aware that the feature works in conditionals starting with <code>Cabal-3.0</code>.</p>
+</blockquote>
+<p>You can import any amount of common stanzas in one stanza. To do that you can just separate all the names with commas (<code>,</code>).</p>
+<p>Another important fact is that you can use common stanzas inside the common stanzas by applying the same rules of common stanzas. So if you have the following common stanzas:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1"></a>common common<span class="op">-</span>base</span>
+<span id="cb4-2"><a href="#cb4-2"></a>  build<span class="op">-</span>depends<span class="op">:</span>    base <span class="op">^&gt;=</span> <span class="fl">4.13</span></span>
+<span id="cb4-3"><a href="#cb4-3"></a></span>
+<span id="cb4-4"><a href="#cb4-4"></a>common common<span class="op">-</span>options</span>
+<span id="cb4-5"><a href="#cb4-5"></a>  ghc<span class="op">-</span>options<span class="op">:</span>    <span class="op">-</span><span class="dt">Wall</span></span>
+<span id="cb4-6"><a href="#cb4-6"></a></span>
+<span id="cb4-7"><a href="#cb4-7"></a>common common<span class="op">-</span><span class="kw">import</span></span>
+<span id="cb4-8"><a href="#cb4-8"></a>  <span class="kw">import</span>:         common-base</span>
+<span id="cb4-9"><a href="#cb4-9"></a>  ghc<span class="op">-</span>options<span class="op">:</span>    <span class="op">-</span><span class="dt">Wall</span></span></code></pre></div>
+<p>Then the two following library stanzas are going to be identical:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1"></a>library a</span>
+<span id="cb5-2"><a href="#cb5-2"></a>  <span class="kw">import</span>:   common-base, common-options</span>
+<span id="cb5-3"><a href="#cb5-3"></a></span>
+<span id="cb5-4"><a href="#cb5-4"></a>library b</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  <span class="kw">import</span>:   common-import</span></code></pre></div>
+<h3 id="compatibility">Compatibility</h3>
+<p>Common stanzas is a relatively new feature, which means you need to know when you can use it depending on the compiler and the tool version you have in your project.</p>
+<p>Common stanzas were <a href="https://github.com/haskell/cabal/pull/4751">first released</a> in <code>Cabal-2.2</code> (on Mar 8, 2018). <code>Stack</code> has started supporting this feature since <a href="https://docs.haskellstack.org/en/v1.7.1/ChangeLog/">v1.7.1</a> which was released on Apr 28, 2018. As Stack uses <code>Cabal</code> library version tightened to the GHC version of the corresponding LTS, for the <code>Stack</code> end-user these dates mean that starting from the GHC-8.4.1 version. LTS 12.* or later you can include common stanzas in your package.</p>
+<h2 id="common-stanzas-in-action">Common stanzas in action</h2>
+<p>For <del>entertaining</del>learning purposes, let’s take an ordinary cabal file, which clearly needs some refactoring, and apply earlier common stanzas rules to prettify the file.</p>
+<blockquote>
+<p>In order to highlight only the parts that really matter for readability, I will skip some information in the post’s code snippets and replace it with <code>...</code> dots. However, worry not! I also created <a href="https://github.com/vrom911/common-stanzas-example">a project on GitHub</a> to reflect the process we are going to go through here. I will link to relevant files in the corresponding place.</p>
+</blockquote>
+<p>Here is what we start with: the package with one library, one executable stanza and two test suites.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb6-1"><a href="#cb6-1"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-2"><a href="#cb6-2"></a><span class="co">-- General package information</span></span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-4"><a href="#cb6-4"></a>cabal<span class="op">-</span>version<span class="op">:</span>       <span class="fl">2.2</span></span>
+<span id="cb6-5"><a href="#cb6-5"></a>name<span class="op">:</span>                common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb6-6"><a href="#cb6-6"></a>version<span class="op">:</span>             <span class="fl">0.0</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb6-7"><a href="#cb6-7"></a>description<span class="op">:</span>         <span class="dt">Example</span> project to demonstrate the common stanzas feature</span>
+<span id="cb6-8"><a href="#cb6-8"></a><span class="op">...</span></span>
+<span id="cb6-9"><a href="#cb6-9"></a></span>
+<span id="cb6-10"><a href="#cb6-10"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-11"><a href="#cb6-11"></a><span class="co">-- Source repository set up</span></span>
+<span id="cb6-12"><a href="#cb6-12"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-13"><a href="#cb6-13"></a>source<span class="op">-</span>repository <span class="fu">head</span></span>
+<span id="cb6-14"><a href="#cb6-14"></a>  <span class="kw">type</span><span class="op">:</span>                git</span>
+<span id="cb6-15"><a href="#cb6-15"></a>  location<span class="op">:</span>            https<span class="op">://</span>github<span class="op">.</span>com<span class="op">/</span>vrom911<span class="op">/</span>common<span class="op">-</span>stanzas<span class="op">-</span>example<span class="op">.</span>git</span>
+<span id="cb6-16"><a href="#cb6-16"></a></span>
+<span id="cb6-17"><a href="#cb6-17"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-18"><a href="#cb6-18"></a><span class="co">-- Library stanza</span></span>
+<span id="cb6-19"><a href="#cb6-19"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-20"><a href="#cb6-20"></a>library</span>
+<span id="cb6-21"><a href="#cb6-21"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      src</span>
+<span id="cb6-22"><a href="#cb6-22"></a>  exposed<span class="op">-</span>modules<span class="op">:</span>     <span class="dt">CommonStanzasExample</span></span>
+<span id="cb6-23"><a href="#cb6-23"></a>  build<span class="op">-</span>depends<span class="op">:</span>       base <span class="op">^&gt;=</span> <span class="fl">4.13</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb6-24"><a href="#cb6-24"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span><span class="dt">Wall</span></span>
+<span id="cb6-25"><a href="#cb6-25"></a>                       <span class="op">...</span></span>
+<span id="cb6-26"><a href="#cb6-26"></a>  default<span class="op">-</span>language<span class="op">:</span>    <span class="dt">Haskell2010</span></span>
+<span id="cb6-27"><a href="#cb6-27"></a>  default<span class="op">-</span>extensions<span class="op">:</span>  <span class="dt">ConstraintKinds</span></span>
+<span id="cb6-28"><a href="#cb6-28"></a>                       <span class="op">...</span></span>
+<span id="cb6-29"><a href="#cb6-29"></a></span>
+<span id="cb6-30"><a href="#cb6-30"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-31"><a href="#cb6-31"></a><span class="co">-- Executable stanza</span></span>
+<span id="cb6-32"><a href="#cb6-32"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-33"><a href="#cb6-33"></a>executable common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb6-34"><a href="#cb6-34"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      app</span>
+<span id="cb6-35"><a href="#cb6-35"></a>  main<span class="op">-</span>is<span class="op">:</span>             Main.hs</span>
+<span id="cb6-36"><a href="#cb6-36"></a>  build<span class="op">-</span>depends<span class="op">:</span>       base <span class="op">^&gt;=</span> <span class="fl">4.13</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb6-37"><a href="#cb6-37"></a>                     , common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb6-38"><a href="#cb6-38"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span><span class="dt">Wall</span></span>
+<span id="cb6-39"><a href="#cb6-39"></a>                       <span class="op">-</span>threaded</span>
+<span id="cb6-40"><a href="#cb6-40"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb6-41"><a href="#cb6-41"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span>
+<span id="cb6-42"><a href="#cb6-42"></a>                       <span class="op">...</span></span>
+<span id="cb6-43"><a href="#cb6-43"></a>  default<span class="op">-</span>language<span class="op">:</span>    <span class="dt">Haskell2010</span></span>
+<span id="cb6-44"><a href="#cb6-44"></a>  default<span class="op">-</span>extensions<span class="op">:</span>  <span class="dt">ConstraintKinds</span></span>
+<span id="cb6-45"><a href="#cb6-45"></a>                       <span class="op">...</span></span>
+<span id="cb6-46"><a href="#cb6-46"></a></span>
+<span id="cb6-47"><a href="#cb6-47"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-48"><a href="#cb6-48"></a><span class="co">-- Test suite # 1</span></span>
+<span id="cb6-49"><a href="#cb6-49"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-50"><a href="#cb6-50"></a>test<span class="op">-</span>suite test<span class="op">-</span>suite<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb6-51"><a href="#cb6-51"></a>  <span class="kw">type</span><span class="op">:</span>                exitcode<span class="op">-</span>stdio<span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb6-52"><a href="#cb6-52"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      test</span>
+<span id="cb6-53"><a href="#cb6-53"></a>  main<span class="op">-</span>is<span class="op">:</span>             Spec1.hs</span>
+<span id="cb6-54"><a href="#cb6-54"></a>  build<span class="op">-</span>depends<span class="op">:</span>       base <span class="op">^&gt;=</span> <span class="fl">4.13</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb6-55"><a href="#cb6-55"></a>                     , common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb6-56"><a href="#cb6-56"></a>                     , hedgehog <span class="op">^&gt;=</span> <span class="fl">1.0</span></span>
+<span id="cb6-57"><a href="#cb6-57"></a>                     , hspec <span class="op">^&gt;=</span> <span class="fl">2.7</span><span class="op">.</span><span class="dv">1</span></span>
+<span id="cb6-58"><a href="#cb6-58"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span><span class="dt">Wall</span></span>
+<span id="cb6-59"><a href="#cb6-59"></a>                       <span class="op">-</span>threaded</span>
+<span id="cb6-60"><a href="#cb6-60"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb6-61"><a href="#cb6-61"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span>
+<span id="cb6-62"><a href="#cb6-62"></a>                       <span class="op">...</span></span>
+<span id="cb6-63"><a href="#cb6-63"></a>  default<span class="op">-</span>language<span class="op">:</span>    <span class="dt">Haskell2010</span></span>
+<span id="cb6-64"><a href="#cb6-64"></a>  default<span class="op">-</span>extensions<span class="op">:</span>  <span class="dt">ConstraintKinds</span></span>
+<span id="cb6-65"><a href="#cb6-65"></a>                       <span class="op">...</span></span>
+<span id="cb6-66"><a href="#cb6-66"></a></span>
+<span id="cb6-67"><a href="#cb6-67"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-68"><a href="#cb6-68"></a><span class="co">-- Test suite # 2</span></span>
+<span id="cb6-69"><a href="#cb6-69"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb6-70"><a href="#cb6-70"></a>test<span class="op">-</span>suite test<span class="op">-</span>suite<span class="op">-</span><span class="dv">2</span></span>
+<span id="cb6-71"><a href="#cb6-71"></a>  <span class="kw">type</span><span class="op">:</span>                exitcode<span class="op">-</span>stdio<span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb6-72"><a href="#cb6-72"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      test</span>
+<span id="cb6-73"><a href="#cb6-73"></a>  main<span class="op">-</span>is<span class="op">:</span>             Spec2.hs</span>
+<span id="cb6-74"><a href="#cb6-74"></a>  build<span class="op">-</span>depends<span class="op">:</span>       base <span class="op">^&gt;=</span> <span class="fl">4.13</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb6-75"><a href="#cb6-75"></a>                     , common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb6-76"><a href="#cb6-76"></a>                     , hedgehog <span class="op">^&gt;=</span> <span class="fl">1.0</span></span>
+<span id="cb6-77"><a href="#cb6-77"></a>                     , hspec <span class="op">^&gt;=</span> <span class="fl">2.7</span><span class="op">.</span><span class="dv">1</span></span>
+<span id="cb6-78"><a href="#cb6-78"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span><span class="dt">Wall</span></span>
+<span id="cb6-79"><a href="#cb6-79"></a>                       <span class="op">-</span>threaded</span>
+<span id="cb6-80"><a href="#cb6-80"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb6-81"><a href="#cb6-81"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span>
+<span id="cb6-82"><a href="#cb6-82"></a>                       <span class="op">...</span></span>
+<span id="cb6-83"><a href="#cb6-83"></a>  default<span class="op">-</span>language<span class="op">:</span>    <span class="dt">Haskell2010</span></span>
+<span id="cb6-84"><a href="#cb6-84"></a>  default<span class="op">-</span>extensions<span class="op">:</span>  <span class="dt">ConstraintKinds</span></span>
+<span id="cb6-85"><a href="#cb6-85"></a>                       <span class="op">...</span></span></code></pre></div>
+<blockquote>
+<p>💻 This <code>cabal</code> file can be found <a href="https://github.com/vrom911/common-stanzas-example/blob/e09a9bd585cf392d49f126965218387a3a1fd4e9/common-stanzas-example.cabal">here</a>.</p>
+</blockquote>
+<p>As this is a multi-stanzas package, it is expected that there are so many duplicated fields among any of them. What first catches the eye is a lot of repetition in <code>ghc-options</code>, <code>default-extensions</code>, and similar purpose fields, that establish some common rules and settings of your whole package.</p>
+<p>Let’s extract them into a common stanza with the straight name <code>common-options</code>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1"></a>common common<span class="op">-</span>options</span>
+<span id="cb7-2"><a href="#cb7-2"></a>  build<span class="op">-</span>depends<span class="op">:</span>       base <span class="op">^&gt;=</span> <span class="fl">4.13</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb7-3"><a href="#cb7-3"></a></span>
+<span id="cb7-4"><a href="#cb7-4"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span><span class="dt">Wall</span></span>
+<span id="cb7-5"><a href="#cb7-5"></a>                       <span class="op">...</span></span>
+<span id="cb7-6"><a href="#cb7-6"></a></span>
+<span id="cb7-7"><a href="#cb7-7"></a>  default<span class="op">-</span>language<span class="op">:</span>    <span class="dt">Haskell2010</span></span>
+<span id="cb7-8"><a href="#cb7-8"></a>  default<span class="op">-</span>extensions<span class="op">:</span>  <span class="dt">ConstraintKinds</span></span>
+<span id="cb7-9"><a href="#cb7-9"></a>                       <span class="op">...</span></span></code></pre></div>
+<p>And we can import it in every stanza in order to remove repetition from them:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb8-1"><a href="#cb8-1"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="co">-- Library stanza</span></span>
+<span id="cb8-3"><a href="#cb8-3"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-4"><a href="#cb8-4"></a>library</span>
+<span id="cb8-5"><a href="#cb8-5"></a>  <span class="kw">import</span>:              common-options</span>
+<span id="cb8-6"><a href="#cb8-6"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      src</span>
+<span id="cb8-7"><a href="#cb8-7"></a>  exposed<span class="op">-</span>modules<span class="op">:</span>     <span class="dt">CommonStanzasExample</span></span>
+<span id="cb8-8"><a href="#cb8-8"></a></span>
+<span id="cb8-9"><a href="#cb8-9"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-10"><a href="#cb8-10"></a><span class="co">-- Executable stanza</span></span>
+<span id="cb8-11"><a href="#cb8-11"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-12"><a href="#cb8-12"></a>executable common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb8-13"><a href="#cb8-13"></a>  <span class="kw">import</span>:              common-options</span>
+<span id="cb8-14"><a href="#cb8-14"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      app</span>
+<span id="cb8-15"><a href="#cb8-15"></a>  main<span class="op">-</span>is<span class="op">:</span>             Main.hs</span>
+<span id="cb8-16"><a href="#cb8-16"></a>  build<span class="op">-</span>depends<span class="op">:</span>       common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb8-17"><a href="#cb8-17"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span>threaded</span>
+<span id="cb8-18"><a href="#cb8-18"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb8-19"><a href="#cb8-19"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span>
+<span id="cb8-20"><a href="#cb8-20"></a></span>
+<span id="cb8-21"><a href="#cb8-21"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-22"><a href="#cb8-22"></a><span class="co">-- Test suite # 1</span></span>
+<span id="cb8-23"><a href="#cb8-23"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-24"><a href="#cb8-24"></a>test<span class="op">-</span>suite test<span class="op">-</span>suite<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb8-25"><a href="#cb8-25"></a>  <span class="kw">import</span>:              common-options</span>
+<span id="cb8-26"><a href="#cb8-26"></a>  <span class="kw">type</span><span class="op">:</span>                exitcode<span class="op">-</span>stdio<span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb8-27"><a href="#cb8-27"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      test</span>
+<span id="cb8-28"><a href="#cb8-28"></a>  main<span class="op">-</span>is<span class="op">:</span>             Spec1.hs</span>
+<span id="cb8-29"><a href="#cb8-29"></a>  build<span class="op">-</span>depends<span class="op">:</span>       common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb8-30"><a href="#cb8-30"></a>                     , hedgehog <span class="op">^&gt;=</span> <span class="fl">1.0</span></span>
+<span id="cb8-31"><a href="#cb8-31"></a>                     , hspec <span class="op">^&gt;=</span> <span class="fl">2.7</span><span class="op">.</span><span class="dv">1</span></span>
+<span id="cb8-32"><a href="#cb8-32"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span>threaded</span>
+<span id="cb8-33"><a href="#cb8-33"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb8-34"><a href="#cb8-34"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span>
+<span id="cb8-35"><a href="#cb8-35"></a></span>
+<span id="cb8-36"><a href="#cb8-36"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-37"><a href="#cb8-37"></a><span class="co">-- Test suite # 2</span></span>
+<span id="cb8-38"><a href="#cb8-38"></a><span class="co">----------------------------------------------------------------------------</span></span>
+<span id="cb8-39"><a href="#cb8-39"></a>test<span class="op">-</span>suite test<span class="op">-</span>suite<span class="op">-</span><span class="dv">2</span></span>
+<span id="cb8-40"><a href="#cb8-40"></a>  <span class="kw">import</span>:              common-options</span>
+<span id="cb8-41"><a href="#cb8-41"></a>  <span class="kw">type</span><span class="op">:</span>                exitcode<span class="op">-</span>stdio<span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb8-42"><a href="#cb8-42"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      test</span>
+<span id="cb8-43"><a href="#cb8-43"></a>  main<span class="op">-</span>is<span class="op">:</span>             Spec2.hs</span>
+<span id="cb8-44"><a href="#cb8-44"></a>  build<span class="op">-</span>depends<span class="op">:</span>       base <span class="op">^&gt;=</span> <span class="fl">4.13</span><span class="op">.</span><span class="fl">0.0</span></span>
+<span id="cb8-45"><a href="#cb8-45"></a>                     , common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb8-46"><a href="#cb8-46"></a>                     , hedgehog <span class="op">^&gt;=</span> <span class="fl">1.0</span></span>
+<span id="cb8-47"><a href="#cb8-47"></a>                     , hspec <span class="op">^&gt;=</span> <span class="fl">2.7</span><span class="op">.</span><span class="dv">1</span></span>
+<span id="cb8-48"><a href="#cb8-48"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span>threaded</span>
+<span id="cb8-49"><a href="#cb8-49"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb8-50"><a href="#cb8-50"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span></code></pre></div>
+<blockquote>
+<p>💻 This transformation can be seen <a href="https://github.com/vrom911/common-stanzas-example/commit/5fd93956166e9d82d085646ee0631614b6a97628">in this commit</a>.</p>
+</blockquote>
+<p>But wait, I still see that test suites share some more common information which can be isolated as well. For that, we can create another common stanza <code>common-tests</code>.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb9-1"><a href="#cb9-1"></a>common common<span class="op">-</span>tests</span>
+<span id="cb9-2"><a href="#cb9-2"></a>  <span class="kw">import</span>:              common-options</span>
+<span id="cb9-3"><a href="#cb9-3"></a>  hs<span class="op">-</span>source<span class="op">-</span>dirs<span class="op">:</span>      test</span>
+<span id="cb9-4"><a href="#cb9-4"></a>  build<span class="op">-</span>depends<span class="op">:</span>       common<span class="op">-</span>stanzas<span class="op">-</span>example</span>
+<span id="cb9-5"><a href="#cb9-5"></a>                     , hedgehog <span class="op">^&gt;=</span> <span class="fl">1.0</span></span>
+<span id="cb9-6"><a href="#cb9-6"></a>                     , hspec <span class="op">^&gt;=</span> <span class="fl">2.7</span><span class="op">.</span><span class="dv">1</span></span>
+<span id="cb9-7"><a href="#cb9-7"></a>  ghc<span class="op">-</span>options<span class="op">:</span>         <span class="op">-</span>threaded</span>
+<span id="cb9-8"><a href="#cb9-8"></a>                       <span class="op">-</span>rtsopts</span>
+<span id="cb9-9"><a href="#cb9-9"></a>                       <span class="op">-</span>with<span class="op">-</span>rtsopts<span class="op">=-</span><span class="dt">N</span></span></code></pre></div>
+<p>This will reduce the test section to the minimum:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb10-1"><a href="#cb10-1"></a>test<span class="op">-</span>suite test<span class="op">-</span>suite<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb10-2"><a href="#cb10-2"></a>  <span class="kw">import</span>:              common-tests</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  <span class="kw">type</span><span class="op">:</span>                exitcode<span class="op">-</span>stdio<span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb10-4"><a href="#cb10-4"></a>  main<span class="op">-</span>is<span class="op">:</span>             Spec1.hs</span>
+<span id="cb10-5"><a href="#cb10-5"></a></span>
+<span id="cb10-6"><a href="#cb10-6"></a>test<span class="op">-</span>suite test<span class="op">-</span>suite<span class="op">-</span><span class="dv">2</span></span>
+<span id="cb10-7"><a href="#cb10-7"></a>  <span class="kw">import</span>:              common-tests</span>
+<span id="cb10-8"><a href="#cb10-8"></a>  <span class="kw">type</span><span class="op">:</span>                exitcode<span class="op">-</span>stdio<span class="op">-</span><span class="fl">1.0</span></span>
+<span id="cb10-9"><a href="#cb10-9"></a>  main<span class="op">-</span>is<span class="op">:</span>             Spec2.hs</span></code></pre></div>
+<blockquote>
+<p>💻 This transformation can be seen <a href="https://github.com/vrom911/common-stanzas-example/commit/22956111a3292791fa70771c251ef4b5c7009a37">in this commit</a>.</p>
+</blockquote>
+<p>Looks much cleaner now!</p>
+<blockquote>
+<p>❗ <strong>Note:</strong> you can object that I repeat <code>type</code> field in test stanzas and this is a good candidate for common stanzas, however, we should not forget that <code>type</code> is the special field and doesn’t belong to build information fields that as we know are supposed to be used in common stanzas.</p>
+</blockquote>
+<h2 id="alternatives">Alternatives</h2>
+<p>Inability to share data in <code>cabal</code> files was a common and a bit annoying issue for many people. So it is not a secret that some other hacks and tools were used to overcome this difficulty before the feature was implemented. In this section, I am going to highlight a few alternative means people have used (and some of them still do) to segregate common parts.</p>
+<blockquote>
+<p>❗ Note that I am not an expert in the further mentioned tools as I am not a frequent user of those. The examples I am showing are for demonstration purposes and could be not the most efficient or common way. For the advanced information about any further tools, you should question the official documentation.</p>
+</blockquote>
+<h3 id="hpack">Hpack</h3>
+<p><a href="https://github.com/sol/hpack">Hpack</a> is the tool which was created as an alternative to Cabal format. <code>Hpack</code> is based on YAML which implies the YAML’s native ability of reusability. YAML has <a href="http://yaml.org/spec/1.1/#anchor/syntax">anchors</a> (<code>&amp;</code>), <a href="http://yaml.org/spec/1.1/#alias/syntax">aliases</a> (<code>*</code>) and <a href="http://yaml.org/type/merge.html">merge keys</a> (<code>&lt;&lt;</code>) to define fields which is handy for sharing common parts of the code.</p>
+<p>🕑 Example time! In order to provide the fairest comparison, we are going to write the example from the <a href="#common-stanzas-in-action">Common stanzas in action</a> section and write it in the Hpack syntax. First, let’s put <code>common-options</code> and <code>common-tests</code> into <code>common.yaml</code> file, that can be reused in the main <code>hpack</code>’s file.</p>
+<blockquote>
+<p>💻 <em>Reminder:</em> You can review this <code>cabal</code> file <a href="https://github.com/vrom911/common-stanzas-example/blob/e09a9bd585cf392d49f126965218387a3a1fd4e9/common-stanzas-example.cabal">here</a>.</p>
+</blockquote>
+<div class="sourceCode" id="cb11"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb11-1"><a href="#cb11-1"></a><span class="co"># common.yaml</span></span>
+<span id="cb11-2"><a href="#cb11-2"></a><span class="kw">-</span><span class="at"> </span><span class="ot">&amp;common-options</span></span>
+<span id="cb11-3"><a href="#cb11-3"></a><span class="at">  </span><span class="fu">dependencies</span><span class="kw">:</span></span>
+<span id="cb11-4"><a href="#cb11-4"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> base</span></span>
+<span id="cb11-5"><a href="#cb11-5"></a><span class="at">      </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;^&gt;= 4.13.0.0&quot;</span></span>
+<span id="cb11-6"><a href="#cb11-6"></a><span class="at">  </span><span class="fu">ghc-options</span><span class="kw">:</span></span>
+<span id="cb11-7"><a href="#cb11-7"></a><span class="at">    </span><span class="kw">-</span><span class="at"> -Wall</span></span>
+<span id="cb11-8"><a href="#cb11-8"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ...</span></span>
+<span id="cb11-9"><a href="#cb11-9"></a></span>
+<span id="cb11-10"><a href="#cb11-10"></a><span class="at">  </span><span class="fu">default-extensions</span><span class="kw">:</span></span>
+<span id="cb11-11"><a href="#cb11-11"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ConstraintKinds</span></span>
+<span id="cb11-12"><a href="#cb11-12"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ...</span></span>
+<span id="cb11-13"><a href="#cb11-13"></a></span>
+<span id="cb11-14"><a href="#cb11-14"></a><span class="kw">-</span><span class="at"> </span><span class="ot">&amp;common-tests</span></span>
+<span id="cb11-15"><a href="#cb11-15"></a><span class="at">  </span><span class="fu">&lt;&lt;</span><span class="kw">:</span><span class="at"> </span><span class="ot">*common-options</span></span>
+<span id="cb11-16"><a href="#cb11-16"></a></span>
+<span id="cb11-17"><a href="#cb11-17"></a><span class="at">  </span><span class="fu">source-dirs</span><span class="kw">:</span><span class="at"> test</span></span>
+<span id="cb11-18"><a href="#cb11-18"></a><span class="at">  </span><span class="fu">dependencies</span><span class="kw">:</span></span>
+<span id="cb11-19"><a href="#cb11-19"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> common-stanzas-example-hpack</span></span>
+<span id="cb11-20"><a href="#cb11-20"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hedgehog</span></span>
+<span id="cb11-21"><a href="#cb11-21"></a><span class="at">      </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;^&gt;= 1.0&quot;</span></span>
+<span id="cb11-22"><a href="#cb11-22"></a><span class="at">    </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> hspec</span></span>
+<span id="cb11-23"><a href="#cb11-23"></a><span class="at">      </span><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;^&gt;= 2.7.1&quot;</span></span>
+<span id="cb11-24"><a href="#cb11-24"></a></span>
+<span id="cb11-25"><a href="#cb11-25"></a><span class="at">  </span><span class="fu">ghc-options</span><span class="kw">:</span></span>
+<span id="cb11-26"><a href="#cb11-26"></a><span class="at">    </span><span class="kw">-</span><span class="at"> -threaded</span></span>
+<span id="cb11-27"><a href="#cb11-27"></a><span class="at">    </span><span class="kw">-</span><span class="at"> ...</span></span></code></pre></div>
+<p>In Hpack, an analogue of <code>your-package-name.cabal</code> is the <code>package.yaml</code> file. It looks very similar to the <code>cabal</code> file by structure, though there are few distinctions, different field names, or absence of some fields. Anyway, isomorphic to our cabal file from the example, Hpack’s file, that uses its variation of <code>common stanzas</code>, can look like this:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb12-1"><a href="#cb12-1"></a><span class="co"># package.yaml</span></span>
+<span id="cb12-2"><a href="#cb12-2"></a><span class="fu">_common</span><span class="kw">:</span><span class="at"> !include &quot;common.yaml&quot;</span></span>
+<span id="cb12-3"><a href="#cb12-3"></a></span>
+<span id="cb12-4"><a href="#cb12-4"></a><span class="fu">verbatim</span><span class="kw">:</span></span>
+<span id="cb12-5"><a href="#cb12-5"></a><span class="at">  </span><span class="fu">cabal-version</span><span class="kw">:</span><span class="at"> </span><span class="fl">2.2</span></span>
+<span id="cb12-6"><a href="#cb12-6"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> common-stanzas-example-hpack</span></span>
+<span id="cb12-7"><a href="#cb12-7"></a><span class="fu">version</span><span class="kw">:</span><span class="at"> </span><span class="st">'0.0.0.0'</span></span>
+<span id="cb12-8"><a href="#cb12-8"></a><span class="fu">description</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;Example project to demonstrate the common stanzas feature&quot;</span></span>
+<span id="cb12-9"><a href="#cb12-9"></a><span class="co">...</span></span>
+<span id="cb12-10"><a href="#cb12-10"></a></span>
+<span id="cb12-11"><a href="#cb12-11"></a><span class="co">github: vrom911/common-stanzas-example</span></span>
+<span id="cb12-12"><a href="#cb12-12"></a></span>
+<span id="cb12-13"><a href="#cb12-13"></a><span class="co"># Including `common-options` to every stanza here.</span></span>
+<span id="cb12-14"><a href="#cb12-14"></a><span class="co">&lt;&lt;: *common-options</span></span>
+<span id="cb12-15"><a href="#cb12-15"></a></span>
+<span id="cb12-16"><a href="#cb12-16"></a><span class="co">library:</span></span>
+<span id="cb12-17"><a href="#cb12-17"></a><span class="co">  source-dirs: src</span></span>
+<span id="cb12-18"><a href="#cb12-18"></a></span>
+<span id="cb12-19"><a href="#cb12-19"></a><span class="co">executables:</span></span>
+<span id="cb12-20"><a href="#cb12-20"></a><span class="co">  common-stanzas-example-hpack:</span></span>
+<span id="cb12-21"><a href="#cb12-21"></a><span class="co">    source-dirs: app</span></span>
+<span id="cb12-22"><a href="#cb12-22"></a><span class="co">    main: &quot;Main.hs&quot;</span></span>
+<span id="cb12-23"><a href="#cb12-23"></a></span>
+<span id="cb12-24"><a href="#cb12-24"></a><span class="co">    dependencies:</span></span>
+<span id="cb12-25"><a href="#cb12-25"></a><span class="co">      - name: &quot;common-stanzas-example-hpack&quot;</span></span>
+<span id="cb12-26"><a href="#cb12-26"></a></span>
+<span id="cb12-27"><a href="#cb12-27"></a><span class="co">    ghc-options:</span></span>
+<span id="cb12-28"><a href="#cb12-28"></a><span class="co">      - -threaded</span></span>
+<span id="cb12-29"><a href="#cb12-29"></a><span class="co">      - -rtsopts</span></span>
+<span id="cb12-30"><a href="#cb12-30"></a><span class="co">      - -with-rtsopts=-N</span></span>
+<span id="cb12-31"><a href="#cb12-31"></a></span>
+<span id="cb12-32"><a href="#cb12-32"></a><span class="co">tests:</span></span>
+<span id="cb12-33"><a href="#cb12-33"></a><span class="co">    test-suite-1-hpack:</span></span>
+<span id="cb12-34"><a href="#cb12-34"></a><span class="co">      &lt;&lt;: *common-tests</span></span>
+<span id="cb12-35"><a href="#cb12-35"></a><span class="co">      main: Spec1.hs</span></span>
+<span id="cb12-36"><a href="#cb12-36"></a><span class="co">      other-modules: []</span></span>
+<span id="cb12-37"><a href="#cb12-37"></a></span>
+<span id="cb12-38"><a href="#cb12-38"></a><span class="co">    test-suite-2-hpack:</span></span>
+<span id="cb12-39"><a href="#cb12-39"></a><span class="co">      &lt;&lt;: *common-tests</span></span>
+<span id="cb12-40"><a href="#cb12-40"></a><span class="co">      main: Spec2.hs</span></span>
+<span id="cb12-41"><a href="#cb12-41"></a><span class="co">      other-modules: []</span></span></code></pre></div>
+<p>If you install <code>Hpack</code> and run <code>hpack</code> command on this <code>package.yaml</code> you will see the generated <code>cabal</code> file. Luckily for you, I have already done that and included it to the repository, so you can check that out immediately. I won’t include the whole code in the post as it looks pretty much similar to the initial <code>cabal</code> file we had before moving to common stanzas.</p>
+<blockquote>
+<p>💻 Hpack introduction and the generated <code>.cabal</code> file can be seen <a href="https://github.com/vrom911/common-stanzas-example/commit/7aec6511e1c900fd944cf244d6d5898c560fc57e">in this commit</a>.</p>
+</blockquote>
+<h3 id="dhall-to-cabal">Dhall-to-Cabal</h3>
+<p>Instead of writing you package information in Cabal syntax, another option is to use <a href="https://dhall-lang.org/">Dhall configurational language</a> to describe all necessary information and then generate the <code>.cabal</code> file using <a href="https://github.com/dhall-lang/dhall-to-cabal">dhall-to-cabal</a> tool. Impressive!</p>
+<p>Let’s use the same old example and see how <code>Dhall</code> can help us with the <code>cabal</code> information duplication reduction. For consistency sake, I will also create the <code>common-options</code> and <code>common-tests</code> which are just variables in <code>Dhall</code>.</p>
+<p>First of all, I “import” two preexisting Dhall modules that have all the needed functionality for <code>cabal</code> syntax mimic. They are called <code>prelude</code> and <code>types</code>, and wherever you see the <code>prelude.blah</code> or <code>types.blah</code> that means that I’m calling the corresponding functions from there.</p>
+<p>Along the way, I have also created a few additional and handy variables for packages: <code>base</code>, <code>common-stanzas-example</code> and <code>executable-ghc-options</code>. And finally, here is how Dhall <code>common-stanzas</code> could look like:</p>
+<pre class="dhall"><code>let common-options =
+    { compiler-options = prelude.defaults.CompilerOptions //
+        { GHC = [ &quot;-Wall&quot;, ...] : List Text
+        }
+    , default-extensions =
+        [ types.Extension.ConstraintKinds True
+        , ...
+        ]
+    , default-language = Some types.Language.Haskell2010
+    }
+
+let common-tests = common-options //
+    { hs-source-dirs = [ &quot;test&quot; ]
+    , build-depends =
+         [ base
+         , common-stanzas-example
+         , { package = &quot;hedgehog&quot;
+           , bounds = prelude.majorBoundVersion (prelude.v &quot;1.0&quot;)
+           }
+         , ...
+         ]
+    , compiler-options = executable-ghc-options
+    }</code></pre>
+<p>I am using Dhall’s records merge operation <code>//</code> and list concatenation <code>#</code> to update and collapse common information with the specific to stanzas data, as the whole <code>.cabal</code> file info is just a record in Dhall. Here are specific fields of the record just to show the usage of the common stanzas. To see the valid Dhall code, please refer to the <code>common-stanzas-example.dhall</code> file in the repository.</p>
+<pre class="dhall"><code>-- Library stanza
+library = Some
+  ( λ(config : types.Config) →
+  prelude.defaults.Library // common-options //
+      { build-depends = [ base ]
+      , hs-source-dirs = [ &quot;src&quot; ]
+      , exposed-modules = [ &quot;CommonStanzasExample&quot; ]
+      }
+  )
+
+-- Executable stanza
+executables =
+  [ { name = &quot;common-stanzas-example&quot;
+    , executable = λ(config : types.Config) →
+      prelude.defaults.Executable // common-options //
+          { hs-source-dirs = [ &quot;app&quot; ]
+          , main-is = &quot;Main.hs&quot;
+          , build-depends =
+              [ base
+              , common-stanzas-example
+              ]
+          , compiler-options = executable-ghc-options
+          }
+    }
+  ]
+
+-- Test suite # 1
+test-suites =
+  [ { name = &quot;test-suite-1&quot;
+    , test-suite = λ(config : types.Config) →
+      prelude.defaults.TestSuite // common-tests //
+          { type = types.TestType.exitcode-stdio { main-is = &quot;Spec1.hs&quot; }
+          , hs-source-dirs = [ &quot;test&quot; ]
+          }
+    }
+...</code></pre>
+<p>When we have an efficient Dhall file in our hands we can use <code>dhall-to-cabal</code> to create the <code>.cabal</code> file to make sure that this is still the same Cabal file we had in the beginning:</p>
+<pre class="shell"><code>dhall-to-cabal common-stanzas-example.dhall</code></pre>
+<blockquote>
+<p>💻 As always, I have already created one for you. And check this commit to see the described work: <a href="https://github.com/vrom911/common-stanzas-example/commit/7aec6511e1c900fd944cf244d6d5898c560fc57e">Dhall commit</a>.</p>
+</blockquote>
+<h2 id="real-world-examples">Real-world examples</h2>
+<p>In this section, to fixate the understanding, I want to show a few examples of common stanzas in the wild.</p>
+<ol type="1">
+<li>A basic example, showing how to use the same version of <code>base</code>, extensions and GHC flags across all stanzas:
+<ul>
+<li><a href="https://github.com/kowainik/tomland/blob/d9b7a1dc344e41466788fe00d0ea016f04629ade/tomland.cabal#L46-L71">kowainik/tomland common stanza</a></li>
+</ul></li>
+<li>A similar example, but more complicated with the usage of mixin for custom prelude <a href>relude</a>:
+<ul>
+<li><a href="https://github.com/kowainik/summoner/blob/60de4f2f087e5bd2beaad9253e7eded731cfbaaf/summoner-cli/summoner.cabal#L48-L80">kowainik/summoner common stanza</a></li>
+</ul></li>
+<li>An example of using several common stanzas:
+<ul>
+<li><a href="https://github.com/kowainik/co-log/blob/e9e475b3f64f58d015d1bcde055729534286a9a9/co-log/co-log.cabal#L33-L67">kowainik/co-log common stanzas</a></li>
+</ul></li>
+</ol>
+<h2 id="conclusion">Conclusion</h2>
+<p>Common stanzas is a useful, long-awaited feature that is very easy to integrate into your project today. With this post, I wanted to share how satisfying it could be to cut out all your shared parts and make your project <code>.cabal</code> file less verbose and easy to maintain. Despite the fact that this feature seems obvious to me, I don’t see it as often as I expected it to be in the wild. That motivated me to create this post with some examples as the addition to the official docs (not the replacement though).</p>
+<p>If you still have any questions about the feature, or you have noticed that I am missing something important that can help others to understand common stanzas better, please contact me without hesitation.</p> </p> </div>
+          </div>
+        </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"> </script>
+    <script src="../js/post.js"> </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad()</script>
+  </body>
+</html>
