@@ -12,10 +12,11 @@ import Hakyll (Compiler, Context, Item, Pattern, Rules, buildTags, compile, cons
                customRoute, defaultContext, defaultHakyllReaderOptions, defaultHakyllWriterOptions,
                field, fromCapture, getResourceString, getTags, idRoute, itemBody, itemIdentifier,
                listField, loadAll, loadAndApplyTemplate, makeItem, match, recentFirst,
-               relativizeUrls, renderPandocWith, route, tagsRules, toFilePath)
+               relativizeUrls, renderPandocWith, route, tagsRules, toFilePath, unsafeCompiler)
 import Hakyll.ShortcutLinks (allShortcutLinksCompiler)
 import System.FilePath (replaceExtension)
 import Text.Pandoc.Options (WriterOptions (..))
+import Text.Pandoc.Templates (compileTemplate)
 
 import Website.Context (postCtx, postCtxWithTags)
 import Website.Nav (mkNavCtx)
@@ -28,7 +29,8 @@ matchBlogPosts = match "blog/*" $ do
     route $ customRoute $ (`replaceExtension` "html") . ("blog/" ++) . drop 16 . toFilePath
     compile $ do
         i   <- getResourceString
-        pandoc <- renderPandocWith defaultHakyllReaderOptions withToc i
+        tocWriter <- unsafeCompiler withToc
+        pandoc <- renderPandocWith defaultHakyllReaderOptions tocWriter i
         let toc = itemBody pandoc
         tgs <- getTags (itemIdentifier i)
         let postTagsCtx = postCtxWithTags tgs
@@ -71,12 +73,14 @@ compilePosts title ptrn = do
             >>= relativizeUrls
 
 -- | Compose TOC from the markdown.
-withToc :: WriterOptions
-withToc = defaultHakyllWriterOptions
-    { writerTableOfContents = True
-    , writerTOCDepth = 4
-    , writerTemplate = Just "$toc$"
-    }
+withToc :: IO WriterOptions
+withToc = compileTemplate "myToc.txt" "$toc$" >>= \case
+    Left err -> error err
+    Right template -> pure $ defaultHakyllWriterOptions
+        { writerTableOfContents = True
+        , writerTOCDepth = 4
+        , writerTemplate = Just template
+        }
 
 ----------------------------------------------------------------------------
 -- External posts
