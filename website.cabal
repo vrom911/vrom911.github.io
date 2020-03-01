@@ -1,4 +1,4 @@
-cabal-version:       2.0
+cabal-version:       2.4
 name:                vrom911-website
 version:             0.0.0.0
 synopsis:            My personal website and blog
@@ -15,7 +15,7 @@ build-type:          Simple
 stability:           stable
 extra-doc-files:     README.md
                    , CHANGELOG.md
-tested-with:         GHC == 8.6.3
+tested-with:         GHC == 8.8.2
 
 source-repository head
   type:     git
@@ -31,11 +31,11 @@ library
                          Website.Nav
                          Website.Project
                          Website.Social
-  build-depends:       base ^>= 4.12
+  build-depends:       base ^>= 4.13
                      , filepath ^>= 1.4
-                     , hakyll ^>= 4.12
-                     , hakyll-shortcut-links ^>= 0.0.0.0
-                     , pandoc >= 2.6
+                     , hakyll ^>= 4.13
+                     , hakyll-shortcut-links ^>= 0.1.0.0
+                     , pandoc >= 2.9
                      -- , relude ^>= 0.5.0
                      , text
 
