@@ -17,7 +17,7 @@ socialLink = field "socialLink" $ pure . sLink . itemBody
 
 postSocials :: [Social]
 postSocials =
-    [ Social "twitter"   "https://twitter.com/vronnie911"
+    [ Social "twitter"   "https://twitter.com/vrom911"
     , Social "github"    "https://github.com/vrom911"
     , Social "linkedin"  "https://www.linkedin.com/in/veronikaromashkina/"
     ]
