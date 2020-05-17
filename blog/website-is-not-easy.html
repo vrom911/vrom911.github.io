@@ -120,23 +120,23 @@
 <p>Hakyll is used to establish the rules of combining different pieces of the webpage together. Here is what I mean, with rules you can say how you would like the routes to be transformed, how to compile CSS files, what extensions of the files you what them to be translated to, how to apply different templates together etc.</p>
 <p>Blog posts are written in markdown. Since <code>pandoc</code> supports the document’s metadata, Hakyll heavily uses it for generating web pages from the <code>md</code> format. For example, the date of the blog post creation is stored inside the markdown file name and can be used in the blog post context as <code>$date$</code> variable. In the same manner, you can add your own contexts which will include some important information for each piece. Tags for blog posts are created using this feature. As the bonus <code>pandoc</code> provides us with the Table of Contents context as well.</p>
 <p>Contexts are very powerful in Hakyll, they help you to write less boilerplate. I am going to demonstrate it in a small example. Let’s say you want to display the list of all your favourite movies on the page. You can just create the list by hands in your HTML file:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">”film</span><span class="ot"> row</span><span class="er">”</span><span class="kw">&gt;</span></span>
-<span id="cb1-2"><a href="#cb1-2"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-3”</span><span class="kw">&gt;</span></span>
-<span id="cb1-3"><a href="#cb1-3"></a>         <span class="kw">&lt;img</span><span class="ot"> src=</span><span class="st">”/images/film1.png”</span><span class="ot"> alt=</span><span class="st">”Film</span> <span class="er">1”</span><span class="kw">&gt;</span></span>
-<span id="cb1-4"><a href="#cb1-4"></a>    <span class="kw">&lt;/div&gt;</span></span>
-<span id="cb1-5"><a href="#cb1-5"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-9”</span><span class="kw">&gt;</span></span>
-<span id="cb1-6"><a href="#cb1-6"></a>        <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">”https://my-favourite-film.com/1</span><span class="kw">&gt;</span>Film 1<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb1-7"><a href="#cb1-7"></a>    <span class="kw">&lt;/div&gt;</span></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw">&lt;/section&gt;</span></span>
-<span id="cb1-9"><a href="#cb1-9"></a><span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">”film</span><span class="ot"> row</span><span class="er">”</span><span class="kw">&gt;</span></span>
-<span id="cb1-10"><a href="#cb1-10"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-3”</span><span class="kw">&gt;</span></span>
-<span id="cb1-11"><a href="#cb1-11"></a>         <span class="kw">&lt;img</span><span class="ot"> src=</span><span class="st">”/images/film2.png”</span><span class="ot"> alt=</span><span class="st">”Film</span> <span class="er">2”</span><span class="kw">&gt;</span></span>
-<span id="cb1-12"><a href="#cb1-12"></a>    <span class="kw">&lt;/div&gt;</span></span>
-<span id="cb1-13"><a href="#cb1-13"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-9”</span><span class="kw">&gt;</span></span>
-<span id="cb1-14"><a href="#cb1-14"></a>        <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">”https://my-favourite-film.com/1</span><span class="kw">&gt;</span>Film 2<span class="kw">&lt;/a&gt;</span></span>
-<span id="cb1-15"><a href="#cb1-15"></a>    <span class="kw">&lt;/div&gt;</span></span>
-<span id="cb1-16"><a href="#cb1-16"></a><span class="kw">&lt;section&gt;</span></span>
-<span id="cb1-17"><a href="#cb1-17"></a>    ...</span></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">”film</span><span class="ot"> row</span><span class="er">”</span><span class="kw">&gt;</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-3”</span><span class="kw">&gt;</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a>         <span class="kw">&lt;img</span><span class="ot"> src=</span><span class="st">”/images/film1.png”</span><span class="ot"> alt=</span><span class="st">”Film</span> <span class="er">1”</span><span class="kw">&gt;</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a>    <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-9”</span><span class="kw">&gt;</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a>        <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">”https://my-favourite-film.com/1</span><span class="kw">&gt;</span>Film 1<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a>    <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a><span class="kw">&lt;/section&gt;</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="kw">&lt;section</span><span class="ot"> class=</span><span class="st">”film</span><span class="ot"> row</span><span class="er">”</span><span class="kw">&gt;</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-3”</span><span class="kw">&gt;</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a>         <span class="kw">&lt;img</span><span class="ot"> src=</span><span class="st">”/images/film2.png”</span><span class="ot"> alt=</span><span class="st">”Film</span> <span class="er">2”</span><span class="kw">&gt;</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a>    <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a>    <span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">”col-9”</span><span class="kw">&gt;</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a>        <span class="kw">&lt;a</span><span class="ot"> href=</span><span class="st">”https://my-favourite-film.com/1</span><span class="kw">&gt;</span>Film 2<span class="kw">&lt;/a&gt;</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a>    <span class="kw">&lt;/div&gt;</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a><span class="kw">&lt;section&gt;</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a>    ...</span></code></pre></div>
 <p>This list can be very boring to fill in, most probably you’d copy the previous section and change some names and links when you want to add another entry. This is not interesting. And the refactoring is not easy when you need to change style — you need to change the same part in every element manually. But with Hakyll you can write:</p>
 <pre><code> $for(myFilms)$
       &lt;section class=”film row”&gt;
@@ -189,28 +189,28 @@ $endfor$
 <li>Run the deployment script: <code>./scripts/deploy.hs “Initial creation”</code>.</li>
 </ol>
 <p>Speaking about the deployment script, there is no magic in there. It’s a simple bash file which runs <code>Hakyll</code> executable to generate site content and commits it to the <code>master</code> branch. You can see how it’s implemented in here:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1"></a><span class="co">#!/usr/bin/env bash</span></span>
-<span id="cb3-2"><a href="#cb3-2"></a><span class="kw">set</span> <span class="ex">-eo</span> pipefail</span>
-<span id="cb3-3"><a href="#cb3-3"></a></span>
-<span id="cb3-4"><a href="#cb3-4"></a><span class="co"># Clean rebuild</span></span>
-<span id="cb3-5"><a href="#cb3-5"></a><span class="ex">cabal</span> new-exec site rebuild</span>
-<span id="cb3-6"><a href="#cb3-6"></a></span>
-<span id="cb3-7"><a href="#cb3-7"></a><span class="co"># Create deploy environment inside of .deploy directory</span></span>
-<span id="cb3-8"><a href="#cb3-8"></a><span class="fu">mkdir</span> .deploy</span>
-<span id="cb3-9"><a href="#cb3-9"></a><span class="bu">cd</span> .deploy</span>
-<span id="cb3-10"><a href="#cb3-10"></a><span class="fu">git</span> init</span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="fu">git</span> remote add origin git@github.com:vrom911/vrom911.github.io.git</span>
-<span id="cb3-12"><a href="#cb3-12"></a><span class="fu">git</span> pull -r origin master</span>
-<span id="cb3-13"><a href="#cb3-13"></a></span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="co"># Add built site files</span></span>
-<span id="cb3-15"><a href="#cb3-15"></a><span class="fu">rsync</span> -a ../_site/ .</span>
-<span id="cb3-16"><a href="#cb3-16"></a><span class="fu">git</span> add .</span>
-<span id="cb3-17"><a href="#cb3-17"></a><span class="fu">git</span> commit -m <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
-<span id="cb3-18"><a href="#cb3-18"></a><span class="fu">git</span> push origin master</span>
-<span id="cb3-19"><a href="#cb3-19"></a></span>
-<span id="cb3-20"><a href="#cb3-20"></a><span class="co"># Cleanup .deploy directory after a successful push</span></span>
-<span id="cb3-21"><a href="#cb3-21"></a><span class="bu">cd</span> ..</span>
-<span id="cb3-22"><a href="#cb3-22"></a><span class="fu">rm</span> -rf .deploy</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">#!/usr/bin/env bash</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-eo</span> pipefail</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="co"># Clean rebuild</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="ex">cabal</span> new-exec site rebuild</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true"></a></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="co"># Create deploy environment inside of .deploy directory</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="fu">mkdir</span> .deploy</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="bu">cd</span> .deploy</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="fu">git</span> init</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="fu">git</span> remote add origin git@github.com:vrom911/vrom911.github.io.git</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="fu">git</span> pull -r origin master</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co"># Add built site files</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="fu">rsync</span> -a ../_site/ .</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="fu">git</span> add .</span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="fu">git</span> commit -m <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="fu">git</span> push origin master</span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co"># Cleanup .deploy directory after a successful push</span></span>
+<span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="bu">cd</span> ..</span>
+<span id="cb3-22"><a href="#cb3-22" aria-hidden="true"></a><span class="fu">rm</span> -rf .deploy</span></code></pre></div>
 <h2 id="conclusion">Conclusion</h2>
 <p>To summarize my experience with the personal website creation: well, the resulting product is not perfect, the development process is very hard, and the webpage doesn’t look like the ideal one in the end and maybe some people would hate it very badly, but these aspects are not the points of my writing. I intended to show that the person knowing so little can achieve the complete result and make stuff work the way one wants it to. So, do not wait for your dream webpage, go and make one!</p> </p> </div>
           </div>
