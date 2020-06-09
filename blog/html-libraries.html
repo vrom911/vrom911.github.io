@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Choosing an HTML library in Haskell</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="vrom911 Blog">
+    <meta name="keywords" content="Haskell, Functional progarmming, FP">
+    <meta name="author" content="Veronika Romashkina" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@vrom911" />
+    <meta property="twitter:title" content="vrom911 - Choosing an HTML library in Haskell" />
+    <meta name="twitter:description" content="The post contains a brief description and comparison of the three particular Haskell HTML generating libraries." />
+    <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+    <meta property="og:title" content="Choosing an HTML library in Haskell" />
+    <meta property="og:description" content="The post contains a brief description and comparison of the three particular Haskell HTML generating libraries." />
+    <meta property="og:site_name" content="vrom911" />
+    <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../css/highlight-theme.css" />
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135683915-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135683915-1');
+        </script>
+
+  </head>
+  <body class="body-posts">
+    <!-- Header -->
+    <nav class="navbar navbar-inverse navbar-fixed-right bg-primary text-secondary">
+      <div class="navbar-header row">
+          <div class="postslogo"> <a class="navbar-brand" href="../"><img class="img-fluid" src="../images/logo.png" alt="vrom911"></a></div>
+          <h5 class="text-center"><a href="../blog"> vrom911 Blog</a></h5>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+<ul class="list-inline mb-0">
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/vrom911" target="_blank">
+            <i class="fab fa-twitter"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/vrom911" target="_blank">
+            <i class="fab fa-github"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.linkedin.com/in/veronikaromashkina/" target="_blank">
+            <i class="fab fa-linkedin"></i>
+       </a>
+    </li>
+
+</ul>
+
+      </div>
+      <div class="toc-zone">
+          <h6 class="text-white text-center">Contents</h6>
+          <div class="toc" id="main"> <ul>
+<li><a href="#use-case">Use case</a></li>
+<li><a href="#type-of-html">type-of-html</a>
+<ul>
+<li><a href="#concepts-of-the-library">Concepts of the library:</a></li>
+<li><a href="#pros">Pros</a></li>
+<li><a href="#cons">Cons</a></li>
+<li><a href="#summary">Summary</a>
+<ul>
+<li><a href="#my-usage-comments">My usage comments</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#blaze">blaze</a>
+<ul>
+<li><a href="#concepts-of-the-library-1">Concepts of the library</a></li>
+<li><a href="#pros-1">Pros</a></li>
+<li><a href="#cons-1">Cons</a></li>
+<li><a href="#summary-1">Summary</a>
+<ul>
+<li><a href="#my-usage-comments-1">My usage comments</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#mustache">mustache</a>
+<ul>
+<li><a href="#concepts-of-the-library-2">Concepts of the library</a></li>
+<li><a href="#pros-2">Pros</a></li>
+<li><a href="#cons-2">Cons</a></li>
+<li><a href="#summary-2">Summary</a>
+<ul>
+<li><a href="#my-usage-comments-2">My usage comments</a></li>
+</ul></li>
+</ul></li>
+<li><a href="#conclusion">Conclusion</a></li>
+</ul> </div>
+      </div>
+    </nav>
+    <section class="container info">
+        <h2 class="text-center text-uppercase text-purple">Choosing an HTML library in Haskell</h2>
+        <div class="text-center">June  9, 2020</div>
+        <div class="row tag-block text-center">
+          <div class="col-12 tag-block">
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/haskell">haskell</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/library">library</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/html">html</a></span>
+            
+          </div>
+        </div>
+        <div class="content">
+          <div class="row post">
+            <div class="col-12 post-body"> <p class="lead"> <p>Recently I was on the lookout for a Haskell HTML rendering library. I was surprised by the number of great and yet so different packages in the assortment. It was tough to choose among them though, so I decided to quickly write this post with my evaluation of all libraries I tried. I hope my notes can be helpful for other seekers like me. The post contains a brief description and comparison of the three particular Haskell HTML generating libraries that I personally used in my project while deciding on the best fit. Besides, this text documents the decision-making process which is actually a really helpful practice, I can recommend everyone taking such notes for recording your decisions.</p>
+<p>To understand the pros and cons of each library described in this post, no HTML knowledge is required. Moreover, I myself can not be considered an HTML expert. Just pure Haskell familiarity is enough.</p>
+<h2 id="use-case">Use case</h2>
+<p>To make the libraries comparison fairer, I want to share my use case on which I built the library choice decision. It is definitely the key part here, as every mentioned library has its strengths and weaknesses, and it is always important to understand first what is needed for your particular problem in order to bring benefits to the whole project.</p>
+<p>The problem I was trying to solve with the HTML generation library is for a really cool project <a href="https://kodimensional.dev/">ChShersh</a> and I are working on at the moment.</p>
+<p>In our case, we need to generate a small HTML report file based on the output data of our tool’s work. We have several conditions we want the desired library to satisfy. First of all, the HTML generation (in runtime) should be fast, as we want to produce the result in no time. Secondly, the code responsible for the resulting HTML should be easily maintainable, testable and readable, especially keeping in mind that only Haskellers are working on it, not professionals in HTML. In the perfect world, it should not bring the dependencies overhead, as users are going to build our tool from sources as well. For that purpose, we need to leave the dependencies trace light and the compilation time reasonable enough. These are the basic criteria we want the solution to have.</p>
+<p>In this post, we are going to look more closely at three particular libraries: <code>type-of-html</code>, <code>blaze-html</code> and <code>mustache</code>. However, there are much more libraries in the wild. This choice was initially made based only on our use case and how promising candidates look for the particular problem. Please, take all further comparison with the given specific use-case in mind as well. I would probably go with another option if my requirements were different.</p>
+<h2 id="type-of-html">type-of-html</h2>
+<p><strong>Source:</strong> <a href="https://github.com/knupfer/type-of-html">knupfer/type-of-html</a></p>
+<p><strong>Documentation:</strong> <a href="https://hackage.haskell.org/package/type-of-html">type-of-html</a></p>
+<p><strong>Description:</strong> library for generating HTML in a highly performant, modular and type-safe manner. This library makes most invalid HTML documents compile-time errors and uses advanced type-level features to realise compile-time computations.</p>
+<h3 id="concepts-of-the-library">Concepts of the library:</h3>
+<p>The core of the library is that the HTML elements are represented on the type level. This approach helps to compose them with each other and perform compile-time analysis of the resulting composition. Each HTML part you write is a Haskell value with the type-level information on what is inside.</p>
+<h3 id="pros">Pros</h3>
+<ol type="1">
+<li><p>A purely Haskell backend person can <strong>smoothly switch to writing frontend</strong> now! And they won’t complain about it, as the pretty attractive design in terms of Haskell is quite straightforward.</p></li>
+<li><p>No surprises, the killer feature of this library is <strong>Type-safety</strong>. And that could be really helpful. The library kindly points out your semantical mistakes in HTML. For example, you won’t be able to switch table rows and table columns by a silly mistake:</p>
+<p><em>HTML:</em> <code>&lt;td&gt;&lt;tr&gt;&lt;/tr&gt;&lt;tr&gt;&lt;/tr&gt;&lt;/td&gt;</code></p>
+<p><em>Code:</em> <code>td_ (tr_ "a" # tr_ "b")</code></p>
+<p><em>Error:</em> <code>('Tr is not a valid child of 'Td)</code></p>
+<p>Moreover, you won’t be able to put any block elements into inline ones and get weird results, your code just won’t compile: <code>&lt;p&gt; anyBlockElemInside &lt;/p&gt;</code></p></li>
+<li><p>Very <strong>fast HTML generation</strong>. This is the part where implementation on types pays off. See these benchmarking numbers <a href="https://github.com/knupfer/type-of-html#performance">here</a>. It was possible to achieve such results due to type-level compiler features and optimizations.</p></li>
+<li><p><strong>Compiler optimizations:</strong> I decided to move it into a separate point as this is the kind of optimizations that are sometimes helpful to the user code (for example, inlining nested empty <code>div</code>s).</p></li>
+<li><p><strong>HTML5 support.</strong> I would not state that it is fully supported as I didn’t find this information, but from what I saw the library provides all elements, tags and attributes that could be needed for an average task.</p></li>
+<li><p>Different <strong>rendering functions</strong> for your needs. Works with <code>Builder</code> that could make it really fast if you need to manipulate with HTML later. Also easy escaping is provided by default.</p></li>
+<li><p>The library is <strong>lightweight</strong>, specifically, it depends only on boot libraries + the <code>double-conversion</code> library which itself depends on boot libraries only.</p></li>
+</ol>
+<h3 id="cons">Cons</h3>
+<ol type="1">
+<li><p><strong>Compilation times</strong>. This is the most noticeable downside for me and my old laptop :( Due to the heavy type-level abuse plus the inability to annotate type signatures (see the next point), the compilation time is drastically increased. Also, remember the compiler optimizations I was describing in the Pros previously? Guess what, they can hit you from the other side too. They affect compile-time as well, and sacrificing the optimizations at all doesn’t work for me in my project.</p></li>
+<li><p>I gave up pretty quickly on functions top-level type signatures, as it is just <strong>impossible to write type signatures</strong>. It is a big deal due to the range of data types of different complexity we are using in the project. Some type signatures are the only way to tell the compiler the type of the element (e.g. phantom parameters). So, in a blink of an eye, I found myself turning on <code>{-# OPTIONS_GHC -Wno-missing-signatures #-}</code> (and my inner Haskeller crying inside). The explanation is simple if you understand the nature of the library: every single element, tag, etc. is represented in its type. So if you write</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode html"><code class="sourceCode html"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">&lt;div</span><span class="ot"> class=</span><span class="st">&quot;link&quot;</span><span class="kw">&gt;&lt;a</span><span class="ot"> href=</span><span class="st">&quot;#foo&quot;</span><span class="kw">&gt;</span>Foo<span class="kw">&lt;/a&gt;&lt;/div&gt;</span></span></code></pre></div>
+<p>It all is going to be in your type:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true"></a>(<span class="op">:@:</span>)</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true"></a>    <span class="dt">'Div</span> (<span class="dt">'ClassA</span> <span class="op">:=</span> [<span class="dt">Char</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true"></a>        ((<span class="op">:@:</span>) <span class="dt">'A</span> (<span class="dt">'HrefA</span> <span class="op">:=</span> [<span class="dt">Char</span>]) [<span class="dt">Char</span>])</span></code></pre></div>
+<blockquote>
+<p><em>Disclaimer:</em> Do NOT try to imagine the type of an intermediate HTML document at home.</p>
+</blockquote></li>
+<li><p>You <strong>won’t be able to use <code>OverloadedStrings</code></strong>, sorry. This is related to the previous point. Such limitation is not only annoying but also is creating some troubles due to the fact that we are using some other libraries that use polymorphic types.</p></li>
+<li><p>Because of the type-safety, some really <strong>hacky tricks</strong> are needed to <strong>fool the compiler</strong>. Yes, to fool the compiler, that is definitely needed. Let’s do some type puzzles starting with the simple one. What if you need to have some element only on condition? In <code>if</code> conditional statements you should have the same types in both cases, but how to do that if types depend on what is inside the HTML? The solution here is to use <code>Maybe</code> (this solution is actually described in the README)</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="kw">if</span> p <span class="kw">then</span> <span class="dt">Just</span> (p_ <span class="st">&quot;Tada!&quot;</span>) <span class="kw">else</span> <span class="dt">Nothing</span></span></code></pre></div>
+<p>The other tricky example which we actually spend some time on solving is the following: based on some given <code>Maybe</code> you have to return one <code>li</code> (list) element on <code>Nothing</code>, or a bunch of <code>li</code>s based on the <code>Just</code> value. The first thought is using Haskell <code>list []</code> for that. But, actually, that won’t work if you need to return different <code>li</code> elements in the list:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a><span class="co">-- WRONG!</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a>[ li_ <span class="st">&quot;foo&quot;</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a>, li_ (<span class="st">&quot;foo&quot;</span> <span class="op">#</span> strong <span class="st">&quot;bar&quot;</span>)</span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>]</span></code></pre></div>
+<p>These elements can not be in one list as they have different types! So lists are a no-go in here, and the cleverer trick is to use <code>Either</code>. As the HTML elements are easily composable with the <code>#</code> operator of the library, we can return <code>Left</code> or <code>Right</code> in the described case. And, as you can imagine, the tricks are becoming more involved when you need to handle more than two different cases and introduce some deeply nested logic.</p></li>
+<li><p>Most of the time <strong>compiler errors are not helpful</strong> at all and appear in the wrong place rather than the real problem. Check this one out:</p>
+<p><img width="1105" alt="Screenshot 2020-06-09 at 13 37 31" src="https://user-images.githubusercontent.com/8126674/84194474-f9bcc080-aa94-11ea-857f-8a6b6415628e.png"></p>
+<p>See this picture of 1/1000 of the error lines about types mismatch. To clarify, I used polymorphic string on the line ~150 in a separate function, and I get absolutely not relevant error on the line 84 that says something about HashSet, which could be really confusing.</p></li>
+<li><p>It is impossible to move common parts in separate functions sometimes. Type inference strikes again. As it could not infer the polymorphic enough type, it would fail as soon as you would use it inside one scope with different types.</p></li>
+</ol>
+<h3 id="summary">Summary</h3>
+<p><code>type-of-html</code> is a nice, fast, safe and clever library. It will pay off if you need a lot of HTML generation on the fly. However, it is not working out well for small, standalone, one-time generation projects and trade-offs are too high.</p>
+<h4 id="my-usage-comments">My usage comments</h4>
+<p>The library was quite easy to integrate, I was able to see results almost straight away (no need for a long set-up). I was confused first with the issues with types when <code>OverloadedStrings</code> were on. Documentation status is good. But I was sometimes spending and wasting a lot of time on error messages that knocked me down and distracted from the real errors in code.</p>
+<h2 id="blaze">blaze</h2>
+<p><strong>Source:</strong> <a href="https://github.com/jaspervdj/blaze-html">jaspervdj/blaze-html</a></p>
+<p><strong>Documentation:</strong> <a href="https://hackage.haskell.org/package/blaze-html">blaze-html</a></p>
+<p><strong>Description:</strong> A blazingly fast HTML combinator library for the Haskell programming language. It embeds HTML templates in Haskell code for optimal efficiency and composability.</p>
+<h3 id="concepts-of-the-library-1">Concepts of the library</h3>
+<p>In the centre of this library is the Monadical HTML type that allows you to compose elements really smoothly. By virtue of helpful type-classes and handy instances, it is quite straightforward to compose elements and use the library as an eDSL.</p>
+<h3 id="pros-1">Pros</h3>
+<ol type="1">
+<li>The library is <strong>lightweight</strong> in a similar way to <code>types-of-html</code>. It depends on boot or very lightweight libraries.</li>
+<li>Blaze states that it is <em>blazingly</em> <strong>fast</strong>. And you can see it by the benchmarks provided <a href="https://jaspervdj.be/blaze/benchmarks.html">here</a>. Even though it concedes to the previous library, it is still sufficiently swift.</li>
+<li><code>Blaze</code> provides an extremely <strong>Composable</strong> API, including composable attributes additionally to elements.</li>
+<li>It allows to <strong>factor out code</strong> easily, to <strong>refactor</strong> and generally <strong>maintain</strong> the source code in a healthy way. Neat for writing complicated functions</li>
+<li>Owing to a nice eDSL, it is easy to <strong>read code</strong> for both back and front developers.</li>
+<li><code>blaze</code> takes advantage of the <strong><code>OverloadedStrings</code></strong> extension, so you can comfortably operate with any type of the string you have in your project without any additional overhead.</li>
+<li><strong>Maturity</strong> of the library is a plus as well. It also provides full support of <strong>HTML5</strong> (and additionally HTML4 in case you need it).</li>
+<li>In addition to the great support of elements, the library also provides an <strong>extensible interface</strong> for the tricky stuff you have in mind.</li>
+<li>Different rendering functions. Works with Lazy <code>ByteString</code>.</li>
+<li>There is a way to create <strong>Haskell code from HTML</strong>, which is not compulsory but a pleasant bonus.</li>
+</ol>
+<h3 id="cons-1">Cons</h3>
+<ol type="1">
+<li><p>When converting text values to HTML, you need to call <code>toHtml</code> function explicitly in different places.</p></li>
+<li><p>Less type-safe than <code>type-of-html</code> analogue. You won’t see little helping errors like: “the semantic is wrong, you really don’t want to put this <code>div</code> inside of the <code>span</code> here”.</p></li>
+<li><p>And some nitpicking. As all attributes work with the special <code>AttributeValue</code> type (not <code>String</code> or <code>Text</code>), the only way sometimes to specify this value is by using its <code>IsString</code> instance. However, as we have <code>Text</code> almost everywhere, we need to use <code>fromString . toString</code> composition everywhere.</p>
+<p>For example:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true"></a>a <span class="op">!</span> A.href (fromString <span class="op">$</span> toString <span class="op">$</span> <span class="st">&quot;#&quot;</span> <span class="op">&lt;&gt;</span> myText) <span class="op">$</span> <span class="op">...</span></span></code></pre></div></li>
+</ol>
+<h3 id="summary-1">Summary</h3>
+<p>The library is very easy to handle for any level of Haskell developers. I think that it is suitable for both small and big HTML generation purposes. It is flexible in the use cases. Also, it doesn’t have such an impact on your compile-time, and small changes don’t require the complete recompilation (which is handy during the development).</p>
+<h4 id="my-usage-comments-1">My usage comments</h4>
+<p>The library was quite easy to integrate, it also does not require any long and boring set up, and you can see results in no time. I was transitioning my ready Haskell HTML code written in <code>type-of-html</code> and what I noticed is that the code became much cleaner. The ability to combine <code>$</code> and parentheses frees your hands makes you more flexible on code alignment. Also, some opportunities for the code factoring out were unblocked (which were impossible due to type inference issues with <code>type-of-html</code>).</p>
+<h2 id="mustache">mustache</h2>
+<p><strong>Source:</strong> <a href="https://github.com/JustusAdam/mustache">JustusAdam/mustache</a></p>
+<p><strong>Documentation:</strong> <a href="https://hackage.haskell.org/package/mustache">mustache</a></p>
+<p><strong>Description:</strong> Allows parsing and rendering template files with mustache markup. See the mustache <a href="http://mustache.github.io/mustache.5.html">language reference</a>.</p>
+<h3 id="concepts-of-the-library-2">Concepts of the library</h3>
+<p>This library is very different from the previous two candidates as it is conceptually not the HTML library, strictly speaking. It is based on the templating system with the separate syntax for manipulating data in the given template. And this template could be anything, including the HTML page.</p>
+<p>As this is not the ultimate comparison of all Haskell HTML libraries, but rather the experience report on the tool search for the concrete issue resolution, I think that it is fair to include the first candidate we had in mind for the task.</p>
+<h3 id="pros-2">Pros</h3>
+<ol type="1">
+<li><strong>Not 100% Haskell</strong>, therefore, it has a lesser entry barrier for those with more HTML experience and less Haskell experience.</li>
+<li>The library is <strong>easy to adopt</strong> if you were using the plain HTML and now want to do something more sophisticated.</li>
+<li>Good for multiple usages in one go: when you need to read the template one time and substitute it with the different variables.</li>
+<li>The format has a nice feature of the <strong>templates combining</strong>, that helps to arrange lots of HTML in a tidy and comfortable way.</li>
+<li>You can change HTML parts in the template and <strong>rerender HTML immediately</strong> without waiting for the compilation to finish.</li>
+</ol>
+<h3 id="cons-2">Cons</h3>
+<ol type="1">
+<li><strong>Not 100% Haskell</strong>, therefore requires more wide knowledge of the stack, in our case HTML knowledge.</li>
+<li>The library does not provide any <code>Generic</code> mechanics, so it forces you to write quite <strong>a lot of boilerplate</strong>.</li>
+<li>There is <strong>no type-safety</strong> and runtime guarantee. Runtime errors are sadly possible. And there is a chance that the template won’t be rendered as expected (could miss some values).</li>
+<li>In most of the cases, you need on-the-fly files reading and template matching. This leads to too many <strong>error-prone</strong> places to watch out.</li>
+<li>The <strong>abilities are limited by the <code>mustache</code> format</strong>, not Haskell capabilities. This means that you could quickly get short on flexibility on factoring out, etc.</li>
+<li><code>mustache</code> is the new and maybe not-familiar format. This creates a <strong>learning curve</strong> which could require an <strong>investment of time</strong>.</li>
+<li>The Haskell library is <strong>not lightweight</strong> and depends on a lot of huge libraries in order to provide instances.</li>
+<li>I personally noticed the <strong>lack of documentation on the templating part</strong>. For example, by only looking at the library I could not make it work, which is the indicator that it could be improved a bit. Luckily, I found somewhere else the code that was using the <code>object</code> function that helped me to use some primitive values in templates.</li>
+</ol>
+<h3 id="summary-2">Summary</h3>
+<p>The library is an example of a nicely done markup language API implementation in Haskell. I already have the experience of working with the library in production before, so it has proven itself to be mature enough and production-ready. Though the previous use-case was very different (we were composing user emails).</p>
+<p>In the first place, I was looking at using <code>mustache</code> because <code>criterion</code> – Haskell benchmarking library – is using templates for their HTML report creations. However, soon enough I realised how different the use cases are. Though <code>mustache</code> fits perfectly to the <code>criterion</code> workflow that is usually used as a library, not as an external tool, it is not giving us enough flexibility and advantages, if we want to distribute our tool as a single binary.</p>
+<h4 id="my-usage-comments-2">My usage comments</h4>
+<p>It is not that straightforward to start using the library. It also requires a lot of set-ups beforehand: you need to create the template, write down the template reading function, recover from errors, etc. The documentation does a poor job of explaining how to start with the library from A to Z. HTML is not what I write that frequently, so I didn’t feel comfortable to work with that. As nobody, who is going to maintain the code, doesn’t have such skills as well, this was a downside for us. Besides, the library requires to write a lot of not-so-type-safe boilerplate. The tool we are working at is WIP and changes frequently, which means that we would need to maintain the boilerplate as well, and it is a bit of overhead. Another sign was the runtime exceptions we should take care of. As I highlighted, it should work smoothly on users machines, and with that in mind, we should somehow have a way to provide all the template files and handle cases with file and other <code>IO</code> Exceptions that can happen on users’ machines.</p>
+<h2 id="conclusion">Conclusion</h2>
+<p>You saw that all the mentioned libraries are so different and yet each of them has its own place to shine. I have tasted all of the above libraries, and even though I am a huge fan of type-safety-for-the-best-experience, in my case the most type-safe solution wasn’t the best. We decided to stick to <code>blaze-html</code>, and it is working like a charm so far. My laptop (which is really old, but still has it!) is really grateful for this decision. It died during compilation few times when I was working with <code>type-of-html</code> as it requires really hardcore type inference from the compiler at <em>EVERY</em> small change.</p>
+<p>In the end, my advice would be to watch out the cons and consider the pros, projecting it on your use case, and be okay with giving up additional type-safety when it is not crucial.</p>
+<blockquote>
+<p>Note again, I truly enjoyed all the tested libraries. I think that developers and maintainers are doing a great job there, and I want to say thank you all for your time and hard work! 💖</p>
+</blockquote> </p> </div>
+          </div>
+        </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"> </script>
+    <script src="../js/post.js"> </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad()</script>
+  </body>
+</html>
