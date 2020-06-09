@@ -100,6 +100,11 @@ epLinkC  = field "externalLink"  $ pure . epLink  . itemBody
 allExternalPosts :: Compiler [Item ExternalPost]
 allExternalPosts = traverse makeItem
     [ ExternalPost
+        { epTitle = "Extensions"
+        , epDate = "May 10, 2020"
+        , epLink = kowainik "extensions"
+        }
+    , ExternalPost
         { epTitle = "Insane in the Membrain"
         , epDate = "July 23, 2019"
         , epLink = kowainik "membrain"
