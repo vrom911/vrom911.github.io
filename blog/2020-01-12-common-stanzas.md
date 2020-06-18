@@ -181,6 +181,7 @@ Here is the full list of the fields that can be used:
  * [other-modules](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-modules)
  * [hs-source-dirs](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-hs-source-dirs)
  * [default-extensions](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-extensions)
+ * [default-languages](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-languages)
  * [other-extensions](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-extensions)
  * [build-tool-depends](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-tool-depends)
  * [buildable](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-buildable)
