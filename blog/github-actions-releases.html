@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Haskell binaries release with GitHub Actions</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="How to create Haskell releases with binary assets using a simple GitHub Actions workflow.">
+    <meta name="keywords" content="Haskell, Functional progarmming, FP, haskell, github, github-actions">
+    <meta name="author" content="Veronika Romashkina" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@vrom911" />
+    <meta property="twitter:title" content="vrom911 - Haskell binaries release with GitHub Actions" />
+    <meta name="twitter:description" content="How to create Haskell releases with binary assets using a simple GitHub Actions workflow." />
+    <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+    <meta property="og:title" content="Haskell binaries release with GitHub Actions" />
+    <meta property="og:description" content="How to create Haskell releases with binary assets using a simple GitHub Actions workflow." />
+    <meta property="og:site_name" content="vrom911" />
+    <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../css/highlight-theme.css" />
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135683915-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135683915-1');
+        </script>
+
+  </head>
+  <body class="body-posts">
+    <!-- Header -->
+    <nav class="navbar navbar-inverse navbar-fixed-right bg-primary text-secondary">
+      <div class="navbar-header row">
+          <div class="postslogo"> <a class="navbar-brand" href="../"><img class="img-fluid" src="../images/logo.png" alt="vrom911"></a></div>
+          <h5 class="text-center"><a href="../blog"> vrom911 Blog</a></h5>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+<ul class="list-inline mb-0">
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/vrom911" target="_blank">
+            <i class="fab fa-twitter"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/vrom911" target="_blank">
+            <i class="fab fa-github"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.linkedin.com/in/veronikaromashkina/" target="_blank">
+            <i class="fab fa-linkedin"></i>
+       </a>
+    </li>
+
+</ul>
+
+      </div>
+      <div class="toc-zone">
+          <h6 class="text-white text-center">Contents</h6>
+          <div class="toc" id="main"> <ul>
+<li><a href="#why-binary">Why binary?</a></li>
+<li><a href="#what-we-want">What we want</a></li>
+<li><a href="#create-a-release">Create a release</a></li>
+<li><a href="#create-binaries">Create binaries</a></li>
+<li><a href="#example-of-the-total-action-workflow">Example of the total Action workflow</a></li>
+<li><a href="#what-is-next">What is next?</a></li>
+<li><a href="#acknowledgement">Acknowledgement</a></li>
+</ul> </div>
+      </div>
+    </nav>
+    <section class="container info">
+        <h2 class="text-center text-uppercase text-purple">Haskell binaries release with GitHub Actions</h2>
+        <div class="text-center">July 17, 2020</div>
+        <div class="row tag-block text-center">
+          <div class="col-12 tag-block">
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/haskell">haskell</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/github">github</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/github-actions">github-actions</a></span>
+            
+          </div>
+        </div>
+        <div class="content">
+          <div class="row post">
+            <div class="col-12 post-body"> <p class="lead"> <p>If you are using the <a href="https://github.com/">GitHub</a> platform for your projects, then you probably have already heard of <a href="https://github.com/features/actions">GitHub Actions</a> Continuous Integration (CI) available there out of the box. This is relatively new and yet already a popular and quite convenient way to set up your workflows as well. In case you did not have the chance to play with it, but would love to give it a try with your Haskell projects, there is the <a href="https://kodimensional.dev/github-actions">blog post by Dmitrii</a> that can help with that.</p>
+<p>However, CI is not the only use case for GitHub Actions. In this post, I would like to share the workflow that allows creating releases at GitHub with the build binaries (ready executable files) for your Haskell tools.</p>
+<h2 id="why-binary">Why binary?</h2>
+<p>When it comes to Haskell tools distribution, the most common option is usually to install whatever you want from <a href="https://hackage.haskell.org/">Hackage</a> or <a href="https://www.stackage.org/">Stackage</a>. That is when the package is available there. If it is not the recommended way is to clone the project and build &amp; install it locally.</p>
+<p>This is not enough for several reasons. First of all, it assumes that the person who would use your tool should know at least a little bit of Haskell. And secondly, they should have some Haskell build tool installed on the machine they would like to use it on. Both of the assumptions could be false simultaneously.</p>
+<p>For those reasons, there is the third distribution way – providing binaries. In that case, the user is capable of installing your tool wherever they want without any additional effort by downloading a file and putting it under the convenient location.</p>
+<h2 id="what-we-want">What we want</h2>
+<p>Now when we understand why the binaries release could be useful, let’s first discuss what the workflow should do for us.</p>
+<p>As soon as the tag with the <code>v*</code>-like name is created, the workflow should be triggered and start producing binaries. It should create a draft release at GitHub and upload built assets of the specified operating system and maybe GHC version. This is an overall goal. But let’s get into more detail on the low-level plan.</p>
+<p>The workflow has two separate jobs:</p>
+<ol type="1">
+<li>To create a draft release with the given name that is linked to the tag that triggered the event.</li>
+<li>To build the requested binaries, strip them (and maybe do more) and then upload to the created already draft release</li>
+</ol>
+<p>With that in mind see the overall picture of the process schematically illustrated at the following image:</p>
+<figure>
+<img src="https://user-images.githubusercontent.com/8126674/87802363-00371880-c849-11ea-82c7-81681bc02206.png" alt /><figcaption>GitHub Actions Release Workflow</figcaption>
+</figure>
+<p>Now as we have a plan, we can deep down to its internals.</p>
+<h2 id="create-a-release">Create a release</h2>
+<p>This job is quite straightforward. It requires three easy steps each of which is accomplished with the existing GitHub action:</p>
+<ol type="1">
+<li>Check out the project. Here we use <a href="https://github.com/actions/checkout">actions/checkout</a> – the standard action that gives the workflow access to the repository it is working with. It also creates you the workspace where you would be able to do whatever you want during this workflow (but only permitted things).</li>
+<li>Create a release. Here we use <a href="https://github.com/actions/create-release">actions/create-release</a> – the standard action that creates the release at GitHub. This action has some configurations that you can tune to your needs. We are making a draft release with the <code>Release TAG_NAME</code> title.</li>
+<li>Write the release URL into the file in the shared workspace. This is needed due to the fact that the jobs can not share the outputs, so we write it down to read later as we would need to know where to upload artifacts. Here we use <a href="https://github.com/actions/upload-artifact">actions/upload-artifact</a> – the action that is used to share some data via uploads.</li>
+</ol>
+<h2 id="create-binaries">Create binaries</h2>
+<p>After the release is created by the previous job, we want to upload binaries to it. For that, first, we should create a build strategy. What we can specify is the matrix of environment settings used for each asset build: operating systems, GHC versions, Cabal versions, any other data you find important at this point. Due to the specifics of the projects I initially created the workflow for (it is <a href="https://github.com/kowainik/stan">Stan</a>, we have 3 platforms and 2 GHC versions in our matrix and we also excluded the windows for one of the GHC versions which gives us 3 x 2 - 1 = 5 assets in total.</p>
+<p>For each matrix item the following steps are taken:</p>
+<ol type="1">
+<li>Checkout code. See the first step in the previous job. This gives us access to the same workspace.</li>
+<li>Set up a Haskell environment. Here we use <a href="https://github.com/actions/setup-haskell">actions/setup-haskell</a> to have GHC and Cabal available for the next steps.</li>
+<li>Freeze and Restore cache. First we <code>cabal freeze</code> the dependencies and cache that instead, so we could have the cached dependencies not build if no versions were changed. We are using <a href="https://github.com/actions/cache">actions/cache</a> for caching.</li>
+<li>Build the executable. We specify the directory where to install the executable in order to easy access to that folder: <code>cabal install exe:stan --install-method=copy --overwrite-policy=always --installdir=dist</code></li>
+<li><em>[Windows specific]</em> Add the <code>.exe</code> suffix to the binary.</li>
+<li>Set the path to the executable into the <code>BINARY_PATH</code> environment variable. We know exactly where it is, as we specified it earlier.</li>
+<li>Strip the binary. The Haskell exe could be very heavy, it never hurts to light it a bit.</li>
+<li>Read the URL of the release using the created file with it during the previous job. We use <a href="https://github.com/actions/download-artifact">actions/download-artifact</a> – action to get files.</li>
+<li>Upload the asset With the help of <a href="https://github.com/actions/upload-release-asset">actions/upload-release-asset</a> – the action that actually uploads our binary to the release by the given URL. You can also set the names the way you want it to be.</li>
+</ol>
+<h2 id="example-of-the-total-action-workflow">Example of the total Action workflow</h2>
+<p>And to summarise all the detailed explanation here is an example script that can also be found in the <a href="https://github.com/kowainik/stan/blob/7088f13c1b3c081e1b2375ddf00a7f9e9c7f535c/.github/workflows/release.yml">Stan repository on GitHub</a>.</p>
+<blockquote>
+<p>📦 The example release itself is also available in the <a href="https://github.com/kowainik/stan/releases/tag/v0.0.1.0">Stan releases</a>.</p>
+</blockquote>
+<div class="sourceCode" id="cb1"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="fu">name</span><span class="kw">:</span><span class="at"> Release</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true"></a><span class="fu">on</span><span class="kw">:</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true"></a><span class="co">  # Trigger the workflow on the new 'v*' tag created</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true"></a><span class="at">  </span><span class="fu">push</span><span class="kw">:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true"></a><span class="at">    </span><span class="fu">tags</span><span class="kw">:</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;v*&quot;</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true"></a></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true"></a><span class="fu">jobs</span><span class="kw">:</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true"></a><span class="at">  </span><span class="fu">create_release</span><span class="kw">:</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Create Github Release</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ubuntu-latest</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check out code</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Create Release</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> create_release</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/create-release@v1.1.1</span></span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true"></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true"></a><span class="at">          </span><span class="fu">tag_name</span><span class="kw">:</span><span class="at"> ${{ github.ref }}</span></span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true"></a><span class="at">          </span><span class="fu">release_name</span><span class="kw">:</span><span class="at"> Release ${{ github.ref }}</span></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true"></a><span class="at">          </span><span class="fu">draft</span><span class="kw">:</span><span class="at"> </span><span class="ch">true</span></span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true"></a><span class="at">          </span><span class="fu">prerelease</span><span class="kw">:</span><span class="at"> </span><span class="ch">false</span></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true"></a></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Output Release URL File</span></span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> echo &quot;${{ steps.create_release.outputs.upload_url }}&quot; &gt; release_url.txt</span></span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Save Release URL File for publish</span></span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-artifact@v1</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> release_url</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> release_url.txt</span></span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true"></a><span class="at">  </span><span class="fu">build_artifact</span><span class="kw">:</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true"></a><span class="at">    </span><span class="fu">needs</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">create_release</span><span class="kw">]</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true"></a><span class="at">    </span><span class="fu">name</span><span class="kw">:</span><span class="at"> ${{ matrix.os }}/GHC ${{ matrix.ghc }}/${{ github.ref }}</span></span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true"></a><span class="at">    </span><span class="fu">runs-on</span><span class="kw">:</span><span class="at"> ${{ matrix.os }}</span></span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true"></a><span class="at">    </span><span class="fu">strategy</span><span class="kw">:</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true"></a><span class="at">      </span><span class="fu">matrix</span><span class="kw">:</span></span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true"></a><span class="at">        </span><span class="fu">os</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="at">ubuntu-latest</span><span class="kw">,</span><span class="at"> macOS-latest</span><span class="kw">,</span><span class="at"> windows-latest</span><span class="kw">]</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true"></a><span class="at">        </span><span class="fu">ghc</span><span class="kw">:</span></span>
+<span id="cb1-44"><a href="#cb1-44" aria-hidden="true"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;8.8.3&quot;</span></span>
+<span id="cb1-45"><a href="#cb1-45" aria-hidden="true"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="st">&quot;8.10.1&quot;</span></span>
+<span id="cb1-46"><a href="#cb1-46" aria-hidden="true"></a><span class="at">        </span><span class="fu">cabal</span><span class="kw">:</span><span class="at"> </span><span class="kw">[</span><span class="st">&quot;3.2&quot;</span><span class="kw">]</span></span>
+<span id="cb1-47"><a href="#cb1-47" aria-hidden="true"></a><span class="at">        </span><span class="fu">exclude</span><span class="kw">:</span></span>
+<span id="cb1-48"><a href="#cb1-48" aria-hidden="true"></a><span class="at">          </span><span class="kw">-</span><span class="at"> </span><span class="fu">os</span><span class="kw">:</span><span class="at"> windows-latest</span></span>
+<span id="cb1-49"><a href="#cb1-49" aria-hidden="true"></a><span class="at">            </span><span class="fu">ghc</span><span class="kw">:</span><span class="at"> </span><span class="fl">8.8.3</span></span>
+<span id="cb1-50"><a href="#cb1-50" aria-hidden="true"></a></span>
+<span id="cb1-51"><a href="#cb1-51" aria-hidden="true"></a><span class="at">    </span><span class="fu">steps</span><span class="kw">:</span></span>
+<span id="cb1-52"><a href="#cb1-52" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Check out code</span></span>
+<span id="cb1-53"><a href="#cb1-53" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/checkout@v2</span></span>
+<span id="cb1-54"><a href="#cb1-54" aria-hidden="true"></a></span>
+<span id="cb1-55"><a href="#cb1-55" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set tag name</span></span>
+<span id="cb1-56"><a href="#cb1-56" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> olegtarasov/get-tag@v2</span></span>
+<span id="cb1-57"><a href="#cb1-57" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> tag</span></span>
+<span id="cb1-58"><a href="#cb1-58" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-59"><a href="#cb1-59" aria-hidden="true"></a><span class="at">          </span><span class="fu">tagRegex</span><span class="kw">:</span><span class="at"> </span><span class="st">&quot;v(.*)&quot;</span></span>
+<span id="cb1-60"><a href="#cb1-60" aria-hidden="true"></a><span class="at">          </span><span class="fu">tagRegexGroup</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb1-61"><a href="#cb1-61" aria-hidden="true"></a></span>
+<span id="cb1-62"><a href="#cb1-62" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Setup Haskell</span></span>
+<span id="cb1-63"><a href="#cb1-63" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/setup-haskell@v1.1.1</span></span>
+<span id="cb1-64"><a href="#cb1-64" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> setup-haskell-cabal</span></span>
+<span id="cb1-65"><a href="#cb1-65" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-66"><a href="#cb1-66" aria-hidden="true"></a><span class="at">          </span><span class="fu">ghc-version</span><span class="kw">:</span><span class="at"> ${{ matrix.ghc }}</span></span>
+<span id="cb1-67"><a href="#cb1-67" aria-hidden="true"></a><span class="at">          </span><span class="fu">cabal-version</span><span class="kw">:</span><span class="at"> ${{ matrix.cabal }}</span></span>
+<span id="cb1-68"><a href="#cb1-68" aria-hidden="true"></a></span>
+<span id="cb1-69"><a href="#cb1-69" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Freeze</span></span>
+<span id="cb1-70"><a href="#cb1-70" aria-hidden="true"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-71"><a href="#cb1-71" aria-hidden="true"></a>          cabal freeze</span>
+<span id="cb1-72"><a href="#cb1-72" aria-hidden="true"></a></span>
+<span id="cb1-73"><a href="#cb1-73" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Cache ~/.cabal/store</span></span>
+<span id="cb1-74"><a href="#cb1-74" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/cache@v1</span></span>
+<span id="cb1-75"><a href="#cb1-75" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-76"><a href="#cb1-76" aria-hidden="true"></a><span class="at">          </span><span class="fu">path</span><span class="kw">:</span><span class="at"> ${{ steps.setup-haskell-cabal.outputs.cabal-store }}</span></span>
+<span id="cb1-77"><a href="#cb1-77" aria-hidden="true"></a><span class="at">          </span><span class="fu">key</span><span class="kw">:</span><span class="at"> ${{ runner.os }}-${{ matrix.ghc }}-${{ hashFiles('cabal.project.freeze') }}</span></span>
+<span id="cb1-78"><a href="#cb1-78" aria-hidden="true"></a></span>
+<span id="cb1-79"><a href="#cb1-79" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Build binary</span></span>
+<span id="cb1-80"><a href="#cb1-80" aria-hidden="true"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-81"><a href="#cb1-81" aria-hidden="true"></a>          mkdir dist</span>
+<span id="cb1-82"><a href="#cb1-82" aria-hidden="true"></a>          cabal install exe:stan --install-method=copy --overwrite-policy=always --installdir=dist</span>
+<span id="cb1-83"><a href="#cb1-83" aria-hidden="true"></a></span>
+<span id="cb1-84"><a href="#cb1-84" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">if</span><span class="kw">:</span><span class="at"> matrix.os == 'windows-latest'</span></span>
+<span id="cb1-85"><a href="#cb1-85" aria-hidden="true"></a><span class="at">        </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set extension to .exe on Windows</span></span>
+<span id="cb1-86"><a href="#cb1-86" aria-hidden="true"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> echo &quot;::set-env name=EXT::.exe&quot;</span></span>
+<span id="cb1-87"><a href="#cb1-87" aria-hidden="true"></a></span>
+<span id="cb1-88"><a href="#cb1-88" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set binary path name</span></span>
+<span id="cb1-89"><a href="#cb1-89" aria-hidden="true"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> echo &quot;::set-env name=BINARY_PATH::./dist/stan${{ env.EXT }}&quot;</span></span>
+<span id="cb1-90"><a href="#cb1-90" aria-hidden="true"></a></span>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Strip binary</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> strip ${{ env.BINARY_PATH }}</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true"></a></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Load Release URL File from release job</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/download-artifact@v1</span></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> release_url</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true"></a></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Release File Name &amp; Upload URL</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> get_release_info</span></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true"></a>          echo &quot;::set-output name=upload_url::$(cat release_url/release_url.txt)&quot;</span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true"></a></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Release Asset</span></span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> upload-release-asset</span></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-release-asset@v1.0.1</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true"></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true"></a><span class="at">          </span><span class="fu">upload_url</span><span class="kw">:</span><span class="at"> ${{ steps.get_release_info.outputs.upload_url }}</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_path</span><span class="kw">:</span><span class="at"> ${{ env.BINARY_PATH }}</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_name</span><span class="kw">:</span><span class="at"> stan-${{ steps.tag.outputs.tag }}-${{ runner.os }}-ghc-${{ matrix.ghc }}${{ env.EXT }}</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_content_type</span><span class="kw">:</span><span class="at"> application/octet-stream</span></span></code></pre></div>
+<h2 id="what-is-next">What is next?</h2>
+<p>To conclude this write up, I would like to mention that while being straightforward and flexible, the workflow has some space for improvements. Here are at least a few things that we are planning to upgrade in there:</p>
+<ul class="task-list">
+<li><input type="checkbox" disabled />
+Statically linked binaries</li>
+<li><input type="checkbox" disabled />
+Use <a href="https://upx.github.io/"><code>upx</code></a> for compressing binaries even further</li>
+<li><input type="checkbox" disabled />
+Create a workflow template for producing releases</li>
+<li><input type="checkbox" disabled />
+Add support of this feature to <a href="https://github.com/kowainik/summoner">Summoner</a>) — Haskell scaffolding tool</li>
+</ul>
+<h2 id="acknowledgement">Acknowledgement</h2>
+<p>I want to thank <a href="https://kodimensional.dev/">Dmitrii Kovanikov</a> for his kindness and patience when sharing with me his knowledge about GitHub Actions. You are the best!</p> </p> </div>
+          </div>
+        </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"> </script>
+    <script src="../js/post.js"> </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad()</script>
+  </body>
+</html>
