@@ -22,7 +22,7 @@ build binaries (ready executable files) for your Haskell tools.
 When it comes to Haskell tools distribution, the most common option is usually
 to install whatever you want from [Hackage](https://hackage.haskell.org/) or
 [Stackage](https://www.stackage.org/). That is when the package is available
-there. If it is not the recommended way is to clone the project and build &
+there. If it is not, the recommended way is to clone the project and build &
 install it locally.
 
 This is not enough for several reasons. First of all, it assumes that the person
