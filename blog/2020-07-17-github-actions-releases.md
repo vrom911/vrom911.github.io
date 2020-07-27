@@ -105,8 +105,9 @@ For each matrix item the following steps are taken:
 5. *[Windows specific]* Add the `.exe` suffix to the binary.
 6. Set the path to the executable into the `BINARY_PATH` environment variable.
    We know exactly where it is, as we specified it earlier.
-7. Strip the binary. The Haskell exe could be very heavy, it never hurts to
-   light it a bit.
+7. Compress the binary. The Haskell exe could be very heavy, it never hurts to
+   light it a bit. Here we use [svenstaro/upx-action](@gh) to first `strip` and
+   then `upx` the binary.
 8. Read the URL of the release using the created file with it during the
    previous job. We use [actions/download-artifact](@gh) – action to get files.
 9. Upload the asset With the help of [actions/upload-release-asset](@gh) – the
@@ -213,8 +214,10 @@ jobs:
       - name: Set binary path name
         run: echo "::set-env name=BINARY_PATH::./dist/stan${{ env.EXT }}"
 
-      - name: Strip binary
-        run: strip ${{ env.BINARY_PATH }}
+      - name: Compress binary
+        uses: svenstaro/upx-action@2.0.1
+        with:
+          file: ${{ env.BINARY_PATH }}
 
       - name: Load Release URL File from release job
         uses: actions/download-artifact@v1
@@ -245,7 +248,7 @@ straightforward and flexible, the workflow has some space for improvements. Here
 are at least a few things that we are planning to upgrade in there:
 
 - [ ] Statically linked binaries
-- [ ] Use [`upx`](https://upx.github.io/) for compressing binaries even further
+- [x] Use [`upx`](https://upx.github.io/) for compressing binaries even further
 - [ ] Create a workflow template for producing releases
 - [ ] Add support of this feature to [Summoner](@gh(kowainik):summoner)) —
       Haskell scaffolding tool
