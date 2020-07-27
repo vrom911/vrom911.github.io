@@ -136,7 +136,7 @@
 <li>Build the executable. We specify the directory where to install the executable in order to easy access to that folder: <code>cabal install exe:stan --install-method=copy --overwrite-policy=always --installdir=dist</code></li>
 <li><em>[Windows specific]</em> Add the <code>.exe</code> suffix to the binary.</li>
 <li>Set the path to the executable into the <code>BINARY_PATH</code> environment variable. We know exactly where it is, as we specified it earlier.</li>
-<li>Strip the binary. The Haskell exe could be very heavy, it never hurts to light it a bit.</li>
+<li>Compress the binary. The Haskell exe could be very heavy, it never hurts to light it a bit. Here we use <a href="https://github.com/svenstaro/upx-action">svenstaro/upx-action</a> to first <code>strip</code> and then <code>upx</code> the binary.</li>
 <li>Read the URL of the release using the created file with it during the previous job. We use <a href="https://github.com/actions/download-artifact">actions/download-artifact</a> – action to get files.</li>
 <li>Upload the asset With the help of <a href="https://github.com/actions/upload-release-asset">actions/upload-release-asset</a> – the action that actually uploads our binary to the release by the given URL. You can also set the names the way you want it to be.</li>
 </ol>
@@ -235,35 +235,37 @@
 <span id="cb1-88"><a href="#cb1-88" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Set binary path name</span></span>
 <span id="cb1-89"><a href="#cb1-89" aria-hidden="true"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> echo &quot;::set-env name=BINARY_PATH::./dist/stan${{ env.EXT }}&quot;</span></span>
 <span id="cb1-90"><a href="#cb1-90" aria-hidden="true"></a></span>
-<span id="cb1-91"><a href="#cb1-91" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Strip binary</span></span>
-<span id="cb1-92"><a href="#cb1-92" aria-hidden="true"></a><span class="at">        </span><span class="fu">run</span><span class="kw">:</span><span class="at"> strip ${{ env.BINARY_PATH }}</span></span>
-<span id="cb1-93"><a href="#cb1-93" aria-hidden="true"></a></span>
-<span id="cb1-94"><a href="#cb1-94" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Load Release URL File from release job</span></span>
-<span id="cb1-95"><a href="#cb1-95" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/download-artifact@v1</span></span>
-<span id="cb1-96"><a href="#cb1-96" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-97"><a href="#cb1-97" aria-hidden="true"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> release_url</span></span>
-<span id="cb1-98"><a href="#cb1-98" aria-hidden="true"></a></span>
-<span id="cb1-99"><a href="#cb1-99" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Release File Name &amp; Upload URL</span></span>
-<span id="cb1-100"><a href="#cb1-100" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> get_release_info</span></span>
-<span id="cb1-101"><a href="#cb1-101" aria-hidden="true"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
-<span id="cb1-102"><a href="#cb1-102" aria-hidden="true"></a>          echo &quot;::set-output name=upload_url::$(cat release_url/release_url.txt)&quot;</span>
-<span id="cb1-103"><a href="#cb1-103" aria-hidden="true"></a></span>
-<span id="cb1-104"><a href="#cb1-104" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Release Asset</span></span>
-<span id="cb1-105"><a href="#cb1-105" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> upload-release-asset</span></span>
-<span id="cb1-106"><a href="#cb1-106" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-release-asset@v1.0.1</span></span>
-<span id="cb1-107"><a href="#cb1-107" aria-hidden="true"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
-<span id="cb1-108"><a href="#cb1-108" aria-hidden="true"></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
-<span id="cb1-109"><a href="#cb1-109" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
-<span id="cb1-110"><a href="#cb1-110" aria-hidden="true"></a><span class="at">          </span><span class="fu">upload_url</span><span class="kw">:</span><span class="at"> ${{ steps.get_release_info.outputs.upload_url }}</span></span>
-<span id="cb1-111"><a href="#cb1-111" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_path</span><span class="kw">:</span><span class="at"> ${{ env.BINARY_PATH }}</span></span>
-<span id="cb1-112"><a href="#cb1-112" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_name</span><span class="kw">:</span><span class="at"> stan-${{ steps.tag.outputs.tag }}-${{ runner.os }}-ghc-${{ matrix.ghc }}${{ env.EXT }}</span></span>
-<span id="cb1-113"><a href="#cb1-113" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_content_type</span><span class="kw">:</span><span class="at"> application/octet-stream</span></span></code></pre></div>
+<span id="cb1-91"><a href="#cb1-91" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Compress binary</span></span>
+<span id="cb1-92"><a href="#cb1-92" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> svenstaro/upx-action@2.0.1</span></span>
+<span id="cb1-93"><a href="#cb1-93" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-94"><a href="#cb1-94" aria-hidden="true"></a><span class="at">          </span><span class="fu">file</span><span class="kw">:</span><span class="at"> ${{ env.BINARY_PATH }}</span></span>
+<span id="cb1-95"><a href="#cb1-95" aria-hidden="true"></a></span>
+<span id="cb1-96"><a href="#cb1-96" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Load Release URL File from release job</span></span>
+<span id="cb1-97"><a href="#cb1-97" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/download-artifact@v1</span></span>
+<span id="cb1-98"><a href="#cb1-98" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-99"><a href="#cb1-99" aria-hidden="true"></a><span class="at">          </span><span class="fu">name</span><span class="kw">:</span><span class="at"> release_url</span></span>
+<span id="cb1-100"><a href="#cb1-100" aria-hidden="true"></a></span>
+<span id="cb1-101"><a href="#cb1-101" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Get Release File Name &amp; Upload URL</span></span>
+<span id="cb1-102"><a href="#cb1-102" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> get_release_info</span></span>
+<span id="cb1-103"><a href="#cb1-103" aria-hidden="true"></a><span class="fu">        run</span><span class="kw">: </span><span class="ch">|</span></span>
+<span id="cb1-104"><a href="#cb1-104" aria-hidden="true"></a>          echo &quot;::set-output name=upload_url::$(cat release_url/release_url.txt)&quot;</span>
+<span id="cb1-105"><a href="#cb1-105" aria-hidden="true"></a></span>
+<span id="cb1-106"><a href="#cb1-106" aria-hidden="true"></a><span class="at">      </span><span class="kw">-</span><span class="at"> </span><span class="fu">name</span><span class="kw">:</span><span class="at"> Upload Release Asset</span></span>
+<span id="cb1-107"><a href="#cb1-107" aria-hidden="true"></a><span class="at">        </span><span class="fu">id</span><span class="kw">:</span><span class="at"> upload-release-asset</span></span>
+<span id="cb1-108"><a href="#cb1-108" aria-hidden="true"></a><span class="at">        </span><span class="fu">uses</span><span class="kw">:</span><span class="at"> actions/upload-release-asset@v1.0.1</span></span>
+<span id="cb1-109"><a href="#cb1-109" aria-hidden="true"></a><span class="at">        </span><span class="fu">env</span><span class="kw">:</span></span>
+<span id="cb1-110"><a href="#cb1-110" aria-hidden="true"></a><span class="at">          </span><span class="fu">GITHUB_TOKEN</span><span class="kw">:</span><span class="at"> ${{ secrets.GITHUB_TOKEN }}</span></span>
+<span id="cb1-111"><a href="#cb1-111" aria-hidden="true"></a><span class="at">        </span><span class="fu">with</span><span class="kw">:</span></span>
+<span id="cb1-112"><a href="#cb1-112" aria-hidden="true"></a><span class="at">          </span><span class="fu">upload_url</span><span class="kw">:</span><span class="at"> ${{ steps.get_release_info.outputs.upload_url }}</span></span>
+<span id="cb1-113"><a href="#cb1-113" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_path</span><span class="kw">:</span><span class="at"> ${{ env.BINARY_PATH }}</span></span>
+<span id="cb1-114"><a href="#cb1-114" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_name</span><span class="kw">:</span><span class="at"> stan-${{ steps.tag.outputs.tag }}-${{ runner.os }}-ghc-${{ matrix.ghc }}${{ env.EXT }}</span></span>
+<span id="cb1-115"><a href="#cb1-115" aria-hidden="true"></a><span class="at">          </span><span class="fu">asset_content_type</span><span class="kw">:</span><span class="at"> application/octet-stream</span></span></code></pre></div>
 <h2 id="what-is-next">What is next?</h2>
 <p>To conclude this write up, I would like to mention that while being straightforward and flexible, the workflow has some space for improvements. Here are at least a few things that we are planning to upgrade in there:</p>
 <ul class="task-list">
 <li><input type="checkbox" disabled />
 Statically linked binaries</li>
-<li><input type="checkbox" disabled />
+<li><input type="checkbox" disabled checked />
 Use <a href="https://upx.github.io/"><code>upx</code></a> for compressing binaries even further</li>
 <li><input type="checkbox" disabled />
 Create a workflow template for producing releases</li>
