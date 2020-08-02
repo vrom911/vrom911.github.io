@@ -51,7 +51,7 @@ The workflow has two separate jobs:
 1. To create a draft release with the given name that is linked to the tag that
    triggered the event.
 2. To build the requested binaries, strip them (and maybe do more) and then
-   upload to the created already draft release
+   upload to the created already draft release.
 
 With that in mind see the overall picture of the process schematically
 illustrated at the following image:
@@ -250,7 +250,7 @@ are at least a few things that we are planning to upgrade in there:
 - [ ] Statically linked binaries
 - [x] Use [`upx`](https://upx.github.io/) for compressing binaries even further
 - [ ] Create a workflow template for producing releases
-- [ ] Add support of this feature to [Summoner](@gh(kowainik):summoner)) —
+- [ ] Add support of this feature to [Summoner](@gh(kowainik):summoner) —
       Haskell scaffolding tool
 
 ## Acknowledgement
