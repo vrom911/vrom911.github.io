@@ -27,6 +27,7 @@ library
                          Website.Blog
                          Website.Context
                          Website.Experience
+                         Website.Feed
                          Website.Hobbies
                          Website.Nav
                          Website.Project

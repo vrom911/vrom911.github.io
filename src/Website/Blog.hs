@@ -12,7 +12,8 @@ import Hakyll (Compiler, Context, Item, Pattern, Rules, buildTags, compile, cons
                customRoute, defaultContext, defaultHakyllReaderOptions, defaultHakyllWriterOptions,
                field, fromCapture, getResourceString, getTags, idRoute, itemBody, itemIdentifier,
                listField, loadAll, loadAndApplyTemplate, makeItem, match, recentFirst,
-               relativizeUrls, renderPandocWith, route, tagsRules, toFilePath, unsafeCompiler)
+               relativizeUrls, renderPandocWith, route, saveSnapshot, tagsRules, toFilePath,
+               unsafeCompiler)
 import Hakyll.ShortcutLinks (allShortcutLinksCompiler)
 import System.FilePath (replaceExtension)
 import Text.Pandoc.Options (WriterOptions (..))
@@ -38,6 +39,7 @@ matchBlogPosts = match "blog/*" $ do
                        <> constField "toc" toc
         allShortcutLinksCompiler
             >>= loadAndApplyTemplate "templates/post.html" postTagsCtx
+            >>= saveSnapshot "content"
             >>= relativizeUrls
 
 -- | Creates "Blog" page with all tags.

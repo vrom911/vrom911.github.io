@@ -17,17 +17,18 @@ socialLink = field "socialLink" $ pure . sLink . itemBody
 
 postSocials :: [Social]
 postSocials =
-    [ Social "twitter"   "https://twitter.com/vrom911"
-    , Social "github"    "https://github.com/vrom911"
-    , Social "linkedin"  "https://www.linkedin.com/in/veronikaromashkina/"
+    [ Social "fab fa-twitter"   "https://twitter.com/vrom911"
+    , Social "fab fa-github"    "https://github.com/vrom911"
+    , Social "fab fa-linkedin"  "https://www.linkedin.com/in/veronikaromashkina/"
     ]
 
 allSocials :: [Social]
 allSocials = postSocials ++
-    [ Social "reddit"    "https://www.reddit.com/user/vrom911"
-    , Social "telegram"  "https://t.me/vrom911"
-    , Social "facebook"  "https://www.facebook.com/ronnie.romashkina"
-    , Social "instagram" "https://www.instagram.com/vrom911/"
+    [ Social "fab fa-reddit"    "https://www.reddit.com/user/vrom911"
+    , Social "fab fa-telegram"  "https://t.me/vrom911"
+    , Social "fab fa-facebook"  "https://www.facebook.com/ronnie.romashkina"
+    , Social "fab fa-instagram" "https://www.instagram.com/vrom911/"
+    , Social "fas fa-rss"       "https://vrom911.github.io/rss.xml"
     ]
 
 mkSocialCtx :: Context a

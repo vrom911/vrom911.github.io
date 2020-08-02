@@ -10,6 +10,7 @@ import Hakyll.Core.Identifier (fromFilePath, toFilePath)
 import Website.Blog (createBlog, createTags, matchBlogPosts)
 import Website.Context (stripExtension)
 import Website.Experience (mkExperienceCtx)
+import Website.Feed (createFeeds)
 import Website.Hobbies (mkHobbiesCtx)
 import Website.Nav (mkNavCtx)
 import Website.Project (mkProjectCtx)
@@ -59,6 +60,9 @@ runWebsite = hakyll $ do
                 >>= loadAndApplyTemplate "templates/404.html" ctx
 
     match "templates/**" $ compile templateBodyCompiler
+
+    -- create RSS and Atom feeds
+    createFeeds
 
 createMainPage :: Identifier -> Rules ()
 createMainPage page = create [page] $ do
