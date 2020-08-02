@@ -17,7 +17,7 @@ feedConfiguration = FeedConfiguration
     , feedDescription = "This feed provides blog posts about Haskell and functional programming in general"
     , feedAuthorName  = "Veronika Romashkina"
     , feedAuthorEmail = "vrom911@gmail.com"
-    , feedRoot        = "https://vrom911.github.io/blog"
+    , feedRoot        = "https://vrom911.github.io"
     }
 
 type FeedRenderer =
