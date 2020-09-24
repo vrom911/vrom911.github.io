@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Haskell Aliases</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="../favicon.ico" type="image/x-icon">
+    <meta name="description" content="The collection of the Haskell build tools command aliases that optimise my workflows.">
+    <meta name="keywords" content="Haskell, Functional progarmming, FP, haskell, build tools">
+    <meta name="author" content="Veronika Romashkina" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Twitter cards -->
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:site" content="@vrom911" />
+    <meta property="twitter:title" content="vrom911 - Haskell Aliases" />
+    <meta name="twitter:description" content="The collection of the Haskell build tools command aliases that optimise my workflows." />
+    <meta name="twitter:image:src" content="https://vrom911.github.io/images/logo.png" />
+    <meta property="og:title" content="Haskell Aliases" />
+    <meta property="og:description" content="The collection of the Haskell build tools command aliases that optimise my workflows." />
+    <meta property="og:site_name" content="vrom911" />
+    <meta property="og:image" content="https://vrom911.github.io/images/logo.png" />
+
+    <!-- Font -->
+    <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <!-- Custom styles for this template -->
+    <link rel="stylesheet" href="../css/highlight-theme.css" />
+    <link rel="stylesheet" href="../css/default.css">
+    <link rel="stylesheet" href="../css/post.css">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-135683915-1"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-135683915-1');
+        </script>
+
+  </head>
+  <body class="body-posts">
+    <!-- Header -->
+    <nav class="navbar navbar-inverse navbar-fixed-right bg-primary text-secondary">
+      <div class="navbar-header row">
+          <div class="postslogo"> <a class="navbar-brand" href="../"><img class="img-fluid" src="../images/logo.png" alt="vrom911"></a></div>
+          <h5 class="text-center"><a href="../blog"> vrom911 Blog</a></h5>
+          <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/brands.css" integrity="sha384-BKw0P+CQz9xmby+uplDwp82Py8x1xtYPK3ORn/ZSoe6Dk3ETP59WCDnX+fI1XCKK" crossorigin="anonymous">
+<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/fontawesome.css" integrity="sha384-4aon80D8rXCGx9ayDt85LbyUHeMWd3UiBaWliBlJ53yzm9hqN21A+o1pqoyK04h+" crossorigin="anonymous">
+<ul class="list-inline mb-0">
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://twitter.com/vrom911" target="_blank">
+            <i class="fab fa-twitter"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://github.com/vrom911" target="_blank">
+            <i class="fab fa-github"></i>
+       </a>
+    </li>
+
+    <li class="list-inline-item">
+        <a class="btn btn-outline-light btn-social text-center rounded-circle" href="https://www.linkedin.com/in/veronikaromashkina/" target="_blank">
+            <i class="fab fa-linkedin"></i>
+       </a>
+    </li>
+
+</ul>
+
+      </div>
+      <div class="toc-zone">
+          <h6 class="text-white text-center">Contents</h6>
+          <div class="toc" id="main"> <ul>
+<li><a href="#cabal">Cabal</a>
+<ul>
+<li><a href="#build">Build</a></li>
+<li><a href="#test">Test</a></li>
+<li><a href="#benchmark">Benchmark</a></li>
+<li><a href="#run">Run</a></li>
+<li><a href="#install">Install</a></li>
+<li><a href="#repl">REPL</a></li>
+<li><a href="#documentation-and-hackage">Documentation and Hackage</a></li>
+<li><a href="#other-meta">Other meta</a></li>
+</ul></li>
+<li><a href="#stack">Stack</a></li>
+<li><a href="#copy-pasteable">Copy-pasteable</a></li>
+</ul> </div>
+      </div>
+    </nav>
+    <section class="container info">
+        <h2 class="text-center text-uppercase text-purple">Haskell Aliases</h2>
+        <div class="text-center">September 25, 2020</div>
+        <div class="row tag-block text-center">
+          <div class="col-12 tag-block">
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/haskell">haskell</a></span>
+            
+            <span> <a class="btn btn-outline-dark btn-tag" href="../tags/build tools">build tools</a></span>
+            
+          </div>
+        </div>
+        <div class="content">
+          <div class="row post">
+            <div class="col-12 post-body"> <p class="lead"> <p>I know from experience that building average-sized Haskell projects could be frustrating to watch and wait to terminate.</p>
+<p><img src="../images/blog/haskell-aliases/waiting-haskell-build.jpg" /></p>
+<p>To be more productive and not waste that much time on Twitter while waiting for packages to complete building, or not to spend hours investigating obvious mistakes, I am usually trying to optimise my commands to my local usage. I can spend my time better, and get more fruitful results in less time, so I am using some specific options to assist with that. But memorising all of them and typing out each time is a tedious task. So, I have created lots of different aliases for various build-tool commands and forgot about this problem for a while.</p>
+<p>I was collecting and refining proper command options through years, and here I want to share them with you, so you can also use them on a daily basis, or give me a few pieces of advice on how I can improve my workflows even further.</p>
+<blockquote>
+<p>To copy-paste all the mentioned commands in a usable straightaway form, go to the <a href="#copy-pasteable">final section</a> of the post.</p>
+</blockquote>
+<h2 id="cabal">Cabal</h2>
+<p>Most of the time, I am using <a href="https://www.haskell.org/cabal/">the Cabal build tool</a> locally to manage my builds, tests, execution and other Haskell project-specific things. So let’s start with these commands.</p>
+<blockquote>
+<p>Note: all commands assume that you have <code>cabal-install</code> version at least 3.0 installed (the version that doesn’t require <code>new-</code> or <code>v2-</code> prefixes in your command, as it already defaults to that. You may require prefixes for other earlier versions).</p>
+</blockquote>
+<p>With Cabal, from time to time you need to know some additional things that are not enabled by default, to make it work the best for you. And the specific parts of the documentation are not always that easy to discover.</p>
+<p>For example, I had some hard times understanding how to make my tests execute with plainly the <code>cabal test</code> command. Sometimes it doesn’t build and run tests. Turned out that some of the design choices made in the more latest versions were affecting the behaviour of this command. The solution to that was either to add the <code>tests: true</code> into the <code>cabal.project</code> file, or specify a special CLI flag:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>cabal test <span class="co">--enable-tests</span></span></code></pre></div>
+<p><img src="../images/blog/haskell-aliases/tom-begging.jpg" /></p>
+<p>So, let’s get started with my simple Cabal aliases.</p>
+<blockquote>
+<p>Here and later I will share some lines from my <code>~/.zshrc</code> file. You can add the same code into your <code>~/.bashrc</code> or similar config file that you use.</p>
+</blockquote>
+<p>As I said, I use Cabal for the Haskell project building. For the compiler versioning management (I use <a href="https://www.haskell.org/ghc/">GHC</a>), I am using the wonderful <a href="https://www.haskell.org/ghcup/"><code>ghcup</code> tool</a>, which has a lot of useful features such as installation/uninstallation of GHC versions, cabal upgrade, etc., and as from just recently it even helps with the IDE integrations.</p>
+<p>First, I need to make sure that I have all the tools and necessary storages in <code>PATH</code>:</p>
+<pre><code>export PATH=&quot;$PATH:$HOME/.local/bin:$HOME/.ghcup/bin&quot;</code></pre>
+<h4 id="build">Build</h4>
+<p>The build command I use the most looks like this:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="bu">alias</span> cbuild=<span class="st">&quot;cabal build</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="st">    --enable-tests</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a><span class="st">    --enable-benchmarks</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true"></a><span class="st">    --write-ghc-environment-files=always</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="st">    -O0&quot;</span></span></code></pre></div>
+<p>And I simply execute <code>$ cbuild</code> (or <code>$ cbuild all</code> for multi-library/package projects) a lot.</p>
+<p>The command also builds the <code>test</code> and <code>benchmark</code> stanzas altogether.</p>
+<p>I personally don’t experience any issues with the GHC environment files, so I create them by default with the <code>--write-ghc-environment-files=always</code> option. On the contrary, this option saves me when I am working with <code>doctest</code>. <code>doctest</code> requires having environment files in order to function properly. Otherwise, it produces weird errors, which is not that easy to resolve and spot the problem of the <em>env</em> files in there:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>src<span class="op">/</span><span class="dt">Relude</span><span class="op">/</span><span class="dt">Container</span><span class="op">/</span>Reexport.hs<span class="op">:</span><span class="dv">45</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="dt">Could</span> <span class="fu">not</span> find <span class="kw">module</span> ‘<span class="dt">Data.HashSet</span>’</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="dt">Use</span> <span class="op">-</span>v (<span class="fu">or</span> <span class="ot">`:set -v`</span> <span class="kw">in</span> ghci) to see a list <span class="kw">of</span> the files searched for<span class="op">.</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true"></a>   <span class="op">|</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true"></a><span class="dv">45</span> <span class="op">|</span> <span class="kw">import</span> <span class="dt">Data.HashSet</span> (<span class="dt">HashSet</span>)</span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>   <span class="op">|</span> <span class="op">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="dt">Test</span> suite relude<span class="op">-</span>doctest<span class="op">:</span> <span class="dt">FAIL</span></span></code></pre></div>
+<blockquote>
+<p>You may notice the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/using-optimisation.html#ghc-flag--O0"><code>-O0</code> GHC option</a> in all my commands, which turns off all the optimisations produced by GHC. I recommend to use it only locally in order to speed up build times. However, in some cases, it could drastically decrease runtimes or can lead to an erroneous behaviour. So be mindful of when you want to apply that. But if you do want to build without optimizations, make sure to add the <code>-O0</code> option to each command that builds your project. Otherwise, you will observe the rebuilds of your Haskell packages due to changed optimizations scheme.</p>
+</blockquote>
+<p>I also often use even more optimised building commands specifically for my Hakyll projects. As I do not own a powerful laptop, sometimes it is too hard for it to build such projects so that it freezes, and I need to restart it again and again. So I use the <code>cbuild</code> command in the following way:</p>
+<pre class="shell"><code>$ cbuild -j1</code></pre>
+<p>Eventually, I got tired of the inability to work on my laptop when I need to build the website projects, so I <a href="https://github.com/vrom911/vrom911.github.io/blob/106e692d5d42928ac3a4ab0af370e20a0e17074e/cabal.project.freeze">fixed all the dependencies</a> with the <code>cabal freeze</code> command. At the moment, my website project is built instantly.</p>
+<h4 id="test">Test</h4>
+<p>I already told the story about the <code>cabal test</code> command. So here is what I am using currently to build and run tests:</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true"></a><span class="bu">alias</span> ctest=<span class="st">&quot;cabal test</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true"></a><span class="st">    --enable-tests</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true"></a><span class="st">    --test-show-details=direct</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true"></a><span class="st">    -O0&quot;</span></span></code></pre></div>
+<p>I was lacking the colourful, streaming testing output before, but I was given the advice to use the <code>--test-show-details=direct</code> option which helps with that.</p>
+<p>Below you can see the default output of the <code>cabal test</code> command, running on a package with multiple test suites without using the <code>--test-show-details</code> flag:</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true"></a><span class="dt">Running</span> <span class="dv">1</span> test suites<span class="op">...</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true"></a><span class="dt">Test</span> suite relude<span class="op">-</span>test<span class="op">:</span> <span class="op">RUNNING...</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true"></a><span class="dt">Test</span> suite relude<span class="op">-</span>test<span class="op">:</span> <span class="dt">PASS</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true"></a><span class="dt">Test</span> suite logged to<span class="op">:</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true"></a><span class="op">/</span><span class="dt">Users</span><span class="op">/</span>relude<span class="op">/</span>dist<span class="op">-</span>newstyle<span class="op">/</span>build<span class="op">/</span>x86_64<span class="op">-</span>osx<span class="op">/</span>ghc<span class="op">-</span><span class="fl">8.8</span><span class="op">.</span><span class="dv">3</span><span class="op">/</span>relude<span class="op">-</span><span class="fl">0.7</span><span class="op">.</span><span class="fl">0.0</span><span class="op">/</span>t<span class="op">/</span>relude<span class="op">-</span>test<span class="op">/</span>test<span class="op">/</span>relude<span class="op">-</span><span class="fl">0.7</span><span class="op">.</span><span class="fl">0.0</span><span class="op">-</span>relude<span class="op">-</span>test<span class="op">.</span><span class="fu">log</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true"></a><span class="dv">1</span> <span class="kw">of</span> <span class="dv">1</span> test suites (<span class="dv">1</span> <span class="kw">of</span> <span class="dv">1</span> test cases) passed<span class="op">.</span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true"></a><span class="dt">Running</span> <span class="dv">1</span> test suites<span class="op">...</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true"></a><span class="dt">Test</span> suite relude<span class="op">-</span>doctest<span class="op">:</span> <span class="op">RUNNING...</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true"></a><span class="dt">Loaded</span> package environment from <span class="op">/</span><span class="dt">Users</span><span class="op">/</span>relude<span class="op">/.</span>ghc<span class="op">.</span>environment<span class="op">.</span>x86_64<span class="op">-</span>darwin<span class="op">-</span><span class="fl">8.8</span><span class="op">.</span><span class="dv">3</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true"></a><span class="dt">Loaded</span> package environment from <span class="op">/</span><span class="dt">Users</span><span class="op">/</span>relude<span class="op">/.</span>ghc<span class="op">.</span>environment<span class="op">.</span>x86_64<span class="op">-</span>darwin<span class="op">-</span><span class="fl">8.8</span><span class="op">.</span><span class="dv">3</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true"></a><span class="dt">Test</span> suite relude<span class="op">-</span>doctest<span class="op">:</span> <span class="dt">PASS</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true"></a><span class="dt">Test</span> suite logged to<span class="op">:</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true"></a><span class="op">/</span><span class="dt">Users</span><span class="op">/</span>relude<span class="op">/</span>dist<span class="op">-</span>newstyle<span class="op">/</span>build<span class="op">/</span>x86_64<span class="op">-</span>osx<span class="op">/</span>ghc<span class="op">-</span><span class="fl">8.8</span><span class="op">.</span><span class="dv">3</span><span class="op">/</span>relude<span class="op">-</span><span class="fl">0.7</span><span class="op">.</span><span class="fl">0.0</span><span class="op">/</span>t<span class="op">/</span>relude<span class="op">-</span>doctest<span class="op">/</span>test<span class="op">/</span>relude<span class="op">-</span><span class="fl">0.7</span><span class="op">.</span><span class="fl">0.0</span><span class="op">-</span>relude<span class="op">-</span>doctest<span class="op">.</span><span class="fu">log</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true"></a><span class="dv">1</span> <span class="kw">of</span> <span class="dv">1</span> test suites (<span class="dv">1</span> <span class="kw">of</span> <span class="dv">1</span> test cases) passed<span class="op">.</span></span></code></pre></div>
+<p>As you see it is hard to get something concrete from here.</p>
+<p>But even with this option on, I still miss the clear final result of tests (passed or failed). This is especially valuable when you have multiple test stanzas and run them all together. It would be helpful to have the visually highlighted result and a summary conclusion of all suites at the end of the output.</p>
+<h4 id="benchmark">Benchmark</h4>
+<p>The benchmarks running command is a really straightforward one. Nothing fancy, just good old <code>x --enable-x</code>:</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="bu">alias</span> cbench=<span class="st">&quot;cabal bench</span></span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="st">    --enable-benchmarks</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">    -O0&quot;</span></span></code></pre></div>
+<h4 id="run">Run</h4>
+<p>The running command is quite innocent and added only for the sake of consistency of my commands:</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="bu">alias</span> crun=<span class="st">&quot;cabal run -O0&quot;</span></span></code></pre></div>
+<p>This command builds the package first and then runs a specified executable. If you have only one executable in your package, you can avoid specifying its name, and <code>crun</code> will choose it unambiguously.</p>
+<h4 id="install">Install</h4>
+<p>I also have the <code>cinstall</code> command to install Haskell tools easily, but before going into details, here are a few thoughts and warnings about the “install” in Haskell.</p>
+<p><u><strong>Do not install libraries globally!</strong></u> Like, <em>never</em>. It is never ever needed with modern Cabal.</p>
+<p>I often see people experiencing weird and annoying issues due to the fact they have installed globally some packages that are used as a dependency in their project. And when people ask anything about <code>install</code> command my immediate reaction would be: “DO NOT do that”.</p>
+<p>Don’t get me wrong, I am not against the command per se, I use it too! My concern is about a very often misuse of the installation process, which messes up with the global environment and leads to incorrect plan construction, which could make completely valid dependencies version plans invalid.</p>
+<p>Of course, I wouldn’t be completely honest if I won’t specify situations in which I do install myself, and these are completely reasonable use-cases for installation:</p>
+<ul>
+<li>Installation of the tools from Hackage that are not going to be used as dependencies, e.g. <code>HLint</code>, <code>stylish-haskell</code>, <code>stan</code>.</li>
+<li>Installation of the local tools that you are developing. Though I have some concerns about this one, and personally I use <code>build</code> + <code>cp</code> the executable into my <code>.local/bin</code> folder, as in some cases, local installation could break some things.</li>
+</ul>
+<p>In all other cases, try to avoid the <code>install</code> command.</p>
+<p>Now, after the huge and noticeable disclaimer, it is safe to share the <code>cinstall</code> command itself:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true"></a><span class="bu">alias</span> cinstall=<span class="st">&quot;cabal install</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true"></a><span class="st">    --installdir=/home/USERNAME/.local/bin</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true"></a><span class="st">    --overwrite-policy=always</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true"></a><span class="st">    --install-method=copy&quot;</span></span></code></pre></div>
+<p>And you can use it like this, to install Haskell tools:</p>
+<pre class="shell"><code>$ cinstall stylish-haskell</code></pre>
+<h4 id="repl">REPL</h4>
+<p>Another common thing I use all the time is the <code>crepl</code> command which runs the Haskell REPL (GHCi) with some pre-configured stuff for me. I am usually using REPL for debugging some functions, etc. So I want to have the <code>pretty-simple</code> package in scope in order to print data types nicely and get more out of the REPL debugging. I use <code>pretty-simple</code> as it is a neat library that can output any data types in the nice formatted way, which is exactly what I need to visually inspect the data during inspections.</p>
+<p>In my global <code>~/.ghc/ghci.conf</code> config I have the following line:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="op">:</span>set <span class="op">-</span>interactive<span class="op">-</span><span class="fu">print</span><span class="ot">=</span>Text.Pretty.Simple.pPrint</span></code></pre></div>
+<p>And I bring <code>pretty-simple</code> into each invocation of REPL using the following alias:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="bu">alias</span> crepl=<span class="st">&quot;cabal repl --build-depends pretty-simple&quot;</span></span></code></pre></div>
+<p>And I can utilise this command on its own, or with some other options specified. For example, if I need to add more packages into the scope and use them from insider GHCi, I can run it like this:</p>
+<pre class="shell"><code>$ crepl -b aeson -b text</code></pre>
+<h4 id="documentation-and-hackage">Documentation and Hackage</h4>
+<p>I care a lot about good documentation in my packages, so I check it locally whenever I introduce a new Haddock description.</p>
+<p>To produce documentation, I simply run the <code>cdoc</code> command defined as follows:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="bu">alias</span> cdoc=<span class="st">&quot;cabal haddock --enable-documentation&quot;</span></span></code></pre></div>
+<p>I am also a Hackage maintainer, with lots of packages that I need to keep my eye on. To ease the process of the Hackage library release workflow, <a href="https://kodimensional.dev">Dmitrii</a> and I came up with a few useful aliases and bash functions for that:</p>
+<div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="bu">alias</span> cdist=<span class="st">&quot;cabal sdist&quot;</span></span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="kw">function</span><span class="fu"> cupload()</span> <span class="kw">{</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true"></a>    <span class="ex">cabal</span> upload <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> -u vrom911</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true"></a><span class="kw">}</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true"></a></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true"></a><span class="bu">alias</span> cdochackage=<span class="st">&quot;cabal haddock --enable-documentation --haddock-for-hackage&quot;</span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true"></a></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true"></a><span class="kw">function</span><span class="fu"> cupload-doc()</span> <span class="kw">{</span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>    <span class="ex">cabal</span> upload -d <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> --publish -u vrom911</span>
+<span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a><span class="kw">}</span></span></code></pre></div>
+<p>In short, I first create a tarball of the package to upload to Hackage, then I upload it. Then to check the candidate and publish if everything looks okay.</p>
+<p>We also prefer to manually build the documentation that could go on Hackage, as there are usually some issues with that on the service. Doing it by hands is easy and creates the docs available at Hackage immediately. The procedure is the same: create tarball + upload it to Hackage.</p>
+<h4 id="other-meta">Other meta</h4>
+<p>From time to time I need to update my local Hackage index database in order to get access to the newer versions of the packages. This is my <code>cupdate</code>:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="bu">alias</span> cupdate=<span class="st">&quot;cabal update&quot;</span></span></code></pre></div>
+<p>And, of course, in the life of every Haskell engineer comes the moment where you have to clean up messed-up <code>dist</code> and <code>dist-newstyle</code> folders — meta information created by Cabal and used for builds:</p>
+<div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="bu">alias</span> cclean=<span class="st">&quot;cabal clean&quot;</span></span></code></pre></div>
+<h2 id="stack">Stack</h2>
+<p>Let’s now see some aliases for another Haskell build tool — <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a>. To tell you the truth, I am not that frequent user of Stack recently, though I was one before. Nevertheless, I still tend to check that any project I am working at is buildable with both build tools Cabal and Stack. Usually, I have CI checking the build with Stack each time and use it myself only sometimes.</p>
+<p>But yet, I have go-to aliases, that help in situations, where you are starting to forget the best ways of using the tool.</p>
+<p>So, first of all, I have the autocompletion available for me:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="ex">autoload</span> -U +X compinit <span class="kw">&amp;&amp;</span> <span class="ex">compinit</span></span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="ex">autoload</span> -U +X bashcompinit <span class="kw">&amp;&amp;</span> <span class="ex">bashcompinit</span></span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">stack</span> --bash-completion-script stack<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
+<blockquote>
+<p>The first two lines are <code>zsh</code> specific, <code>bash</code> users may only need the last line.</p>
+</blockquote>
+<p>And I have two types of the build:</p>
+<ul>
+<li><p>A standard one:</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true"></a><span class="bu">alias</span> sbuild=<span class="st">&quot;stack build</span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true"></a><span class="st">    -j 2</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true"></a><span class="st">    --test</span></span>
+<span id="cb20-4"><a href="#cb20-4" aria-hidden="true"></a><span class="st">    --bench</span></span>
+<span id="cb20-5"><a href="#cb20-5" aria-hidden="true"></a><span class="st">    --no-run-tests</span></span>
+<span id="cb20-6"><a href="#cb20-6" aria-hidden="true"></a><span class="st">    --no-run-benchmarks&quot;</span></span></code></pre></div></li>
+<li><p>A fast one:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true"></a><span class="bu">alias</span> fbuild=<span class="st">&quot;stack build</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true"></a><span class="st">    --fast</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true"></a><span class="st">    -j 2</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true"></a><span class="st">    --test</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true"></a><span class="st">    --bench</span></span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a><span class="st">    --no-run-tests</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a><span class="st">    --no-run-benchmarks&quot;</span></span></code></pre></div></li>
+</ul>
+<p>I am also very happy to see the Stack feature of the output colouring customization. Though I am not using it a lot currently, I tried to play with it once, and if you a more frequent Stack user than I am, I recommend to <a href="https://docs.haskellstack.org/en/stable/yaml_configuration/#stack-colors">check it out as well</a>.</p>
+<p>I do not have any other stack aliases, basically because most of the commands I use work quite well out of the box for me, e.g.</p>
+<pre class="shell"><code>$ stack test</code></pre>
+<p>So, I do not create any aliases, as it is not required to keep any additional options or tricks in mind for that.</p>
+<h2 id="copy-pasteable">Copy-pasteable</h2>
+<p>To summarise all that I described, here are all the mentioned settings put together, so you can easily copy-paste it and use them for your needs.</p>
+<div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="co"># Haskell</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="bu">export</span> <span class="va">PATH=</span><span class="st">&quot;</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/.local/bin:</span><span class="va">$HOME</span><span class="st">/.ghcup/bin&quot;</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true"></a><span class="co"># Cabal</span></span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true"></a></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true"></a><span class="bu">alias</span> cbuild=<span class="st">&quot;cabal build --enable-tests --enable-benchmarks --write-ghc-environment-files=always -O0&quot;</span></span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true"></a><span class="bu">alias</span> ctest=<span class="st">&quot;cabal test --enable-tests --test-show-details=direct -O0&quot;</span></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true"></a><span class="bu">alias</span> cbench=<span class="st">&quot;cabal bench --enable-benchmarks -O0&quot;</span></span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true"></a><span class="bu">alias</span> crun=<span class="st">&quot;cabal run -O0&quot;</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true"></a><span class="bu">alias</span> cinstall=<span class="st">&quot;cabal install --installdir=/home/USERNAME/.local/bin --overwrite-policy=always --install-method=copy&quot;</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true"></a><span class="bu">alias</span> cclean=<span class="st">&quot;cabal clean&quot;</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true"></a><span class="bu">alias</span> cupdate=<span class="st">&quot;cabal update&quot;</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true"></a><span class="bu">alias</span> crepl=<span class="st">&quot;cabal repl --build-depends pretty-simple&quot;</span></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true"></a><span class="bu">alias</span> cdoc=<span class="st">&quot;cabal haddock --enable-documentation&quot;</span></span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true"></a><span class="bu">alias</span> cdochackage=<span class="st">&quot;cabal haddock --enable-documentation --haddock-for-hackage&quot;</span></span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true"></a><span class="bu">alias</span> cdist=<span class="st">&quot;cabal sdist&quot;</span></span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true"></a></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true"></a><span class="kw">function</span><span class="fu"> cupload()</span> <span class="kw">{</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true"></a>    <span class="ex">cabal</span> upload <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> -u vrom911</span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true"></a><span class="kw">}</span></span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true"></a></span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true"></a><span class="kw">function</span><span class="fu"> cupload-doc()</span> <span class="kw">{</span></span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true"></a>    <span class="ex">cabal</span> upload -d <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> --publish -u vrom911</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true"></a><span class="kw">}</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true"></a></span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true"></a><span class="co"># Stack</span></span>
+<span id="cb23-27"><a href="#cb23-27" aria-hidden="true"></a></span>
+<span id="cb23-28"><a href="#cb23-28" aria-hidden="true"></a><span class="ex">autoload</span> -U +X compinit <span class="kw">&amp;&amp;</span> <span class="ex">compinit</span></span>
+<span id="cb23-29"><a href="#cb23-29" aria-hidden="true"></a><span class="ex">autoload</span> -U +X bashcompinit <span class="kw">&amp;&amp;</span> <span class="ex">bashcompinit</span></span>
+<span id="cb23-30"><a href="#cb23-30" aria-hidden="true"></a><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">stack</span> --bash-completion-script stack<span class="va">)</span><span class="st">&quot;</span></span>
+<span id="cb23-31"><a href="#cb23-31" aria-hidden="true"></a></span>
+<span id="cb23-32"><a href="#cb23-32" aria-hidden="true"></a><span class="bu">alias</span> sbuild=<span class="st">&quot;stack build        -j 2 --test --bench --no-run-tests --no-run-benchmarks&quot;</span></span>
+<span id="cb23-33"><a href="#cb23-33" aria-hidden="true"></a><span class="bu">alias</span> fbuild=<span class="st">&quot;stack build --fast -j 2 --test --bench --no-run-tests --no-run-benchmarks&quot;</span></span></code></pre></div>
+<p>Bon appétit!</p> </p> </div>
+          </div>
+        </div>
+    </section>
+    <!-- Bootstrap core JavaScript -->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"> </script>
+    <script src="../js/post.js"> </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/haskell.min.js"></script>
+    <script>hljs.initHighlightingOnLoad()</script>
+  </body>
+</html>

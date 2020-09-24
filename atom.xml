@@ -8,8 +8,16 @@
         <name>Veronika Romashkina</name>
         <email>vrom911@gmail.com</email>
     </author>
-    <updated>2020-07-17T00:00:00Z</updated>
+    <updated>2020-09-25T00:00:00Z</updated>
     <entry>
+    <title>Haskell Aliases</title>
+    <link href="https://vrom911.github.io/blog/haskell-aliases.html" />
+    <id>https://vrom911.github.io/blog/haskell-aliases.html</id>
+    <published>2020-09-25T00:00:00Z</published>
+    <updated>2020-09-25T00:00:00Z</updated>
+    <summary type="html"><![CDATA[The collection of the Haskell build tools command aliases that optimise my workflows.]]></summary>
+</entry>
+<entry>
     <title>Haskell binaries release with GitHub Actions</title>
     <link href="https://vrom911.github.io/blog/github-actions-releases.html" />
     <id>https://vrom911.github.io/blog/github-actions-releases.html</id>

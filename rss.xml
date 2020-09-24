@@ -7,8 +7,16 @@
         <description><![CDATA[This feed provides blog posts about Haskell and functional programming in general]]></description>
         <atom:link href="https://vrom911.github.io/rss.xml" rel="self"
                    type="application/rss+xml" />
-        <lastBuildDate>Fri, 17 Jul 2020 00:00:00 UT</lastBuildDate>
+        <lastBuildDate>Fri, 25 Sep 2020 00:00:00 UT</lastBuildDate>
         <item>
+    <title>Haskell Aliases</title>
+    <link>https://vrom911.github.io/blog/haskell-aliases.html</link>
+    <description><![CDATA[The collection of the Haskell build tools command aliases that optimise my workflows.]]></description>
+    <pubDate>Fri, 25 Sep 2020 00:00:00 UT</pubDate>
+    <guid>https://vrom911.github.io/blog/haskell-aliases.html</guid>
+    <dc:creator>Veronika Romashkina</dc:creator>
+</item>
+<item>
     <title>Haskell binaries release with GitHub Actions</title>
     <link>https://vrom911.github.io/blog/github-actions-releases.html</link>
     <description><![CDATA[How to create Haskell releases with binary assets using a simple GitHub Actions workflow.]]></description>
