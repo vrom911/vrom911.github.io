@@ -30,7 +30,7 @@ allHobbies = traverse makeItem
         { hName = "Travel"
         , hLink = "/hobbies/travel"
         , hIcon = "map-signs"
-        , hDesc = "I dream about visiting most of the World. Currently, I'm in Singapore and exploring this part on the map. Check out the countries I've already been to."
+        , hDesc = "I dream about visiting most of the World. Currently, I'm in London, UK. Check out the countries I've already been to."
         }
     , Hobby
         { hName = "Generative Art"
