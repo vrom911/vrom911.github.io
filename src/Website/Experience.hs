@@ -27,9 +27,9 @@ allExperience :: Compiler [Item Experience]
 allExperience = traverse makeItem
     [ Experience
         { eName = "Habito"
-        , eLink = "https://habito.com"
+        , eLink = ""
         , eImg  = "hb.png"
-        , eTime = "Dec, 2019 — present"
+        , eTime = "Dec, 2019 — Aug, 2020"
         , ePosition = "Software Engineer"
         , eCountry = "UK, London"
         }
