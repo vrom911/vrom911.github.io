@@ -4,20 +4,20 @@ description: The collection of the Haskell build tools command aliases that opti
 tags: haskell, build tools
 ---
 
-I know from experience that building average-sized Haskell projects could be
+I know from experience that building average-sized Haskell projects can be
 frustrating to watch and wait to terminate.
 
 ![](/images/blog/haskell-aliases/waiting-haskell-build.jpg)
 
 To be more productive and not waste that much time on Twitter while waiting for
 packages to complete building, or not to spend hours investigating obvious
-mistakes, I am usually trying to optimise my commands to my local usage. I can
-spend my time better, and get more fruitful results in less time, so I am using
+mistakes, I usually try to optimise my commands to my local usage. I can
+spend my time better, and get more fruitful results in less time, so I use
 some specific options to assist with that. But memorising all of them and typing
-out each time is a tedious task. So, I have created lots of different aliases
+them out each time is a tedious task. So, I created lots of different aliases
 for various build-tool commands and forgot about this problem for a while.
 
-I was collecting and refining proper command options through years, and here I
+I have collected and refined proper command options through the years, and here I
 want to share them with you, so you can also use them on a daily basis, or give
 me a few pieces of advice on how I can improve my workflows even further.
 
@@ -26,7 +26,7 @@ me a few pieces of advice on how I can improve my workflows even further.
 
 ## Cabal
 
-Most of the time, I am using [the Cabal build tool](https://www.haskell.org/cabal/)
+Most of the time, I use [the Cabal build tool](https://www.haskell.org/cabal/)
 locally to manage my builds, tests, execution and other Haskell project-specific
 things. So let's start with these commands.
 
@@ -40,11 +40,11 @@ With Cabal, from time to time you need to know some additional things that are
 not enabled by default, to make it work the best for you. And the specific parts
 of the documentation are not always that easy to discover.
 
-For example, I had some hard times understanding how to make my tests execute
+For example, I had a hard time understanding how to make my tests execute
 with plainly the `cabal test` command. Sometimes it doesn't build and run tests.
-Turned out that some of the design choices made in the more latest versions were
+It turned out that some of the design choices made in the more recent versions were
 affecting the behaviour of this command. The solution to that was either to add
-the `tests: true` into the `cabal.project` file, or specify a special CLI flag:
+`tests: true` into the `cabal.project` file, or to specify a special CLI flag:
 
 ```haskell
 cabal test --enable-tests
@@ -58,11 +58,11 @@ So, let's get started with my simple Cabal aliases.
 > Here and later I will share some lines from my `~/.zshrc` file. You can add
 > the same code into your `~/.bashrc` or similar config file that you use.
 
-As I said, I use Cabal for the Haskell project building. For the compiler
-versioning management (I use [GHC](https://www.haskell.org/ghc/)), I am using
+As I said, I use Cabal for building Haskell projects. For compiler
+version management (I use [GHC](https://www.haskell.org/ghc/)), I use
 the wonderful [`ghcup` tool](https://www.haskell.org/ghcup/), which has a lot of
 useful features such as installation/uninstallation of GHC versions, cabal
-upgrade, etc., and as from just recently it even helps with the IDE
+upgrade, etc., and as from just recently it even helps with IDE
 integrations.
 
 First, I need to make sure that I have all the tools and necessary storages in
@@ -89,11 +89,11 @@ projects) a lot.
 
 The command also builds the `test` and `benchmark` stanzas altogether.
 
-I personally don't experience any issues with the GHC environment files, so I
+I personally don't experience any issues with GHC environment files, so I
 create them by default with the `--write-ghc-environment-files=always` option.
 On the contrary, this option saves me when I am working with `doctest`.
-`doctest` requires having environment files in order to function properly.
-Otherwise, it produces weird errors, which is not that easy to resolve and spot
+`doctest` requires environment files in order to function properly.
+Otherwise, it produces weird errors, which are not that easy to resolve and spot
 the problem of the _env_ files in there:
 
 ```haskell
@@ -109,12 +109,12 @@ Test suite relude-doctest: FAIL
 > You may notice the
 > [`-O0` GHC option](https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/using-optimisation.html#ghc-flag--O0)
 > in all my commands, which turns off all the optimisations produced by GHC. I
-> recommend to use it only locally in order to speed up build times. However, in
-> some cases, it could drastically decrease runtimes or can lead to an erroneous
+> recommend using it only locally in order to speed up build times. However, in
+> some cases, it could drastically decrease runtimes or lead to erroneous
 > behaviour. So be mindful of when you want to apply that. But if you do want to
 > build without optimizations, make sure to add the `-O0` option to each command
-> that builds your project. Otherwise, you will observe the rebuilds of your
-> Haskell packages due to changed optimizations scheme.
+> that builds your project. Otherwise, you will observe rebuilds of your
+> Haskell packages due to the changed optimizations scheme.
 
 I also often use even more optimised building commands specifically for my
 Hakyll projects. As I do not own a powerful laptop, sometimes it is too hard for
@@ -176,7 +176,7 @@ output.
 
 #### Benchmark
 
-The benchmarks running command is a really straightforward one. Nothing fancy,
+The command to run the benchmarks is really straightforward. Nothing fancy,
 just good old `x --enable-x`:
 
 ```bash
@@ -201,7 +201,7 @@ and `crun` will choose it unambiguously.
 #### Install
 
 I also have the `cinstall` command to install Haskell tools easily, but before
-going into details, here are a few thoughts and warnings about the "install" in
+going into details, here are a few thoughts and warnings about "install" in
 Haskell.
 
 <u>__Do not install libraries globally!__</u> Like, *never*. It is never ever needed
@@ -209,19 +209,19 @@ with modern Cabal.
 
 I often see people experiencing weird and annoying issues due to the fact they
 have installed globally some packages that are used as a dependency in their
-project. And when people ask anything about `install` command my immediate
+project. And when people ask anything about the `install` command my immediate
 reaction would be: "DO NOT do that".
 
 Don't get me wrong, I am not against the command per se, I use it too! My
-concern is about a very often misuse of the installation process, which messes
-up with the global environment and leads to incorrect plan construction, which
-could make completely valid dependencies version plans invalid.
+concern is about a very frequent misuse of the installation process, which messes
+up the global environment and leads to incorrect plan construction, which
+could make completely valid dependency version plans invalid.
 
-Of course, I wouldn't be completely honest if I won't specify situations in
+Of course, I wouldn't be completely honest if I wouldn't specify situations in
 which I do install myself, and these are completely reasonable use-cases for
 installation:
 
-* Installation of the tools from Hackage that are not going to be used as
+* Installation of tools from Hackage that are not going to be used as
   dependencies, e.g. `HLint`, `stylish-haskell`, `stan`.
 * Installation of the local tools that you are developing. Though I have some
   concerns about this one, and personally I use `build` + `cp` the executable
@@ -249,11 +249,11 @@ $ cinstall stylish-haskell
 #### REPL
 
 Another common thing I use all the time is the `crepl` command which runs the
-Haskell REPL (GHCi) with some pre-configured stuff for me. I am usually using
-REPL for debugging some functions, etc. So I want to have the `pretty-simple`
+Haskell REPL (GHCi) for me with some pre-configured stuff. I usually use the
+REPL for debugging functions, etc. So I want to have the `pretty-simple`
 package in scope in order to print data types nicely and get more out of the
 REPL debugging. I use `pretty-simple` as it is a neat library that can output
-any data types in the nice formatted way, which is exactly what I need to
+any data types in a nicely formatted way, which is exactly what I need to
 visually inspect the data during inspections.
 
 In my global `~/.ghc/ghci.conf` config I have the following line:
@@ -269,9 +269,9 @@ alias:
 alias crepl="cabal repl --build-depends pretty-simple"
 ```
 
-And I can utilise this command on its own, or with some other options specified.
+And I can use this command on its own, or with other options specified.
 For example, if I need to add more packages into the scope and use them from
-insider GHCi, I can run it like this:
+inside GHCi, I can run it like this:
 
 ```shell
 $ crepl -b aeson -b text
@@ -291,7 +291,7 @@ alias cdoc="cabal haddock --enable-documentation"
 I am also a Hackage maintainer, with lots of packages that I need to keep my eye
 on. To ease the process of the Hackage library release workflow,
 [Dmitrii](https://kodimensional.dev) and I came up with a few useful aliases and
-bash functions for that:
+bash functions:
 
 ```bash
 alias cdist="cabal sdist"
@@ -311,8 +311,8 @@ In short, I first create a tarball of the package to upload to Hackage, then I
 upload it. Then to check the candidate and publish if everything looks okay.
 
 We also prefer to manually build the documentation that could go on Hackage, as
-there are usually some issues with that on the service. Doing it by hands is
-easy and creates the docs available at Hackage immediately. The procedure is the
+there are usually some issues with that on the service. Doing it by hand is
+easy and makes the docs available on Hackage immediately. The procedure is the
 same: create tarball + upload it to Hackage.
 
 #### Other meta
@@ -336,15 +336,15 @@ alias cclean="cabal clean"
 
 Let's now see some aliases for another Haskell build tool —
 [Stack](https://docs.haskellstack.org/en/stable/README/). To tell you the truth,
-I am not that frequent user of Stack recently, though I was one before.
-Nevertheless, I still tend to check that any project I am working at is
-buildable with both build tools Cabal and Stack. Usually, I have CI checking the
+I have not been that frequent a user of Stack recently, though I was one before.
+Nevertheless, I still tend to check that any project I am working on is
+buildable with both build tools, Cabal and Stack. Usually, I have CI checking the
 build with Stack each time and use it myself only sometimes.
 
-But yet, I have go-to aliases, that help in situations, where you are starting
+But yet, I have go-to aliases that help in situations where you are starting
 to forget the best ways of using the tool.
 
-So, first of all, I have the autocompletion available for me:
+So, first of all, I have autocompletion available to me:
 
 ```bash
 autoload -U +X compinit && compinit
@@ -380,9 +380,9 @@ And I have two types of the build:
     ```
 
 I am also very happy to see the Stack feature of the output colouring
-customization. Though I am not using it a lot currently, I tried to play with it
-once, and if you a more frequent Stack user than I am, I recommend to
-[check it out as well](https://docs.haskellstack.org/en/stable/yaml_configuration/#stack-colors).
+customization. Though I do not use it a lot currently, I tried to play with it
+once, and if you a more frequent Stack user than I am, I recommend
+[checking it out as well](https://docs.haskellstack.org/en/stable/yaml_configuration/#stack-colors).
 
 I do not have any other stack aliases, basically because most of the commands I
 use work quite well out of the box for me, e.g.
@@ -391,13 +391,13 @@ use work quite well out of the box for me, e.g.
 $ stack test
 ```
 
-So, I do not create any aliases, as it is not required to keep any additional
+So, I do not create any aliases as it is not required to keep any additional
 options or tricks in mind for that.
 
 ## Copy-pasteable
 
 To summarise all that I described, here are all the mentioned settings put
-together, so you can easily copy-paste it and use them for your needs.
+together, so you can easily copy-paste them and use them for your needs.
 
 ```bash
 # Haskell
