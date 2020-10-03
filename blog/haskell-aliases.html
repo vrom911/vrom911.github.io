@@ -104,27 +104,27 @@
         </div>
         <div class="content">
           <div class="row post">
-            <div class="col-12 post-body"> <p class="lead"> <p>I know from experience that building average-sized Haskell projects could be frustrating to watch and wait to terminate.</p>
+            <div class="col-12 post-body"> <p class="lead"> <p>I know from experience that building average-sized Haskell projects can be frustrating to watch and wait to terminate.</p>
 <p><img src="../images/blog/haskell-aliases/waiting-haskell-build.jpg" /></p>
-<p>To be more productive and not waste that much time on Twitter while waiting for packages to complete building, or not to spend hours investigating obvious mistakes, I am usually trying to optimise my commands to my local usage. I can spend my time better, and get more fruitful results in less time, so I am using some specific options to assist with that. But memorising all of them and typing out each time is a tedious task. So, I have created lots of different aliases for various build-tool commands and forgot about this problem for a while.</p>
-<p>I was collecting and refining proper command options through years, and here I want to share them with you, so you can also use them on a daily basis, or give me a few pieces of advice on how I can improve my workflows even further.</p>
+<p>To be more productive and not waste that much time on Twitter while waiting for packages to complete building, or not to spend hours investigating obvious mistakes, I usually try to optimise my commands to my local usage. I can spend my time better, and get more fruitful results in less time, so I use some specific options to assist with that. But memorising all of them and typing them out each time is a tedious task. So, I created lots of different aliases for various build-tool commands and forgot about this problem for a while.</p>
+<p>I have collected and refined proper command options through the years, and here I want to share them with you, so you can also use them on a daily basis, or give me a few pieces of advice on how I can improve my workflows even further.</p>
 <blockquote>
 <p>To copy-paste all the mentioned commands in a usable straightaway form, go to the <a href="#copy-pasteable">final section</a> of the post.</p>
 </blockquote>
 <h2 id="cabal">Cabal</h2>
-<p>Most of the time, I am using <a href="https://www.haskell.org/cabal/">the Cabal build tool</a> locally to manage my builds, tests, execution and other Haskell project-specific things. So let’s start with these commands.</p>
+<p>Most of the time, I use <a href="https://www.haskell.org/cabal/">the Cabal build tool</a> locally to manage my builds, tests, execution and other Haskell project-specific things. So let’s start with these commands.</p>
 <blockquote>
 <p>Note: all commands assume that you have <code>cabal-install</code> version at least 3.0 installed (the version that doesn’t require <code>new-</code> or <code>v2-</code> prefixes in your command, as it already defaults to that. You may require prefixes for other earlier versions).</p>
 </blockquote>
 <p>With Cabal, from time to time you need to know some additional things that are not enabled by default, to make it work the best for you. And the specific parts of the documentation are not always that easy to discover.</p>
-<p>For example, I had some hard times understanding how to make my tests execute with plainly the <code>cabal test</code> command. Sometimes it doesn’t build and run tests. Turned out that some of the design choices made in the more latest versions were affecting the behaviour of this command. The solution to that was either to add the <code>tests: true</code> into the <code>cabal.project</code> file, or specify a special CLI flag:</p>
+<p>For example, I had a hard time understanding how to make my tests execute with plainly the <code>cabal test</code> command. Sometimes it doesn’t build and run tests. It turned out that some of the design choices made in the more recent versions were affecting the behaviour of this command. The solution to that was either to add <code>tests: true</code> into the <code>cabal.project</code> file, or to specify a special CLI flag:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>cabal test <span class="co">--enable-tests</span></span></code></pre></div>
 <p><img src="../images/blog/haskell-aliases/tom-begging.jpg" /></p>
 <p>So, let’s get started with my simple Cabal aliases.</p>
 <blockquote>
 <p>Here and later I will share some lines from my <code>~/.zshrc</code> file. You can add the same code into your <code>~/.bashrc</code> or similar config file that you use.</p>
 </blockquote>
-<p>As I said, I use Cabal for the Haskell project building. For the compiler versioning management (I use <a href="https://www.haskell.org/ghc/">GHC</a>), I am using the wonderful <a href="https://www.haskell.org/ghcup/"><code>ghcup</code> tool</a>, which has a lot of useful features such as installation/uninstallation of GHC versions, cabal upgrade, etc., and as from just recently it even helps with the IDE integrations.</p>
+<p>As I said, I use Cabal for building Haskell projects. For compiler version management (I use <a href="https://www.haskell.org/ghc/">GHC</a>), I use the wonderful <a href="https://www.haskell.org/ghcup/"><code>ghcup</code> tool</a>, which has a lot of useful features such as installation/uninstallation of GHC versions, cabal upgrade, etc., and as from just recently it even helps with IDE integrations.</p>
 <p>First, I need to make sure that I have all the tools and necessary storages in <code>PATH</code>:</p>
 <pre><code>export PATH=&quot;$PATH:$HOME/.local/bin:$HOME/.ghcup/bin&quot;</code></pre>
 <h4 id="build">Build</h4>
@@ -136,7 +136,7 @@
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true"></a><span class="st">    -O0&quot;</span></span></code></pre></div>
 <p>And I simply execute <code>$ cbuild</code> (or <code>$ cbuild all</code> for multi-library/package projects) a lot.</p>
 <p>The command also builds the <code>test</code> and <code>benchmark</code> stanzas altogether.</p>
-<p>I personally don’t experience any issues with the GHC environment files, so I create them by default with the <code>--write-ghc-environment-files=always</code> option. On the contrary, this option saves me when I am working with <code>doctest</code>. <code>doctest</code> requires having environment files in order to function properly. Otherwise, it produces weird errors, which is not that easy to resolve and spot the problem of the <em>env</em> files in there:</p>
+<p>I personally don’t experience any issues with GHC environment files, so I create them by default with the <code>--write-ghc-environment-files=always</code> option. On the contrary, this option saves me when I am working with <code>doctest</code>. <code>doctest</code> requires environment files in order to function properly. Otherwise, it produces weird errors, which are not that easy to resolve and spot the problem of the <em>env</em> files in there:</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true"></a>src<span class="op">/</span><span class="dt">Relude</span><span class="op">/</span><span class="dt">Container</span><span class="op">/</span>Reexport.hs<span class="op">:</span><span class="dv">45</span><span class="op">:</span><span class="dv">1</span><span class="op">:</span> <span class="fu">error</span><span class="op">:</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true"></a><span class="dt">Could</span> <span class="fu">not</span> find <span class="kw">module</span> ‘<span class="dt">Data.HashSet</span>’</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true"></a><span class="dt">Use</span> <span class="op">-</span>v (<span class="fu">or</span> <span class="ot">`:set -v`</span> <span class="kw">in</span> ghci) to see a list <span class="kw">of</span> the files searched for<span class="op">.</span></span>
@@ -145,7 +145,7 @@
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true"></a>   <span class="op">|</span> <span class="op">^^^^^^^^^^^^^^^^^^^^^^^^^^^^^</span></span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true"></a><span class="dt">Test</span> suite relude<span class="op">-</span>doctest<span class="op">:</span> <span class="dt">FAIL</span></span></code></pre></div>
 <blockquote>
-<p>You may notice the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/using-optimisation.html#ghc-flag--O0"><code>-O0</code> GHC option</a> in all my commands, which turns off all the optimisations produced by GHC. I recommend to use it only locally in order to speed up build times. However, in some cases, it could drastically decrease runtimes or can lead to an erroneous behaviour. So be mindful of when you want to apply that. But if you do want to build without optimizations, make sure to add the <code>-O0</code> option to each command that builds your project. Otherwise, you will observe the rebuilds of your Haskell packages due to changed optimizations scheme.</p>
+<p>You may notice the <a href="https://downloads.haskell.org/~ghc/latest/docs/html/users_guide/using-optimisation.html#ghc-flag--O0"><code>-O0</code> GHC option</a> in all my commands, which turns off all the optimisations produced by GHC. I recommend using it only locally in order to speed up build times. However, in some cases, it could drastically decrease runtimes or lead to erroneous behaviour. So be mindful of when you want to apply that. But if you do want to build without optimizations, make sure to add the <code>-O0</code> option to each command that builds your project. Otherwise, you will observe rebuilds of your Haskell packages due to the changed optimizations scheme.</p>
 </blockquote>
 <p>I also often use even more optimised building commands specifically for my Hakyll projects. As I do not own a powerful laptop, sometimes it is too hard for it to build such projects so that it freezes, and I need to restart it again and again. So I use the <code>cbuild</code> command in the following way:</p>
 <pre class="shell"><code>$ cbuild -j1</code></pre>
@@ -175,7 +175,7 @@
 <p>As you see it is hard to get something concrete from here.</p>
 <p>But even with this option on, I still miss the clear final result of tests (passed or failed). This is especially valuable when you have multiple test stanzas and run them all together. It would be helpful to have the visually highlighted result and a summary conclusion of all suites at the end of the output.</p>
 <h4 id="benchmark">Benchmark</h4>
-<p>The benchmarks running command is a really straightforward one. Nothing fancy, just good old <code>x --enable-x</code>:</p>
+<p>The command to run the benchmarks is really straightforward. Nothing fancy, just good old <code>x --enable-x</code>:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true"></a><span class="bu">alias</span> cbench=<span class="st">&quot;cabal bench</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true"></a><span class="st">    --enable-benchmarks</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true"></a><span class="st">    -O0&quot;</span></span></code></pre></div>
@@ -184,13 +184,13 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true"></a><span class="bu">alias</span> crun=<span class="st">&quot;cabal run -O0&quot;</span></span></code></pre></div>
 <p>This command builds the package first and then runs a specified executable. If you have only one executable in your package, you can avoid specifying its name, and <code>crun</code> will choose it unambiguously.</p>
 <h4 id="install">Install</h4>
-<p>I also have the <code>cinstall</code> command to install Haskell tools easily, but before going into details, here are a few thoughts and warnings about the “install” in Haskell.</p>
+<p>I also have the <code>cinstall</code> command to install Haskell tools easily, but before going into details, here are a few thoughts and warnings about “install” in Haskell.</p>
 <p><u><strong>Do not install libraries globally!</strong></u> Like, <em>never</em>. It is never ever needed with modern Cabal.</p>
-<p>I often see people experiencing weird and annoying issues due to the fact they have installed globally some packages that are used as a dependency in their project. And when people ask anything about <code>install</code> command my immediate reaction would be: “DO NOT do that”.</p>
-<p>Don’t get me wrong, I am not against the command per se, I use it too! My concern is about a very often misuse of the installation process, which messes up with the global environment and leads to incorrect plan construction, which could make completely valid dependencies version plans invalid.</p>
-<p>Of course, I wouldn’t be completely honest if I won’t specify situations in which I do install myself, and these are completely reasonable use-cases for installation:</p>
+<p>I often see people experiencing weird and annoying issues due to the fact they have installed globally some packages that are used as a dependency in their project. And when people ask anything about the <code>install</code> command my immediate reaction would be: “DO NOT do that”.</p>
+<p>Don’t get me wrong, I am not against the command per se, I use it too! My concern is about a very frequent misuse of the installation process, which messes up the global environment and leads to incorrect plan construction, which could make completely valid dependency version plans invalid.</p>
+<p>Of course, I wouldn’t be completely honest if I wouldn’t specify situations in which I do install myself, and these are completely reasonable use-cases for installation:</p>
 <ul>
-<li>Installation of the tools from Hackage that are not going to be used as dependencies, e.g. <code>HLint</code>, <code>stylish-haskell</code>, <code>stan</code>.</li>
+<li>Installation of tools from Hackage that are not going to be used as dependencies, e.g. <code>HLint</code>, <code>stylish-haskell</code>, <code>stan</code>.</li>
 <li>Installation of the local tools that you are developing. Though I have some concerns about this one, and personally I use <code>build</code> + <code>cp</code> the executable into my <code>.local/bin</code> folder, as in some cases, local installation could break some things.</li>
 </ul>
 <p>In all other cases, try to avoid the <code>install</code> command.</p>
@@ -202,18 +202,18 @@
 <p>And you can use it like this, to install Haskell tools:</p>
 <pre class="shell"><code>$ cinstall stylish-haskell</code></pre>
 <h4 id="repl">REPL</h4>
-<p>Another common thing I use all the time is the <code>crepl</code> command which runs the Haskell REPL (GHCi) with some pre-configured stuff for me. I am usually using REPL for debugging some functions, etc. So I want to have the <code>pretty-simple</code> package in scope in order to print data types nicely and get more out of the REPL debugging. I use <code>pretty-simple</code> as it is a neat library that can output any data types in the nice formatted way, which is exactly what I need to visually inspect the data during inspections.</p>
+<p>Another common thing I use all the time is the <code>crepl</code> command which runs the Haskell REPL (GHCi) for me with some pre-configured stuff. I usually use the REPL for debugging functions, etc. So I want to have the <code>pretty-simple</code> package in scope in order to print data types nicely and get more out of the REPL debugging. I use <code>pretty-simple</code> as it is a neat library that can output any data types in a nicely formatted way, which is exactly what I need to visually inspect the data during inspections.</p>
 <p>In my global <code>~/.ghc/ghci.conf</code> config I have the following line:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true"></a><span class="op">:</span>set <span class="op">-</span>interactive<span class="op">-</span><span class="fu">print</span><span class="ot">=</span>Text.Pretty.Simple.pPrint</span></code></pre></div>
 <p>And I bring <code>pretty-simple</code> into each invocation of REPL using the following alias:</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true"></a><span class="bu">alias</span> crepl=<span class="st">&quot;cabal repl --build-depends pretty-simple&quot;</span></span></code></pre></div>
-<p>And I can utilise this command on its own, or with some other options specified. For example, if I need to add more packages into the scope and use them from insider GHCi, I can run it like this:</p>
+<p>And I can use this command on its own, or with other options specified. For example, if I need to add more packages into the scope and use them from inside GHCi, I can run it like this:</p>
 <pre class="shell"><code>$ crepl -b aeson -b text</code></pre>
 <h4 id="documentation-and-hackage">Documentation and Hackage</h4>
 <p>I care a lot about good documentation in my packages, so I check it locally whenever I introduce a new Haddock description.</p>
 <p>To produce documentation, I simply run the <code>cdoc</code> command defined as follows:</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true"></a><span class="bu">alias</span> cdoc=<span class="st">&quot;cabal haddock --enable-documentation&quot;</span></span></code></pre></div>
-<p>I am also a Hackage maintainer, with lots of packages that I need to keep my eye on. To ease the process of the Hackage library release workflow, <a href="https://kodimensional.dev">Dmitrii</a> and I came up with a few useful aliases and bash functions for that:</p>
+<p>I am also a Hackage maintainer, with lots of packages that I need to keep my eye on. To ease the process of the Hackage library release workflow, <a href="https://kodimensional.dev">Dmitrii</a> and I came up with a few useful aliases and bash functions:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true"></a><span class="bu">alias</span> cdist=<span class="st">&quot;cabal sdist&quot;</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true"></a></span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true"></a><span class="kw">function</span><span class="fu"> cupload()</span> <span class="kw">{</span></span>
@@ -226,16 +226,16 @@
 <span id="cb16-10"><a href="#cb16-10" aria-hidden="true"></a>    <span class="ex">cabal</span> upload -d <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span> --publish -u vrom911</span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true"></a><span class="kw">}</span></span></code></pre></div>
 <p>In short, I first create a tarball of the package to upload to Hackage, then I upload it. Then to check the candidate and publish if everything looks okay.</p>
-<p>We also prefer to manually build the documentation that could go on Hackage, as there are usually some issues with that on the service. Doing it by hands is easy and creates the docs available at Hackage immediately. The procedure is the same: create tarball + upload it to Hackage.</p>
+<p>We also prefer to manually build the documentation that could go on Hackage, as there are usually some issues with that on the service. Doing it by hand is easy and makes the docs available on Hackage immediately. The procedure is the same: create tarball + upload it to Hackage.</p>
 <h4 id="other-meta">Other meta</h4>
 <p>From time to time I need to update my local Hackage index database in order to get access to the newer versions of the packages. This is my <code>cupdate</code>:</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true"></a><span class="bu">alias</span> cupdate=<span class="st">&quot;cabal update&quot;</span></span></code></pre></div>
 <p>And, of course, in the life of every Haskell engineer comes the moment where you have to clean up messed-up <code>dist</code> and <code>dist-newstyle</code> folders — meta information created by Cabal and used for builds:</p>
 <div class="sourceCode" id="cb18"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true"></a><span class="bu">alias</span> cclean=<span class="st">&quot;cabal clean&quot;</span></span></code></pre></div>
 <h2 id="stack">Stack</h2>
-<p>Let’s now see some aliases for another Haskell build tool — <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a>. To tell you the truth, I am not that frequent user of Stack recently, though I was one before. Nevertheless, I still tend to check that any project I am working at is buildable with both build tools Cabal and Stack. Usually, I have CI checking the build with Stack each time and use it myself only sometimes.</p>
-<p>But yet, I have go-to aliases, that help in situations, where you are starting to forget the best ways of using the tool.</p>
-<p>So, first of all, I have the autocompletion available for me:</p>
+<p>Let’s now see some aliases for another Haskell build tool — <a href="https://docs.haskellstack.org/en/stable/README/">Stack</a>. To tell you the truth, I have not been that frequent a user of Stack recently, though I was one before. Nevertheless, I still tend to check that any project I am working on is buildable with both build tools, Cabal and Stack. Usually, I have CI checking the build with Stack each time and use it myself only sometimes.</p>
+<p>But yet, I have go-to aliases that help in situations where you are starting to forget the best ways of using the tool.</p>
+<p>So, first of all, I have autocompletion available to me:</p>
 <div class="sourceCode" id="cb19"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true"></a><span class="ex">autoload</span> -U +X compinit <span class="kw">&amp;&amp;</span> <span class="ex">compinit</span></span>
 <span id="cb19-2"><a href="#cb19-2" aria-hidden="true"></a><span class="ex">autoload</span> -U +X bashcompinit <span class="kw">&amp;&amp;</span> <span class="ex">bashcompinit</span></span>
 <span id="cb19-3"><a href="#cb19-3" aria-hidden="true"></a><span class="bu">eval</span> <span class="st">&quot;</span><span class="va">$(</span><span class="ex">stack</span> --bash-completion-script stack<span class="va">)</span><span class="st">&quot;</span></span></code></pre></div>
@@ -260,12 +260,12 @@
 <span id="cb21-6"><a href="#cb21-6" aria-hidden="true"></a><span class="st">    --no-run-tests</span></span>
 <span id="cb21-7"><a href="#cb21-7" aria-hidden="true"></a><span class="st">    --no-run-benchmarks&quot;</span></span></code></pre></div></li>
 </ul>
-<p>I am also very happy to see the Stack feature of the output colouring customization. Though I am not using it a lot currently, I tried to play with it once, and if you a more frequent Stack user than I am, I recommend to <a href="https://docs.haskellstack.org/en/stable/yaml_configuration/#stack-colors">check it out as well</a>.</p>
+<p>I am also very happy to see the Stack feature of the output colouring customization. Though I do not use it a lot currently, I tried to play with it once, and if you a more frequent Stack user than I am, I recommend <a href="https://docs.haskellstack.org/en/stable/yaml_configuration/#stack-colors">checking it out as well</a>.</p>
 <p>I do not have any other stack aliases, basically because most of the commands I use work quite well out of the box for me, e.g.</p>
 <pre class="shell"><code>$ stack test</code></pre>
-<p>So, I do not create any aliases, as it is not required to keep any additional options or tricks in mind for that.</p>
+<p>So, I do not create any aliases as it is not required to keep any additional options or tricks in mind for that.</p>
 <h2 id="copy-pasteable">Copy-pasteable</h2>
-<p>To summarise all that I described, here are all the mentioned settings put together, so you can easily copy-paste it and use them for your needs.</p>
+<p>To summarise all that I described, here are all the mentioned settings put together, so you can easily copy-paste them and use them for your needs.</p>
 <div class="sourceCode" id="cb23"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true"></a><span class="co"># Haskell</span></span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true"></a><span class="bu">export</span> <span class="va">PATH=</span><span class="st">&quot;</span><span class="va">$PATH</span><span class="st">:</span><span class="va">$HOME</span><span class="st">/.local/bin:</span><span class="va">$HOME</span><span class="st">/.ghcup/bin&quot;</span></span>
 <span id="cb23-3"><a href="#cb23-3" aria-hidden="true"></a></span>
