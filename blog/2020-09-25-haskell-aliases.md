@@ -409,7 +409,7 @@ alias cbuild="cabal build --enable-tests --enable-benchmarks --write-ghc-environ
 alias ctest="cabal test --enable-tests --test-show-details=direct -O0"
 alias cbench="cabal bench --enable-benchmarks -O0"
 alias crun="cabal run -O0"
-alias cinstall="cabal install --installdir=/home/USERNAME/.local/bin --overwrite-policy=always --install-method=copy"
+alias cinstall="cabal install --installdir=$HOME/.local/bin --overwrite-policy=always --install-method=copy"
 alias cclean="cabal clean"
 alias cupdate="cabal update"
 alias crepl="cabal repl --build-depends pretty-simple"
