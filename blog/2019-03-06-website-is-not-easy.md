@@ -114,12 +114,12 @@ To give the full picture here are checkpoints to deploy your own website right n
 1. Get yourself the repo at GitHub called `yourUserName.github.io`.
 2. Create two branches:
    + `develop` – this is where all your code will go while you’re working
-   + `master` – this is where the generated code for the website should go, so GitHub can deploy it.
+   + `main` – this is where the generated code for the website should go, so GitHub can deploy it.
 3. Get your Hakyll website working as you want website to look like.
 4. Commit.
 5. Run the deployment script: `./scripts/deploy.hs “Initial creation”`.
 
-Speaking about the deployment script, there is no magic in there. It’s a simple bash file which runs `Hakyll` executable to generate site content and commits it to the `master` branch. You can see how it’s implemented in here:
+Speaking about the deployment script, there is no magic in there. It’s a simple bash file which runs `Hakyll` executable to generate site content and commits it to the `main` branch. You can see how it’s implemented in here:
 
 ```bash
 #!/usr/bin/env bash
@@ -131,15 +131,15 @@ cabal new-exec site rebuild
 # Create deploy environment inside of .deploy directory
 mkdir .deploy
 cd .deploy
-git init
+git init --initial-branch=main
 git remote add origin git@github.com:vrom911/vrom911.github.io.git
-git pull -r origin master
+git pull -r origin main
 
 # Add built site files
 rsync -a ../_site/ .
 git add .
 git commit -m "$1"
-git push origin master
+git push origin main
 
 # Cleanup .deploy directory after a successful push
 cd ..

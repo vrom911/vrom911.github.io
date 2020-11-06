@@ -40,7 +40,7 @@ our users. This brings us to the decision of implementing our own lenses inside
 ### How it should work
 
 `relude` encourages users enthusiasm and eagerness to explore. That’s why
-`relude` uses the approach with the [`Extra.*` modules](@github(kowainik):relude/tree/master/src/Relude/Extra) which
+`relude` uses the approach with the [`Extra.*` modules](@github(kowainik):relude/tree/main/src/Relude/Extra) which
 are not exported by default, so it is quite easy to bring something new and let
 users decide whether to use it or not without spoiling the global namespace.
 This method is also applied to the implementation of `lens`. To use lenses from
@@ -446,7 +446,7 @@ you & kLensL .~ True
 As promised, some links:
 
 * [relude: Lens Hackage page](@hackage:relude-0.5.0/docs/Relude-Extra-Lens.html)
-* [relude: Lens source code](@github(kowainik):relude/blob/master/src/Relude/Extra/Lens.hs)
+* [relude: Lens source code](@github(kowainik):relude/blob/main/src/Relude/Extra/Lens.hs)
 * [`lens` package][lens]
 * [`microlens` package](@hackage:microlens)
 * [lens tutorial](@hackage:lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html)
