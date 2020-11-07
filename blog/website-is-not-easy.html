@@ -182,13 +182,13 @@ $endfor$
 <li>Create two branches:
 <ul>
 <li><code>develop</code> – this is where all your code will go while you’re working</li>
-<li><code>master</code> – this is where the generated code for the website should go, so GitHub can deploy it.</li>
+<li><code>main</code> – this is where the generated code for the website should go, so GitHub can deploy it.</li>
 </ul></li>
 <li>Get your Hakyll website working as you want website to look like.</li>
 <li>Commit.</li>
 <li>Run the deployment script: <code>./scripts/deploy.hs “Initial creation”</code>.</li>
 </ol>
-<p>Speaking about the deployment script, there is no magic in there. It’s a simple bash file which runs <code>Hakyll</code> executable to generate site content and commits it to the <code>master</code> branch. You can see how it’s implemented in here:</p>
+<p>Speaking about the deployment script, there is no magic in there. It’s a simple bash file which runs <code>Hakyll</code> executable to generate site content and commits it to the <code>main</code> branch. You can see how it’s implemented in here:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true"></a><span class="co">#!/usr/bin/env bash</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true"></a><span class="kw">set</span> <span class="ex">-eo</span> pipefail</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true"></a></span>
@@ -198,15 +198,15 @@ $endfor$
 <span id="cb3-7"><a href="#cb3-7" aria-hidden="true"></a><span class="co"># Create deploy environment inside of .deploy directory</span></span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true"></a><span class="fu">mkdir</span> .deploy</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true"></a><span class="bu">cd</span> .deploy</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="fu">git</span> init</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true"></a><span class="fu">git</span> init --initial-branch=main</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true"></a><span class="fu">git</span> remote add origin git@github.com:vrom911/vrom911.github.io.git</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="fu">git</span> pull -r origin master</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true"></a><span class="fu">git</span> pull -r origin main</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true"></a></span>
 <span id="cb3-14"><a href="#cb3-14" aria-hidden="true"></a><span class="co"># Add built site files</span></span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true"></a><span class="fu">rsync</span> -a ../_site/ .</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true"></a><span class="fu">git</span> add .</span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true"></a><span class="fu">git</span> commit -m <span class="st">&quot;</span><span class="va">$1</span><span class="st">&quot;</span></span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="fu">git</span> push origin master</span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true"></a><span class="fu">git</span> push origin main</span>
 <span id="cb3-19"><a href="#cb3-19" aria-hidden="true"></a></span>
 <span id="cb3-20"><a href="#cb3-20" aria-hidden="true"></a><span class="co"># Cleanup .deploy directory after a successful push</span></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true"></a><span class="bu">cd</span> ..</span>

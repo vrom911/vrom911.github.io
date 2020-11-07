@@ -115,7 +115,7 @@
 </ul>
 <p>These are reasons to want lenses within touch, but as maintainers of a lightweight alternative prelude, we don’t want to impose any lens packages on our users. This brings us to the decision of implementing our own lenses inside <code>relude</code>.</p>
 <h3 id="how-it-should-work">How it should work</h3>
-<p><code>relude</code> encourages users enthusiasm and eagerness to explore. That’s why <code>relude</code> uses the approach with the <a href="https://github.com/kowainik/relude/tree/master/src/Relude/Extra"><code>Extra.*</code> modules</a> which are not exported by default, so it is quite easy to bring something new and let users decide whether to use it or not without spoiling the global namespace. This method is also applied to the implementation of <code>lens</code>. To use lenses from <code>relude</code> you can just add the following import:</p>
+<p><code>relude</code> encourages users enthusiasm and eagerness to explore. That’s why <code>relude</code> uses the approach with the <a href="https://github.com/kowainik/relude/tree/main/src/Relude/Extra"><code>Extra.*</code> modules</a> which are not exported by default, so it is quite easy to bring something new and let users decide whether to use it or not without spoiling the global namespace. This method is also applied to the implementation of <code>lens</code>. To use lenses from <code>relude</code> you can just add the following import:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a><span class="kw">import</span> <span class="dt">Relude.Extra.Lens</span></span></code></pre></div>
 <p>Moreover, this approach doesn’t spoil your project that already has a dependency on the <code>lens</code> or <code>microlens</code> library, you just don’t export this extra module.</p>
 <p>Besides, there is another cool bonus. The fact that <code>Lens'</code> is a type alias gives us the compatibility with the <code>lens</code> package itself. This means that <code>Lens'</code> from <code>relude</code> is absolutely the same type that <code>Lens'</code> from <code>lens</code> or <code>microlens</code> package. So, if later you decide to migrate to one of the libraries, all that you need to do is to add the required library to the dependencies list and change the <code>import</code> to the corresponding module name of the chosen library. All functions would work as expected without any breakages.</p>
@@ -294,7 +294,7 @@
 <p>As promised, some links:</p>
 <ul>
 <li><a href="https://hackage.haskell.org/package/relude-0.5.0/docs/Relude-Extra-Lens.html">relude: Lens Hackage page</a></li>
-<li><a href="https://github.com/kowainik/relude/blob/master/src/Relude/Extra/Lens.hs">relude: Lens source code</a></li>
+<li><a href="https://github.com/kowainik/relude/blob/main/src/Relude/Extra/Lens.hs">relude: Lens source code</a></li>
 <li><a href="http://hackage.haskell.org/package/lens"><code>lens</code> package</a></li>
 <li><a href="https://hackage.haskell.org/package/microlens"><code>microlens</code> package</a></li>
 <li><a href="https://hackage.haskell.org/package/lens-tutorial-1.0.3/docs/Control-Lens-Tutorial.html">lens tutorial</a></li>
