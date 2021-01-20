@@ -9,13 +9,13 @@ license:             MPL-2.0
 license-file:        LICENSE
 author:              Veronika Romashkina
 maintainer:          vrom911@gmail.com
-copyright:           2019 vrom911
+copyright:           2019-2021 vrom911
 category:            Website
 build-type:          Simple
 stability:           stable
 extra-doc-files:     README.md
                    , CHANGELOG.md
-tested-with:         GHC == 8.8.3
+tested-with:         GHC == 8.10
 
 source-repository head
   type:     git
@@ -27,15 +27,14 @@ library
                          Website.Blog
                          Website.Context
                          Website.Experience
-                         Website.Feed
                          Website.Hobbies
                          Website.Nav
                          Website.Project
                          Website.Social
-  build-depends:       base ^>= 4.13
+  build-depends:       base ^>= 4.14
                      , filepath ^>= 1.4
                      , hakyll ^>= 4.13
-                     , hakyll-shortcut-links ^>= 0.1.0.0
+                     , hakyll-shortcut-links ^>= 0.1.0.1
                      , pandoc >= 2.9
                      -- , relude ^>= 0.5.0
                      , text

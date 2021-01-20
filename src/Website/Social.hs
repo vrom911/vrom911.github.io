@@ -28,7 +28,6 @@ allSocials = postSocials ++
     , Social "fab fa-telegram"  "https://t.me/vrom911"
     , Social "fab fa-facebook"  "https://www.facebook.com/ronnie.romashkina"
     , Social "fab fa-instagram" "https://www.instagram.com/vrom911/"
-    , Social "fas fa-rss"       "https://vrom911.github.io/rss.xml"
     ]
 
 mkSocialCtx :: Context a
