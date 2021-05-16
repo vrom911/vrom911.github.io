@@ -117,7 +117,7 @@
         </div>
         <div class="content">
           <div class="row post">
-            <div class="col-12 post-body"> <p class="lead"> <p>When creating a project in <a href="https://www.haskell.org">Haskell</a> you <em>usually</em> explicitly or implicitly deal with the <code>.cabal</code> files, no matter which build tool you prefer. In this post, I would like to discuss one specific feature of <a href="https://www.haskell.org/cabal/">Cabal</a> — <a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#common-stanzas">common stanzas</a>, explain its mission and demonstrate how it could be used, which problems it helps to avoid, and also mention some widely used alternatives.</p>
+            <div class="col-12 post-body"> <p class="lead"> <p>When creating a project in <a href="https://www.haskell.org">Haskell</a> you <em>usually</em> explicitly or implicitly deal with the <code>.cabal</code> files, no matter which build tool you prefer. In this post, I would like to discuss one specific feature of <a href="https://www.haskell.org/cabal/">Cabal</a> — <a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#common-stanzas">common stanzas</a>, explain its mission and demonstrate how it could be used, which problems it helps to avoid, and also mention some widely used alternatives.</p>
 <h2 id="terminology">Terminology</h2>
 <p>Before going into detail about the feature itself I think it could be useful to speak a bit about the <code>cabal</code> configuration format, declare all the definitions and explain the structure of the <code>.cabal</code> file, so everybody could follow what common stanzas bring to the table. If you are using Cabal on a daily basis or fairly proficient with the syntax and the concepts of Cabal, you can skip to the next section. If you are not a frequent Cabal user, I think that this section might be useful anyway as it is generally valuable to keep up with what you are dealing with even if it is not apparent usage.</p>
 <h3 id="what-is-the-cabal-file">What is the cabal file</h3>
@@ -130,32 +130,32 @@
 </blockquote>
 <p>Let’s talk a bit more concrete about the structure of the <code>cabal</code> file and its application for your project.</p>
 <h3 id="cabal-files-structure">Cabal files structure</h3>
-<p>Most of the time you don’t create the <code>.cabal</code> file from scratch. Using <code>init</code> <a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#using-cabal-init">commands</a> of the build tools (or some <a href="https://github.com/kowainik/summoner">programmes specialised on scaffolding</a>), you can get a reasonable default project configuration, and all you have to do is to modify it slightly as needed. Despite that, let’s look into a detailed view of the file to understand it better.</p>
+<p>Most of the time you don’t create the <code>.cabal</code> file from scratch. Using <code>init</code> <a href="https://cabal.readthedocs.io/en/latest/developing-packages.html#using-cabal-init">commands</a> of the build tools (or some <a href="https://github.com/kowainik/summoner">programmes specialised on scaffolding</a>), you can get a reasonable default project configuration, and all you have to do is to modify it slightly as needed. Despite that, let’s look into a detailed view of the file to understand it better.</p>
 <p>Cabal uses special syntax that is parsed by the <code>Cabal</code> <a href="https://hackage.haskell.org/package/Cabal">library</a> and used by other build tools as well. The <code>.cabal</code> file is divided into sections and each one of them consists of the fields with name and value that are related to those sections semantically. The field name (case insensitive) and the value (case sensitive) are separated by the <code>:</code> symbol.</p>
 <p>The full specification can be found here:</p>
 <ul>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-desc">Cabal format description</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#package-description">Cabal format description</a></li>
 </ul>
 <h3 id="general-fields">General fields</h3>
-<p>The first section in the file is the general-purpose package describing part. This section is also called <a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#package-properties">“package properties”</a>. It must always start with the field <code>cabal-version</code> in which you should specify the version of Cabal format you’re using in your package configuration:</p>
+<p>The first section in the file is the general-purpose package describing part. This section is also called <a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#package-properties">“package properties”</a>. It must always start with the field <code>cabal-version</code> in which you should specify the version of Cabal format you’re using in your package configuration:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode haskell"><code class="sourceCode haskell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true"></a>cabal<span class="op">-</span>version<span class="op">:</span>       <span class="fl">3.0</span></span></code></pre></div>
 <p>This is important as the Cabal specification does change with the time and that makes the version of the tool essential for parsing the file. The version number you specify will affect both compatibility and behaviour.</p>
 <p>Besides that, this section is the right place for properties like <code>name</code>, <code>version</code>, <code>author</code>, some extra meta information sources, like <code>LICENSE</code>, <code>README</code>, <code>CHANGELOG</code>, and many more that should be established once and for the package as a whole.</p>
 <h3 id="stanzas">Stanzas</h3>
 <p>Aside from the basic package information, In your project, you can have:</p>
 <ul>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#library">Libraries</a>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#library">Libraries</a>
 <ul>
 <li>Public library — external API that could be used by other projects.</li>
 <li>Internal library — internal API only in the scope of your project.</li>
 </ul></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#executables">Executables</a> — a runnable standalone programme.</li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#test-suites">Test suites</a> — runnable special executable for package tests.</li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#benchmarks">Benchmark suites</a> — runnable special executable to compare the performance.</li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#foreign-libraries">Foreign libraries</a> — system libraries.</li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#configurations">Configurations sections</a> — the place to introduce all flags that can be included in other sections.</li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#source-repositories">Source repositories</a> — source revision control repository for a package.</li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#custom-setup-scripts">Custom setup scripts</a> — establish the way to work with custom <code>Setup.hs</code> files.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#executables">Executables</a> — a runnable standalone programme.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#test-suites">Test suites</a> — runnable special executable for package tests.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#benchmarks">Benchmark suites</a> — runnable special executable to compare the performance.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#foreign-libraries">Foreign libraries</a> — system libraries.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#configurations">Configurations sections</a> — the place to introduce all flags that can be included in other sections.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#source-repositories">Source repositories</a> — source revision control repository for a package.</li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#custom-setup-scripts">Custom setup scripts</a> — establish the way to work with custom <code>Setup.hs</code> files.</li>
 </ul>
 <p>and all these elements in any number and combination. This is up to you to select the suitable parts for your goal and glue them together in one project. Each piece from the list above is called <strong>stanza</strong>.</p>
 <blockquote>
@@ -181,39 +181,39 @@
 <p>Common stanza is another type of stanzas that can contain the information to be shared in other stanzas by manually including it in them.</p>
 <p>At the moment common stanzas can include only <em>build information fields</em> inside. Here is the full list of the fields that can be used:</p>
 <ul>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-depends">build-depends</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-build-type">build-depends</a></li>
 <li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-modules">other-modules</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-hs-source-dirs">hs-source-dirs</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-extensions">default-extensions</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-languages">default-languages</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-extensions">other-extensions</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-tool-depends">build-tool-depends</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-buildable">buildable</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-options">ghc-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-prof-options">ghc-prof-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-shared-options">ghc-shared-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-includes">includes</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-install-includes">install-includes</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-include-dirs">include-dirs</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-c-sources">c-sources</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cxx-sources">cxx-sources</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-asm-sources">asm-sources</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cmm-sources">cmm-sources</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-js-sources">js-sources</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-libraries">extra-libraries</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-ghci-libraries">extra-ghci-libraries</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-bundled-libraries">extra-bundled-libraries</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-lib-dirs">extra-lib-dirs</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cc-options">cc-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cpp-options">cpp-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cxx-options">cxx-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cmm-options">cmm-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-asm-options">asm-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ld-options">ld-options</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-pkgconfig-depends">pkgconfig-depends</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-frameworks">frameworks</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-frameworks-dirs">extra-frameworks-dirs</a></li>
-<li><a href="https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-mixins">mixins</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-other-modules">hs-source-dirs</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-default-extensions">default-extensions</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-default-languages">default-languages</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-other-extensions">other-extensions</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-build-tool-depends">build-tool-depends</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-buildable">buildable</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ghc-options">ghc-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ghc-prof-options">ghc-prof-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ghc-shared-options">ghc-shared-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-includes">includes</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-install-includes">install-includes</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-include-dirs">include-dirs</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-c-sources">c-sources</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cxx-sources">cxx-sources</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-asm-sources">asm-sources</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cmm-sources">cmm-sources</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-js-sources">js-sources</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-libraries">extra-libraries</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-ghci-libraries">extra-ghci-libraries</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-bundled-libraries">extra-bundled-libraries</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-lib-dirs">extra-lib-dirs</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cc-options">cc-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cpp-options">cpp-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cxx-options">cxx-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cmm-options">cmm-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-asm-options">asm-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ld-options">ld-options</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-pkgconfig-depends">pkgconfig-depends</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-frameworks">frameworks</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-frameworks-dirs">extra-frameworks-dirs</a></li>
+<li><a href="https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-mixins">mixins</a></li>
 </ul>
 <h3 id="how-to-use">How to use</h3>
 <p>Common stanzas have to be defined before you can use it in other sections, so the best place to put your common stanzas is after the general information and before the first stanza of your package. Common stanza primarily is a stanza, so it should be a section of the cabal file starting with the special keyword.</p>
