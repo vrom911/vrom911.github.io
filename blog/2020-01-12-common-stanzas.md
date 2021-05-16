@@ -53,7 +53,7 @@ application for your project.
 ### Cabal files structure
 
 Most of the time you don't create the `.cabal` file from scratch. Using `init`
-[commands](https://www.haskell.org/cabal/users-guide/developing-packages.html#using-cabal-init)
+[commands](https://cabal.readthedocs.io/en/latest/developing-packages.html#using-cabal-init)
 of the build tools (or some [programmes specialised on scaffolding](@github(kowainik):summoner)),
 you can get a reasonable default project configuration, and all you have to do
 is to modify it slightly as needed. Despite that, let's look into a detailed
@@ -68,12 +68,12 @@ symbol.
 
 The full specification can be found here:
 
- * [Cabal format description](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-desc)
+ * [Cabal format description](https://cabal.readthedocs.io/en/latest/cabal-package.html#package-description)
 
 ### General fields
 
 The first section in the file is the general-purpose package describing part.
-This section is also called ["package properties"](https://www.haskell.org/cabal/users-guide/developing-packages.html#package-properties).
+This section is also called ["package properties"](https://cabal.readthedocs.io/en/latest/cabal-package.html#package-properties).
 It must always start with the field `cabal-version` in which you should specify
 the version of Cabal format you're using in your package configuration:
 
@@ -94,22 +94,22 @@ package as a whole.
 
 Aside from the basic package information, In your project, you can have:
 
- * [Libraries](https://www.haskell.org/cabal/users-guide/developing-packages.html#library)
+ * [Libraries](https://cabal.readthedocs.io/en/latest/cabal-package.html#library)
    + Public library — external API that could be used by other projects.
    + Internal library — internal API only in the scope of your project.
- * [Executables](https://www.haskell.org/cabal/users-guide/developing-packages.html#executables)
+ * [Executables](https://cabal.readthedocs.io/en/latest/cabal-package.html#executables)
    — a runnable standalone programme.
- * [Test suites](https://www.haskell.org/cabal/users-guide/developing-packages.html#test-suites)
+ * [Test suites](https://cabal.readthedocs.io/en/latest/cabal-package.html#test-suites)
    — runnable special executable for package tests.
- * [Benchmark suites](https://www.haskell.org/cabal/users-guide/developing-packages.html#benchmarks)
+ * [Benchmark suites](https://cabal.readthedocs.io/en/latest/cabal-package.html#benchmarks)
    — runnable special executable to compare the performance.
- * [Foreign libraries](https://www.haskell.org/cabal/users-guide/developing-packages.html#foreign-libraries)
+ * [Foreign libraries](https://cabal.readthedocs.io/en/latest/cabal-package.html#foreign-libraries)
    — system libraries.
- * [Configurations sections](https://www.haskell.org/cabal/users-guide/developing-packages.html#configurations)
+ * [Configurations sections](https://cabal.readthedocs.io/en/latest/cabal-package.html#configurations)
    — the place to introduce all flags that can be included in other sections.
- * [Source repositories](https://www.haskell.org/cabal/users-guide/developing-packages.html#source-repositories)
+ * [Source repositories](https://cabal.readthedocs.io/en/latest/cabal-package.html#source-repositories)
    — source revision control repository for a package.
- * [Custom setup scripts](https://www.haskell.org/cabal/users-guide/developing-packages.html#custom-setup-scripts)
+ * [Custom setup scripts](https://cabal.readthedocs.io/en/latest/cabal-package.html#custom-setup-scripts)
    — establish the way to work with custom `Setup.hs` files.
 
 and all these elements in any number and combination. This is up to you to
@@ -177,39 +177,39 @@ shared in other stanzas by manually including it in them.
 At the moment common stanzas can include only _build information fields_ inside.
 Here is the full list of the fields that can be used:
 
- * [build-depends](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-depends)
+ * [build-depends](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-build-type)
  * [other-modules](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-modules)
- * [hs-source-dirs](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-hs-source-dirs)
- * [default-extensions](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-extensions)
- * [default-languages](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-default-languages)
- * [other-extensions](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-other-extensions)
- * [build-tool-depends](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-build-tool-depends)
- * [buildable](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-buildable)
- * [ghc-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-options)
- * [ghc-prof-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-prof-options)
- * [ghc-shared-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ghc-shared-options)
- * [includes](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-includes)
- * [install-includes](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-install-includes)
- * [include-dirs](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-include-dirs)
- * [c-sources](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-c-sources)
- * [cxx-sources](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cxx-sources)
- * [asm-sources](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-asm-sources)
- * [cmm-sources](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cmm-sources)
- * [js-sources](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-js-sources)
- * [extra-libraries](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-libraries)
- * [extra-ghci-libraries](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-ghci-libraries)
- * [extra-bundled-libraries](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-bundled-libraries)
- * [extra-lib-dirs](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-lib-dirs)
- * [cc-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cc-options)
- * [cpp-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cpp-options)
- * [cxx-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cxx-options)
- * [cmm-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-cmm-options)
- * [asm-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-asm-options)
- * [ld-options](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-ld-options)
- * [pkgconfig-depends](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-pkgconfig-depends)
- * [frameworks](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-frameworks)
- * [extra-frameworks-dirs](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-extra-frameworks-dirs)
- * [mixins](https://www.haskell.org/cabal/users-guide/developing-packages.html#pkg-field-mixins)
+ * [hs-source-dirs](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-other-modules)
+ * [default-extensions](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-default-extensions)
+ * [default-languages](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-default-languages)
+ * [other-extensions](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-other-extensions)
+ * [build-tool-depends](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-build-tool-depends)
+ * [buildable](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-buildable)
+ * [ghc-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ghc-options)
+ * [ghc-prof-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ghc-prof-options)
+ * [ghc-shared-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ghc-shared-options)
+ * [includes](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-includes)
+ * [install-includes](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-install-includes)
+ * [include-dirs](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-include-dirs)
+ * [c-sources](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-c-sources)
+ * [cxx-sources](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cxx-sources)
+ * [asm-sources](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-asm-sources)
+ * [cmm-sources](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cmm-sources)
+ * [js-sources](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-js-sources)
+ * [extra-libraries](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-libraries)
+ * [extra-ghci-libraries](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-ghci-libraries)
+ * [extra-bundled-libraries](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-bundled-libraries)
+ * [extra-lib-dirs](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-lib-dirs)
+ * [cc-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cc-options)
+ * [cpp-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cpp-options)
+ * [cxx-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cxx-options)
+ * [cmm-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-cmm-options)
+ * [asm-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-asm-options)
+ * [ld-options](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-ld-options)
+ * [pkgconfig-depends](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-pkgconfig-depends)
+ * [frameworks](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-frameworks)
+ * [extra-frameworks-dirs](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-extra-frameworks-dirs)
+ * [mixins](https://cabal.readthedocs.io/en/latest/cabal-package.html#pkg-field-mixins)
 
 ### How to use
 
@@ -754,4 +754,4 @@ better, please contact me without hesitation.
 
 
 [cabal]: https://www.haskell.org/cabal/
-[common-stanza]: https://www.haskell.org/cabal/users-guide/developing-packages.html#common-stanzas
+[common-stanza]: https://cabal.readthedocs.io/en/latest/cabal-package.html#common-stanzas
