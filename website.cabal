@@ -38,6 +38,7 @@ library
                      , pandoc >= 2.9
                      -- , relude ^>= 0.5.0
                      , text
+                     , time
 
   ghc-options:         -Wall
                        -Wincomplete-uni-patterns

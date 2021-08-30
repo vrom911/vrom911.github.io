@@ -43,19 +43,19 @@ matchBlogPosts = match "blog/*" $ do
             >>= relativizeUrls
 
 -- | Creates "Blog" page with all tags.
-createBlog :: Rules ()
-createBlog = create ["blog.html"] $ compilePosts "Blog Posts" "blog/*"
+createBlog :: String -> Rules ()
+createBlog year = create ["blog.html"] $ compilePosts year "Blog Posts" "blog/*"
 
-createTags :: Rules ()
-createTags = do
+createTags :: String -> Rules ()
+createTags year = do
     tags <- buildTags "blog/*" (fromCapture "tags/*.html")
     tagsRules tags $ \tag ptrn -> do
         let title = "Tag " ++ tag
-        compilePosts title ptrn
+        compilePosts year title ptrn
 
 -- | Compiles all posta for the blog pages with the tags context
-compilePosts :: String -> Pattern -> Rules ()
-compilePosts title ptrn = do
+compilePosts :: String -> String -> Pattern -> Rules ()
+compilePosts year title ptrn = do
     route idRoute
     compile $ do
         posts <- recentFirst =<< loadAll ptrn
@@ -67,6 +67,7 @@ compilePosts title ptrn = do
                <> mkSocialCtx
                <> makeExternalPostsContext
                <> constField "title" title
+               <> constField "year" year
                <> defaultContext
 
         makeItem ""

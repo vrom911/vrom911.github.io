@@ -26,6 +26,14 @@ experienceCtx =
 allExperience :: Compiler [Item Experience]
 allExperience = traverse makeItem
     [ Experience
+        { eName = "Standard Chartered"
+        , eLink = "https://sc.com"
+        , eImg  = "sc.png"
+        , eTime = "Mar, 2021 — present"
+        , ePosition = "Quantitative Developer"
+        , eCountry = "UK, London"
+        }
+    , Experience
         { eName = "Habito"
         , eLink = ""
         , eImg  = "hb.png"

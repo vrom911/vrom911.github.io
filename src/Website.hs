@@ -1,10 +1,11 @@
 module Website
-       ( runWebsite
-       ) where
+    ( runWebsite
+    ) where
 
-import Hakyll (Identifier, Rules, applyAsTemplate, compile, compressCssCompiler, copyFileCompiler,
-               create, defaultContext, hakyll, idRoute, loadAndApplyTemplate, makeItem, match,
-               relativizeUrls, route, templateBodyCompiler, (.||.))
+import Data.Time (getCurrentTime, getCurrentTimeZone, localDay, toGregorian, utcToLocalTime)
+import Hakyll (Identifier, Rules, applyAsTemplate, compile, compressCssCompiler, constField,
+               copyFileCompiler, create, defaultContext, hakyll, idRoute, loadAndApplyTemplate,
+               makeItem, match, relativizeUrls, route, templateBodyCompiler, (.||.))
 import Hakyll.Core.Identifier (fromFilePath, toFilePath)
 
 import Website.Blog (createBlog, createTags, matchBlogPosts)
@@ -18,13 +19,14 @@ import Website.Social (mkSocialCtx)
 
 -- | Main function that runs the website.
 runWebsite :: IO ()
-runWebsite = hakyll $ do
+runWebsite = currentYear >>= \year -> hakyll $ do
     match (    "images/**"
           .||. "fonts/**"
           .||. "js/*"
           .||. "pde/*"
           .||. "files/*"
           .||. "favicon.ico"
+          .||. "keybase.txt"
           ) $ do
         route   idRoute
         compile copyFileCompiler
@@ -34,6 +36,7 @@ runWebsite = hakyll $ do
         compile compressCssCompiler
 
     -- Main pages
+    let createMainPage = createPage year
     createMainPage "index.html"
     createMainPage "projects.html"
     createMainPage "hobbies.html"
@@ -45,9 +48,9 @@ runWebsite = hakyll $ do
     -- post pages
     matchBlogPosts
     -- All posts page
-    createBlog
+    createBlog year
     -- build up tags
-    createTags
+    createTags year
 
     -- Render the 404 page, we don't relativize URL's here.
     create ["404.html"] $ do
@@ -60,8 +63,8 @@ runWebsite = hakyll $ do
 
     match "templates/**" $ compile templateBodyCompiler
 
-createMainPage :: Identifier -> Rules ()
-createMainPage page = create [page] $ do
+createPage :: String -> Identifier -> Rules ()
+createPage year page = create [page] $ do
     route idRoute
     compile $ do
         let ctx = stripExtension
@@ -71,8 +74,17 @@ createMainPage page = create [page] $ do
                <> mkNavCtx
                <> mkProjectCtx
                <> defaultContext
+               <> constField "year" year
         makeItem ""
             >>= applyAsTemplate ctx
             >>= loadAndApplyTemplate (fromFilePath $ "templates/" ++ toFilePath page) ctx
             >>= loadAndApplyTemplate "templates/default.html" ctx
             >>= relativizeUrls
+
+currentYear :: IO String
+currentYear = do
+    now <- getCurrentTime
+    zone <- getCurrentTimeZone
+    let localNow = utcToLocalTime zone now
+    let (year, _, _) = toGregorian $ localDay localNow
+    pure $ show year
