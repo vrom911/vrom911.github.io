@@ -1,0 +1,56 @@
+==================================================================
+https://keybase.io/vrom911
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of https://vrom911.github.io
+  * I am vrom911 (https://keybase.io/vrom911) on keybase.
+  * I have a public key ASA8Vpo8UfhYlg0Sh33tb7CiPYvoBPX--yP2nPHOBuuXugo
+
+To do so, I am signing this object:
+
+{
+  "body": {
+    "key": {
+      "eldest_kid": "01203c569a3c51f858960d12877ded6fb0a23d8be804f5fefb23f69cf1ce06eb97ba0a",
+      "host": "keybase.io",
+      "kid": "01203c569a3c51f858960d12877ded6fb0a23d8be804f5fefb23f69cf1ce06eb97ba0a",
+      "uid": "64ea563d95e02af44dab994b031e2619",
+      "username": "vrom911"
+    },
+    "merkle_root": {
+      "ctime": 1630313614,
+      "hash": "44259210f6e910aa56fe6a189ea2adf9cb020e4c0a98454499ccff907a089ce99d61b93664bcc7d7594f28a1360065a86fa4fa9cb8e0d72ea9f33bacdef9b3b4",
+      "hash_meta": "ce5e538ab3c04fc44f6e7a0ad1e21a0ec59e64ee3c9341a2f4ac3d464aebe51a",
+      "seqno": 20663320
+    },
+    "service": {
+      "entropy": "ZGdkjeJXwPcB+IkuI81biG0S",
+      "hostname": "vrom911.github.io",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "5.7.0"
+  },
+  "ctime": 1630313632,
+  "expire_in": 504576000,
+  "prev": "2cdff912a59f4fe5b5c5c00bc1762f6a598753fb143082868ef69a06ed06e533",
+  "seqno": 7,
+  "tag": "signature"
+}
+
+which yields the signature:
+
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgPFaaPFH4WJYNEod97W+woj2L6AT1/vsj9pzxzgbrl7oKp3BheWxvYWTESpcCB8QgLN/5EqWfT+W1xcALwXYvalmHU/sUMIKGjvaaBu0G5TPEIP880Trm95nC/Q+wav0kiWrJa7Mi4193b8ZPy+JTiJPdAgHCo3NpZ8RALrzOdzSl9eMmLOZmPFf98KvevyW01omhGjpbIr80wlOFicwnlHk0sfH9c2TKLoI8m9+x1y5cz2ncyuRHhTEwC6hzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIAjrT41IKmOVrnKOtKf6Z7L6VzPpXQkF5z0MbwTWQhkEo3RhZ80CAqd2ZXJzaW9uAQ==
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/vrom911
+
+==================================================================
