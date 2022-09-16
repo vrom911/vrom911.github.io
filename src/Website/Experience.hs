@@ -29,7 +29,7 @@ allExperience = traverse makeItem
         { eName = "Standard Chartered"
         , eLink = "https://sc.com"
         , eImg  = "sc.png"
-        , eTime = "Mar, 2021 — present"
+        , eTime = "Mar, 2021 — Aug, 2022"
         , ePosition = "Quantitative Developer"
         , eCountry = "UK, London"
         }
