@@ -1,4 +1,4 @@
-cabal-version:       2.4
+cabal-version:       3.8
 name:                vrom911-website
 version:             0.0.0.0
 synopsis:            My personal website and blog
@@ -9,13 +9,13 @@ license:             MPL-2.0
 license-file:        LICENSE
 author:              Veronika Romashkina
 maintainer:          vrom911@gmail.com
-copyright:           2019-2022 vrom911
+copyright:           2019-2025 vrom911
 category:            Website
 build-type:          Simple
 stability:           stable
 extra-doc-files:     README.md
                    , CHANGELOG.md
-tested-with:         GHC == 8.10.4
+tested-with:         GHC == 9.6.7
 
 source-repository head
   type:     git
@@ -31,10 +31,10 @@ library
                          Website.Nav
                          Website.Project
                          Website.Social
-  build-depends:       base ^>= 4.14
-                     , filepath ^>= 1.4
-                     , hakyll ^>= 4.13
-                     , hakyll-shortcut-links ^>= 0.1.0.1
+  build-depends:       base >= 4.18
+                     , filepath >= 1.5
+                     , hakyll >= 4.13
+                     , hakyll-shortcut-links ^>= 0.1.1.0
                      , pandoc >= 2.9
                      -- , relude ^>= 0.5.0
                      , text
